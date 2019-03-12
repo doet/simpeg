@@ -183,24 +183,24 @@ class FilesCrudController extends Controller
           if ($row[18] != '') array_push($tunda,$row[18]);
           if ($row[19] != '') array_push($tunda,$row[19]);
 
-          DB::table('tb_dls')->insert([
-             'ppjk'       => $row[1],
-             'agens_id'   => $agen->id,
-             'date'       => strtotime($date),
-             'kapals_id'  => $kapal->id,
-             'jetty_id'   => $dermaga->id,
-             'ops'        => $row[12],
-             'bapp'       => $row[13],
-             'pc'         => $row[14],
-             'tunda'      => json_encode($tunda),
-             'on'         => strtotime($dateon),
-             'off'        => strtotime($dateoff),
-             'dd'         => $row[22],
-             'ket'        => $row[23],
-             'kurs'       => $row[24]
-           ]);
+          // DB::table('tb_dls')->insert([
+          //    'ppjk'       => $row[1],
+          //    'agens_id'   => $agen->id,
+          //    'date'       => strtotime($date),
+          //    'kapals_id'  => $kapal->id,
+          //    'jetty_id'   => $dermaga->id,
+          //    'ops'        => $row[12],
+          //    'bapp'       => $row[13],
+          //    'pc'         => $row[14],
+          //    'tunda'      => json_encode($tunda),
+          //    'on'         => strtotime($dateon),
+          //    'off'        => strtotime($dateoff),
+          //    'dd'         => $row[22],
+          //    'ket'        => $row[23],
+          //    'kurs'       => $row[24]
+          //  ]);
+          echo $data['isinya'];
         }
-        // echo $data['isinya'];
         //return
       break;
     }
@@ -228,7 +228,7 @@ class FilesCrudController extends Controller
         }else{
           $isinya[$l]=array();
           for( $i=0 ; $i < count($row) ; $i++ ){
-            if (is_object($row[$i]) == 'true')$row[$i] = date_format($row[$i], 'h:i');
+            if (is_object($row[$i]) == 'true')$row[$i] = date_format($row[$i], 'H:i');
             array_push($isinya[$l],$row[$i]);
           }
         }

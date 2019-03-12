@@ -102,10 +102,10 @@
                 <thead>
                   <tr>
                     <td class="top right left" rowspan="2" width='20px'>No</td>
-                    <td class="top right" rowspan="2" width='30px'>Nomor </br> PPJK</td>
+                    <td class="top right" rowspan="2" width='40px'>Nomor </br> PPJK</td>
                     <td class="top right" rowspan="2" width='30px'>Agen </br> (Code)</td>
                     <td class="top right button" colspan="2">Waktu Permintaan</td>
-                    <td class="top right" rowspan="2" width='200px'>Nama Kapal</td>
+                    <td class="top right" rowspan="2" width='180px'>Nama Kapal</td>
                     <td class="top right" rowspan="2" width='35px'>GRT</td>
                     <td class="top right" rowspan="2" width='30px'>LOA </br> (Meter)</td>
                     <td class="top right" rowspan="2" width='80px'>Bendera</td>

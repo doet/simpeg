@@ -308,7 +308,7 @@ class OprasionalApiController extends Controller
               $row->id,
               $row->ppjk,
               $row->agenCode,
-              date("d-m-Y H:i",$row->date),
+              date("d-m-Y h:i",$row->date),
               '('.$row->kapalsJenis.') '.$row->kapalsName,
               $row->kapalsGrt,
               $row->kapalsLoa,

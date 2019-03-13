@@ -180,8 +180,8 @@
                     echo '<td class="top right"  align="center"'.$mv.'</td>';
                     echo '<td class="top right"  align="center"'.$mg.'</td>';
 
-                    echo '<td class="top right" align="center">'.date("H:i",$row->on).'</td>';
-                    echo '<td class="top right" align="center">'.date("H:i",$row->off).'</td>';
+                    echo '<td class="top right" align="center">'.date("H:i",$row->tundaon).'</td>';
+                    echo '<td class="top right" align="center">'.date("H:i",$row->tundaoff).'</td>';
                     echo '<td class="top right">&nbsp;'.$row->dd.'</td>';
                     echo '<td class="top right">&nbsp;'.$row->ket.'</td>';
                     echo '<td class="top right" align="center">'.$row->kurs.'</td>';

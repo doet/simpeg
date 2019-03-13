@@ -183,23 +183,23 @@ class FilesCrudController extends Controller
           if ($row[18] != '') array_push($tunda,$row[18]);
           if ($row[19] != '') array_push($tunda,$row[19]);
 
-          // DB::table('tb_dls')->insert([
-          //    'ppjk'       => $row[1],
-          //    'agens_id'   => $agen->id,
-          //    'date'       => strtotime($date),
-          //    'kapals_id'  => $kapal->id,
-          //    'jetty_id'   => $dermaga->id,
-          //    'ops'        => $row[12],
-          //    'bapp'       => $row[13],
-          //    'pc'         => $row[14],
-          //    'tunda'      => json_encode($tunda),
-          //    'on'         => strtotime($dateon),
-          //    'off'        => strtotime($dateoff),
-          //    'dd'         => $row[22],
-          //    'ket'        => $row[23],
-          //    'kurs'       => $row[24]
-          //  ]);
-          echo $data['isinya'];
+          DB::table('tb_dls')->insert([
+             'ppjk'       => $row[1],
+             'agens_id'   => $agen->id,
+             'date'       => strtotime($date),
+             'kapals_id'  => $kapal->id,
+             'jetty_id'   => $dermaga->id,
+             'ops'        => $row[12],
+             'bapp'       => $row[13],
+             'pc'         => $row[14],
+             'tunda'      => json_encode($tunda),
+             'tundaon'    => strtotime($dateon),
+             'tundaoff'   => strtotime($dateoff),
+             'dd'         => $row[22],
+             'ket'        => $row[23],
+             'kurs'       => $row[24]
+           ]);
+          // echo $data['isinya'];
         }
         //return
       break;

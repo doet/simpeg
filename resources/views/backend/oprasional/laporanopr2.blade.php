@@ -43,156 +43,156 @@
 @endsection
 
 @section('content')
-<div id="modal" class="modal fade" tabindex="-1">
-	<div class="modal-dialog">
-			<div class="modal-content">
-				<!-- 01 Header -->
-				<form id="form">
-					<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h3 class="smaller lighter blue no-margin">Form Laporan </h3>
-					</div>
-					<!-- 01 end heder -->
-					<!-- 02 body -->
-					<div class="modal-body">
-						{{ csrf_field() }}
-						<!-- <input type="hidden" name="datatb" value="keluarga" />
-						<input type="hidden" id='oper-1' name="oper" value="add" />
-						<input type="hidden" id='id-1' name="id" value="id" /> -->
-						<div class="row">
-							<div class="col-xs-12 col-sm-6">
-
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PPJK</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="ppjk" name="ppjk"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Agen</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="agen" name="agen"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Date</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-8" type="text" id="date" name="date"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kapal</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm" type="text" id="kapal" name="kapal"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Dermaga</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix">
-												<select id="dermaga" name="dermaga" class="chosen-select" data-placeholder="Pilih Nama ..." >
-													<option></option>
-												</select>
-											</div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">ops</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix">
-												<select id="ops" name="ops" class="chosen-select" data-placeholder="Pilih Nama ..." >
-													<option ></option>
-													<option value="Berth">Berth</option>
-													<option value="Unberth">Unberth</option>
-												</select>
-											</div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">BAPP</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="bapp" name="bapp"></div>
-										</div>
-									</div><div class="space-2"></div>
-
-
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-6">
-
-								<div class="row">
-
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PC</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="pc" name="pc"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">On/Off</label>
-										<div class="col-xs-12 col-sm-9">
-												<div class="clearfix"><input class="input-sm" type="text" name="pcdate" id="pcdate" /></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tunda</label>
-										<div class="col-xs-12 col-sm-9">
-												<select id="tunda" class="multiselect" multiple="">
-														<option value="GB">GB</option>
-														<option value="GC">GC</option>
-														<option value="GS">GS</option>
-														<option value="MV">MV</option>
-														<option value="MG">MG</option>
-												</select>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">On/Off</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm" type="text" id="tundadate" name="tundadate"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">DD</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="dd" name="dd"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Ket</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm" type="text" id="ket" name="ket"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kurs</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="kurs" name="kurs"></div>
-										</div>
-									</div><div class="space-2"></div>
-
-								</div>
-
-							</div>
+	<div id="modal" class="modal fade" tabindex="-1">
+		<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- 01 Header -->
+					<form id="form">
+						<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h3 class="smaller lighter blue no-margin">Form Laporan </h3>
 						</div>
+						<!-- 01 end heder -->
+						<!-- 02 body -->
+						<div class="modal-body">
+							{{ csrf_field() }}
+							<!-- <input type="hidden" name="datatb" value="keluarga" />
+							<input type="hidden" id='oper-1' name="oper" value="add" />
+							<input type="hidden" id='id-1' name="id" value="id" /> -->
+							<div class="row">
+								<div class="col-xs-12 col-sm-6">
 
-					</div>
-					<!-- 02 end body -->
+									<div class="row">
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PPJK</label>
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="ppjk" name="ppjk"></div>
+											</div>
+										</div><div class="space-2"></div>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Agen</label>
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="agen" name="agen"></div>
+											</div>
+										</div><div class="space-2"></div>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Date</label>
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix"><input class="input-sm col-sm-8" type="text" id="date" name="date"></div>
+											</div>
+										</div><div class="space-2"></div>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kapal</label>
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix"><input class="input-sm" type="text" id="kapal" name="kapal"></div>
+											</div>
+										</div><div class="space-2"></div>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Dermaga</label>
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix">
+													<select id="dermaga" name="dermaga" class="chosen-select" data-placeholder="Pilih Nama ..." >
+														<option></option>
+													</select>
+												</div>
+											</div>
+										</div><div class="space-2"></div>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">ops</label>
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix">
+													<select id="ops" name="ops" class="chosen-select" data-placeholder="Pilih Nama ..." >
+														<option ></option>
+														<option value="Berth">Berth</option>
+														<option value="Unberth">Unberth</option>
+													</select>
+												</div>
+											</div>
+										</div><div class="space-2"></div>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">BAPP</label>
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="bapp" name="bapp"></div>
+											</div>
+										</div><div class="space-2"></div>
 
-					<!-- 03 footer -->
-					<div class="modal-footer">
-						<button class="btn btn-sm btn-danger pull-right" id='save'>
-								<i class="ace-icon fa fa-floppy-o"></i>Save
-						</button>
-						<button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
-								<i class="ace-icon fa fa-times"></i>Close
-						</button>
+
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-6">
+
+									<div class="row">
+
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PC</label>
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="pc" name="pc"></div>
+											</div>
+										</div><div class="space-2"></div>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">On/Off</label>
+											<div class="col-xs-12 col-sm-9">
+													<div class="clearfix"><input class="input-sm" type="text" name="pcdate" id="pcdate" /></div>
+											</div>
+										</div><div class="space-2"></div>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tunda</label>
+											<div class="col-xs-12 col-sm-9">
+													<select id="tunda" class="multiselect" multiple="">
+															<option value="GB">GB</option>
+															<option value="GC">GC</option>
+															<option value="GS">GS</option>
+															<option value="MV">MV</option>
+															<option value="MG">MG</option>
+													</select>
+											</div>
+										</div><div class="space-2"></div>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">On/Off</label>
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix"><input class="input-sm" type="text" id="tundadate" name="tundadate"></div>
+											</div>
+										</div><div class="space-2"></div>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">DD</label>
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="dd" name="dd"></div>
+											</div>
+										</div><div class="space-2"></div>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Ket</label>
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix"><input class="input-sm" type="text" id="ket" name="ket"></div>
+											</div>
+										</div><div class="space-2"></div>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kurs</label>
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="kurs" name="kurs"></div>
+											</div>
+										</div><div class="space-2"></div>
+
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+						<!-- 02 end body -->
+
+						<!-- 03 footer -->
+						<div class="modal-footer">
+							<button class="btn btn-sm btn-danger pull-right" id='save'>
+									<i class="ace-icon fa fa-floppy-o"></i>Save
+							</button>
+							<button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
+									<i class="ace-icon fa fa-times"></i>Close
+							</button>
+						</div>
+						<!-- 03 end footer Form -->
 					</div>
-					<!-- 03 end footer Form -->
 				</div>
-			</div>
-	</div><!-- /.modal-dialog -->
+		</div><!-- /.modal-dialog -->
 
 
 
@@ -205,39 +205,40 @@
 							<span class="editable" id="psdate"></span>
 					</div>
 					</br>
-					<form>
 
-					</form>
 					<form id="dompdf" role="form" method="POST" action="{{ url('oprasional/PDFAdmin') }}" target="_blank">
 						{!! csrf_field() !!}
-						<input name="page" value="" hidden/>
-						<input name="file" value="" hidden/>
-						<input name="start" value="" hidden/>
+						<input name="page" value="" />
+						<input name="file" value="" />
+						<input name="start" value="" />
+						<button type="submit" name="submit">submit</button>
 					</form>
 					<table id="grid-table"></table>
 
 					<div id="grid-pager"></div>
+
+
           <!-- PAGE CONTENT ENDS -->
         </div><!-- /.col -->
       </div><!-- /.row -->
 @endsection
 
 @section('js')
-	<script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 
-	<script src="{{ asset('/js/moment.min.js') }}"></script>
-	<script src="{{ asset('/js/bootstrap-datepicker.min.js') }}"></script>
-	<script src="{{ asset('/js/bootstrap-datetimepicker.min.js') }}"></script>
-	<script src="{{ asset('/js/daterangepicker.min.js') }}"></script>
+<script src="{{ asset('/js/moment.min.js') }}"></script>
+<script src="{{ asset('/js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script src="{{ asset('/js/daterangepicker.min.js') }}"></script>
 
-	<script src="{{ asset('js/jquery.jqGrid.min.js') }}"></script>
-	<script src="{{ asset('js/grid.locale-en.js') }}"></script>
+<script src="{{ asset('js/jquery.jqGrid.min.js') }}"></script>
+<script src="{{ asset('js/grid.locale-en.js') }}"></script>
 
-	<script src="{{ asset('js/bootstrap-multiselect.min.js') }}"></script>
-	<script src="{{ asset('/js/bootstrap-editable.min.js') }}"></script>
-	<script src="{{ asset('/js/ace-editable.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap-multiselect.min.js') }}"></script>
+<script src="{{ asset('/js/bootstrap-editable.min.js') }}"></script>
+<script src="{{ asset('/js/ace-editable.min.js') }}"></script>
 
-	<script src="{{ asset('/js/chosen.jquery.min.js') }}"></script>
+<script src="{{ asset('/js/chosen.jquery.min.js') }}"></script>
 
 <script type="text/javascript">
 
@@ -303,12 +304,6 @@
 			},
 		}).next().on(ace.click_event, function(){
 				$(this).prev().focus();
-		});
-
-		$('#on, #off').datetimepicker({
-				format: 'LT',
-				format: 'HH:mm',
-				date: nowdate,
 		});
 
 		$( "#agen" ).autocomplete({
@@ -643,9 +638,14 @@
 				onClickButton:function(){
 					// var data = $(this).jqGrid('getRowData'); Get all data
 
-					$('#dompdf input[name=page]').val('dl-dompdf');
-					$('#dompdf input[name=start]').val(setdate);
+					// $('#dompdf input[name=page]').val('dl-dompdf');
+					// $('#dompdf input[name=start]').val(setdate);
 					// console.log(setdate);
+					//
+					//
+					$('input[name=page]').val('dl-dompdf');
+					$('input[name=file]').val('dl-dompdf');
+					$('input[name=start]').val(setdate);
 
 					$('#dompdf').submit();
 				}
@@ -734,38 +734,38 @@
 					}
 				}
 		}).jqGrid('navButtonAdd',pager_selector,{
-			keys: true,
-			caption:"",
-			buttonicon:"ace-icon fa fa-plus-circle purple",
-			position:"first",
-			onClickButton:function(){
-				$('#form').trigger("reset");
-				$('#date').data("DateTimePicker").date(new Date(setdate));
+				keys: true,
+				caption:"",
+				buttonicon:"ace-icon fa fa-plus-circle purple",
+				position:"first",
+				onClickButton:function(){
+					$('#form').trigger("reset");
+					$('#date').data("DateTimePicker").date(new Date(setdate));
 
-				$('#pcdate, #tundadate').daterangepicker({
-					'applyClass' : 'btn-sm btn-success',
-					'cancelClass' : 'btn-sm btn-default',
-					"opens": "center",
-					timePicker: true,
-					timePicker24Hour: true,
-					startDate: moment().startOf('minute'),
-					endDate: moment().startOf('minute').add(1, 'minute'),
-					locale: {
-							applyLabel: 'Apply',
-							cancelLabel: 'Cancel',
-							format: 'DD/MM/YY HH:mm'
-					}
-				})
-				.prev().on(ace.click_event, function(){
-						$(this).next().focus();
-				});
-				// console.log(moment().startOf('minute'));
-				$('#dermaga, #ops').val('').trigger("chosen:updated");
-				$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
-				postsave ='';
-				postsave += 'oper=add&';
-				$('#modal').modal('show');
-			}
+					$('#pcdate, #tundadate').daterangepicker({
+						'applyClass' : 'btn-sm btn-success',
+						'cancelClass' : 'btn-sm btn-default',
+						"opens": "center",
+						timePicker: true,
+						timePicker24Hour: true,
+						startDate: moment().startOf('minute'),
+						endDate: moment().startOf('minute').add(1, 'minute'),
+						locale: {
+								applyLabel: 'Apply',
+								cancelLabel: 'Cancel',
+								format: 'DD/MM/YY HH:mm'
+						}
+					})
+					.prev().on(ace.click_event, function(){
+							$(this).next().focus();
+					});
+					// console.log(moment().startOf('minute'));
+					$('#dermaga, #ops').val('').trigger("chosen:updated");
+					$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
+					postsave ='';
+					postsave += 'oper=add&';
+					$('#modal').modal('show');
+				}
 		})
 
 

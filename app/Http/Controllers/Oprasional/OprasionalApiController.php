@@ -56,6 +56,8 @@ class OprasionalApiController extends Controller
           ->where('tb_dls.id', $id)
           ->get();
         foreach($query as $row) {
+          if ($row->pcon == '')$row->pcon = $row->date;
+          if ($row->pcoff == '')$row->pcoff = $row->date;
           $responce['ppjk']=$row->ppjk;
           $responce['agen']=$row->agenCode;
           $responce['date']=date("d-m-Y H:i",$row->date);
@@ -64,9 +66,11 @@ class OprasionalApiController extends Controller
           $responce['ops']=$row->ops;
           $responce['bapp']=$row->bapp;
           $responce['pc']=$row->pc;
+          $responce['pcon']=date("d/m/y H:i",$row->pcon);
+          $responce['pcoff']=date("d/m/y H:i",$row->pcoff);
           $responce['tunda']=json_decode($row->tunda);
-          $responce['on']=date("H:i",$row->on);
-          $responce['off']=date("H:i",$row->off);
+          $responce['tundaon']=date("d/m/y H:i",$row->tundaon);
+          $responce['tundaoff']=date("d/m/y H:i",$row->tundaoff);
           $responce['dd']=$row->dd;
           $responce['ket']=$row->ket;
           $responce['kurs']=$row->kurs;
@@ -168,7 +172,7 @@ class OprasionalApiController extends Controller
         if (!isset($kapal)){$kapal = '{"id":""}'; $kapal = json_decode($kapal);}
 
         $date = $request->input('date');
-        $d = explode(" ",$date);
+        // $d = explode(" ",$date);
 
         if($request->input('tunda') !== ''){
           $tunda = $request->input('tunda');
@@ -179,6 +183,14 @@ class OprasionalApiController extends Controller
           }
           $tunda = json_encode($tunda);
         }
+        $pcdate = str_replace('-', ',', $request->input('pcdate',''));
+        $pcdate = str_replace('/', '-', $pcdate);
+        $pcdate = explode(',',$pcdate);
+
+        $tundadate = str_replace('-', ',', $request->input('tundadate',''));
+        $tundadate = str_replace('/', '-', $tundadate);
+        $tundadate = explode(',',$tundadate);
+
 
         $datanya=array(
           'ppjk'=>$request->input('ppjk'),
@@ -189,9 +201,11 @@ class OprasionalApiController extends Controller
           'ops'=>$request->input('ops',''),
           'bapp'=>$request->input('bapp',''),
           'pc'=>$request->input('pc',''),
+          'pcon'=>strtotime($pcdate[0]),
+          'pcoff'=>strtotime($pcdate[1]),
           'tunda'=>$tunda,
-          'on'=>strtotime($d[0].' '.$request->input('on','')),
-          'off'=>strtotime($d[0].' '.$request->input('off','')),
+          'tundaon'=>strtotime($tundadate[0]),
+          'tundaoff'=>strtotime($tundadate[1]),
           'dd'=>$request->input('dd',''),
           'ket'=>$request->input('ket',''),
           'kurs'=>$request->input('kurs',''),
@@ -318,8 +332,8 @@ class OprasionalApiController extends Controller
               $row->bapp,
               $row->pc,
               $row->tunda,
-              date("H:i",$row->on),
-              date("H:i",$row->off),
+              date("H:i",$row->tundaon),
+              date("H:i",$row->tundaoff),
               $row->dd,
               $row->ket,
               $row->kurs,

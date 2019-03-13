@@ -62,16 +62,19 @@ class OprasionalController extends Controller
     return view('backend.oprasional.masteroper', compact('multilevel','aktif_menu'));
   }
 
+  public function mkapal(){
+    return view('backend.oprasional.submasterdata.mkapal');
+  }
   public function magen(){
       return view('backend.oprasional.submasterdata.magen');
+  }
+  public function mpc(){
+    return view('backend.oprasional.submasterdata.mpc');
   }
   public function mdermaga(){
       return view('backend.oprasional.submasterdata.mdermaga');
   }
-  public function mkapal(){
-      return view('backend.oprasional.submasterdata.mkapal');
-  }
-  public function mpc(){
-      return view('backend.oprasional.submasterdata.mpc');
+  public function mmooring(){
+      return view('backend.oprasional.submasterdata.mmooring');
   }
 }

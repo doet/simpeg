@@ -59,7 +59,7 @@ class PDFController extends Controller
         'tb_kapals.grt as kapalsGrt',
         'tb_kapals.loa as kapalsLoa',
         'tb_kapals.bendera as kapalsBendera',
-        'tb_jettys.value as jettyName',
+        'tb_jettys.name as jettyName',
         'tb_jettys.code as jettyCode',
         // 'tb_jettys.color as jettyColor',
         'tb_dls.*'

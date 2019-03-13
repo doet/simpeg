@@ -36,7 +36,7 @@
     })
 
     var master = jQuery(tabel).jqGrid({
-      caption: "Diagnosa Penyakit",
+      caption: "Agen",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
 			postData: {datatb:'magen',_token:'{{ csrf_token() }}'},
@@ -51,7 +51,7 @@
       sortname:'id',
       sortorder: 'desc',
       height: 250,
-      colNames:[' ', 'code','name','user'],
+      colNames:[' ', 'Call Sign','Name','Alamat','Penanggungjawab','Tlp','NPWP','KET'],
       colModel:[
         {name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false,
           // formatter:'actions',
@@ -63,9 +63,13 @@
           //   //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
           // }
         },
-				{name:'code',index:'code', width:200, editable: true},
-				{name:'name',index:'name', width:200, editable: true},
-				{name:'user',index:'user', width:200, editable: true},
+				{name:'code',index:'code', width:100, editable: true, align: 'center'},
+				{name:'name',index:'name', width:150, editable: true},
+				{name:'alamat',index:'alamat', width:200, editable: true},
+				{name:'user',index:'user', width:150, editable: true},
+				{name:'tlp',index:'tlp', width:100, editable: true},
+				{name:'npwp',index:'npwp', width:100, editable: true},
+				{name:'ket',index:'ket', width:300, editable: true},
       ],
 
       viewrecords : true,

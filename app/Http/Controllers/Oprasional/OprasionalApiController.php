@@ -49,7 +49,7 @@ class OprasionalApiController extends Controller
             'tb_kapals.grt as kapalsGrt',
             'tb_kapals.loa as kapalsLoa',
             'tb_kapals.bendera as kapalsBendera',
-            'tb_jettys.value as jettyName',
+            'tb_jettys.name as jettyName',
             // 'tb_jettys.color as jettyColor',
             'tb_dls.*'
           )
@@ -80,7 +80,7 @@ class OprasionalApiController extends Controller
         $query = DB::table('tb_jettys')
           ->get();
         foreach($query as $row) {
-          $responce[$row->id]=$row->value;
+          $responce[$row->id]=$row->name;
         }
       break;
     }
@@ -132,17 +132,17 @@ class OprasionalApiController extends Controller
         $cari = $request->input('cari');
         $query = DB::table('tb_jettys')
           // ->distinct('code')
-          ->where('value','like',$cari.'%')
-          ->orderBy('value', 'asc')
+          ->where('name','like',$cari.'%')
+          ->orderBy('name', 'asc')
           ->get();
         $i=0;
         $value_n='';
         foreach($query as $row) {
-          if ($row->value != $value_n){
+          if ($row->name != $value_n){
             // $responce[$i] = '('.$row->jenis.') '.$row->value;
-            $responce[$i] = $row->value;
+            $responce[$i] = $row->name;
             $i++;
-            $value_n=$row->value;
+            $value_n=$row->name;
           }
         }
         if(empty($responce))$responce[0]='Null';
@@ -244,12 +244,69 @@ class OprasionalApiController extends Controller
         $datanya=array(
           'code'=>$request->input('code',''),
           'name'=>$request->input('name',''),
+          'alamat'=>$request->input('alamat',''),
           'user'=>$request->input('user',''),
+          'tlp'=>$request->input('tlp',''),
+          'npwp'=>$request->input('npwp',''),
+          'ket'=>$request->input('ket',''),
         );
 
         if ($oper=='add')DB::table('tb_agens')->insert($datanya);
         if ($oper=='edit')DB::table('tb_agens')->where('id', $id)->update($datanya);
         if ($oper=='del')DB::table('tb_agens')->delete($id);
+
+        $responce = array(
+          'status' => $datanya,
+          //"suscces",
+          'msg' => 'ok',
+        );
+      break;
+      case 'mpc':
+        $datanya=array(
+          'code'=>$request->input('code',''),
+          'name'=>$request->input('name',''),
+        );
+
+        if ($oper=='add')DB::table('tb_pcs')->insert($datanya);
+        if ($oper=='edit')DB::table('tb_pcs')->where('id', $id)->update($datanya);
+        if ($oper=='del')DB::table('tb_pcs')->delete($id);
+
+        $responce = array(
+          'status' => $datanya,
+          //"suscces",
+          'msg' => 'ok',
+        );
+      break;
+      case 'mdermaga':
+        $datanya=array(
+          'code'=>$request->input('code',''),
+          'name'=>$request->input('name',''),
+          'ket'=>$request->input('ket',''),
+        );
+
+        if ($oper=='add')DB::table('tb_jettys')->insert($datanya);
+        if ($oper=='edit')DB::table('tb_jettys')->where('id', $id)->update($datanya);
+        if ($oper=='del')DB::table('tb_jettys')->delete($id);
+
+        $responce = array(
+          'status' => $datanya,
+          //"suscces",
+          'msg' => 'ok',
+        );
+      break;
+      case 'mmooring':
+        $datanya=array(
+          'code'=>$request->input('code',''),
+          'name'=>$request->input('name',''),
+          'alamat'=>$request->input('alamat',''),
+          'user'=>$request->input('user',''),
+          'tlp'=>$request->input('tlp',''),
+          'npwp'=>$request->input('npwp',''),
+        );
+
+        if ($oper=='add')DB::table('tb_moorings')->insert($datanya);
+        if ($oper=='edit')DB::table('tb_moorings')->where('id', $id)->update($datanya);
+        if ($oper=='del')DB::table('tb_moorings')->delete($id);
 
         $responce = array(
           'status' => $datanya,
@@ -299,7 +356,7 @@ class OprasionalApiController extends Controller
               'tb_kapals.grt as kapalsGrt',
               'tb_kapals.loa as kapalsLoa',
               'tb_kapals.bendera as kapalsBendera',
-              'tb_jettys.value as jettyName',
+              'tb_jettys.name as jettyName',
               'tb_jettys.code as jettyCode',
               // 'tb_jettys.color as jettyColor',
               'tb_dls.*'
@@ -310,6 +367,15 @@ class OprasionalApiController extends Controller
         break;
         case 'magen':
           $qu = DB::table('tb_agens');
+        break;
+        case 'mpc':
+          $qu = DB::table('tb_pcs');
+        break;
+        case 'mdermaga':
+          $qu = DB::table('tb_jettys');
+        break;
+        case 'mmooring':
+          $qu = DB::table('tb_moorings');
         break;
       }
       $count = $qu->count();
@@ -384,9 +450,46 @@ class OprasionalApiController extends Controller
               $row->id,
               $row->code,
               $row->name,
+              $row->alamat,
               $row->user,
-              // $row->grt,
-              // $row->loa,
+              $row->tlp,
+              $row->npwp,
+              $row->ket,
+            );
+            $i++;
+          break;
+          case 'mpc':   // Variabel Master
+            $responce['rows'][$i]['id'] = $row->id;
+            $responce['rows'][$i]['cell'] = array(
+              // $i+1,
+              $row->id,
+              $row->code,
+              $row->name,
+            );
+            $i++;
+          break;
+          case 'mdermaga':   // Variabel Master
+            $responce['rows'][$i]['id'] = $row->id;
+            $responce['rows'][$i]['cell'] = array(
+              // $i+1,
+              $row->id,
+              $row->code,
+              $row->name,
+              $row->ket,
+            );
+            $i++;
+          break;
+          case 'mmooring':   // Variabel Master
+            $responce['rows'][$i]['id'] = $row->id;
+            $responce['rows'][$i]['cell'] = array(
+              // $i+1,
+              $row->id,
+              $row->code,
+              $row->name,
+              $row->alamat,
+              $row->user,
+              $row->tlp,
+              $row->npwp,
             );
             $i++;
           break;

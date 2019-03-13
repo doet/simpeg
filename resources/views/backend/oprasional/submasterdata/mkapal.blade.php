@@ -36,7 +36,7 @@
     })
 
     var master = jQuery(tabel).jqGrid({
-      caption: "Diagnosa Penyakit",
+      caption: "Kapal",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
 			postData: {datatb:'mkapal',_token:'{{ csrf_token() }}'},

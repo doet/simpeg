@@ -59,6 +59,24 @@
                                     Agen
                                 </a>
                             </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#home" onclick="load('oprasional/mpc','#isi')">
+                                    <i class="green ace-icon fa fa-home bigger-120"></i>
+                                    PC
+                                </a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#home" onclick="load('oprasional/mdermaga','#isi')">
+                                    <i class="green ace-icon fa fa-home bigger-120"></i>
+                                    Dermaga
+                                </a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#home" onclick="load('oprasional/mmooring','#isi')">
+                                    <i class="green ace-icon fa fa-home bigger-120"></i>
+                                    Mooring
+                                </a>
+                            </li>
 
                         </ul>
 

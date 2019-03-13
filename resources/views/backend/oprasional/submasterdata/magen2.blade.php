@@ -47,12 +47,15 @@
 			sortname:'name',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:[' ', 'code','name','user'],
+			colNames:[' ', 'Call','Name','Alamat','PJ','Tlp','NPWP','KET'],
 			colModel:[
 				{name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false, align: 'center'},
-				{name:'code',index:'code', width:200, editable: true},
+				{name:'code',index:'code', width:50, editable: true},
 				{name:'name',index:'name', width:200, editable: true},
 				{name:'user',index:'user', width:200, editable: true},
+				{name:'tlp',index:'tlp', width:200, editable: true},
+				{name:'npwp',index:'npwp', width:200, editable: true},
+				{name:'ket',index:'ket', width:200, editable: true},
 			],
 
 			viewrecords : true,

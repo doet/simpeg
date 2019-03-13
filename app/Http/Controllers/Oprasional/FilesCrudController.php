@@ -167,7 +167,7 @@ class FilesCrudController extends Controller
 
           // dermaga
           $dermaga = DB::table('tb_jettys')->where(['code' => $row[10]])->first();
-          if(!$dermaga) $dermaga['id'] = DB::table('tb_jettys')->insertGetId(['code' => $row[10],'value' => $row[11]]); $dermaga = (object) $dermaga;
+          if(!$dermaga) $dermaga['id'] = DB::table('tb_jettys')->insertGetId(['code' => $row[10],'name' => $row[11]]); $dermaga = (object) $dermaga;
 
           $d1 = explode('/', $row[3]);
           if ($row[4]!='SHIFT')$d2 = $row[4];
@@ -286,7 +286,7 @@ class FilesCrudController extends Controller
             $query->where('date', '>', $start)
               ->Where('date', '<', $start+$day1);
         })
-        ->select('tb_jettys.value as jettyName','tb_jettys.color as jettyColor', 'tb_dls.*')
+        ->select('tb_jettys.name as jettyName','tb_jettys.color as jettyColor', 'tb_dls.*')
         ->get();
         $jty=0;
       foreach ($jetty as $row) {

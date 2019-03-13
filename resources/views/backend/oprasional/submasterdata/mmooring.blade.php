@@ -36,10 +36,10 @@
     })
 
     var master = jQuery(tabel).jqGrid({
-      caption: "PC",
+      caption: "Mooring",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
-			postData: {datatb:'mpc',_token:'{{ csrf_token() }}'},
+			postData: {datatb:'mmooring',_token:'{{ csrf_token() }}'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
       // serializeRowData:function(postdata,ids) {
@@ -51,7 +51,7 @@
       sortname:'id',
       sortorder: 'desc',
       height: 250,
-      colNames:[' ', 'Code','Name'],
+      colNames:[' ', 'Call Sign','Name','Alamat','Penanggungjawab','Tlp','NPWP'],
       colModel:[
         {name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false,
           // formatter:'actions',
@@ -64,7 +64,11 @@
           // }
         },
 				{name:'code',index:'code', width:100, editable: true, align: 'center'},
-				{name:'name',index:'name', width:500, editable: true}
+				{name:'name',index:'name', width:150, editable: true},
+				{name:'alamat',index:'alamat', width:200, editable: true},
+				{name:'user',index:'user', width:150, editable: true},
+				{name:'tlp',index:'tlp', width:100, editable: true},
+				{name:'npwp',index:'npwp', width:100, editable: true}
       ],
 
       viewrecords : true,
@@ -116,7 +120,7 @@
         style_edit_form(form);
       },
       onclickSubmit: function () {
-        return { datatb:'mpc', _token:'<?php echo csrf_token();?>'};
+        return { datatb:'mmooring', _token:'<?php echo csrf_token();?>'};
       }
     },{
       //new record form
@@ -130,7 +134,7 @@
         style_edit_form(form);
       },
       onclickSubmit: function () {
-        return { datatb:'mpc', _token:'<?php echo csrf_token();?>'};
+        return { datatb:'mmooring', _token:'<?php echo csrf_token();?>'};
       }
     },{
       //delete record form
@@ -145,7 +149,7 @@
         form.data('styled', true);
       },
       onclickSubmit: function () {
-        return { datatb:'mpc', _token:'<?php echo csrf_token();?>'};
+        return { datatb:'mmooring', _token:'<?php echo csrf_token();?>'};
       }
     },{
       //search form

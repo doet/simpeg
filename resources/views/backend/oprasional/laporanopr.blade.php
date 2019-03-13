@@ -470,12 +470,12 @@
 			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','Tunda','ON','OFF','DD','Ket','Kurs'],
 			colModel:[
 				{name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false, align: 'center'},
-				{name:'ppjk',index:'ppjk', width:50, sorttype:"int", editable: false},
-				{name:'agen',index:'agen',width:40, editable:false, align: 'center'},
-				{name:'date',index:'date', width:100,editable: false},
+				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
+				{name:'agen',index:'agen',width:45, editable:false, align: 'center'},
+				{name:'date',index:'date', width:120,editable: false},
 				{name:'kapal',index:'kapal', width:150, editable: false},
-				{name:'grt',index:'grt', width:60, editable: false},
-				{name:'loa',index:'loa', width:60, sortable:false},
+				{name:'grt',index:'grt', width:50, editable: false, align: 'right'},
+				{name:'loa',index:'loa', width:50, sortable:false, align: 'right'},
 				{name:'bendera',index:'bendera', width:80, editable: false},
         {name:'dermaga',index:'dermaga', width:100, editable: false},
         {name:'ops',index: 'ops', width: 60,editable: false, align: 'center'},
@@ -704,7 +704,7 @@
 									$(this).next().focus();
 							});
 
-							console.log();
+							// console.log();
 							$( "#kapal" ).val(data.kapal);
 
 							$('#dermaga').val(data.dermaga).trigger("chosen:updated");

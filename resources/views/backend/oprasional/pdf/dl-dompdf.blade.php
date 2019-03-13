@@ -80,6 +80,14 @@
                  background-color: #5373D1;
                  color: #FFFFFF;
             }
+            .kuning {
+                 background-color: #FFFF00;
+                 /* color: #FFFFFF; */
+            }
+            .ungu {
+                 background-color: #800080;
+                 color: #FFFFFF;
+            }
         </style>
     </head>
     <body style="font-family:'Arial', Helvetica, sans-serif ; font-size:12px;">
@@ -115,7 +123,7 @@
                     <td class="top right" rowspan="2" width='25px'>PC</td>
                     <td class="top right button" colspan="5">Kapal Tunda</td>
                     <td class="top right button" colspan="2">Waktu</td>
-                    <td class="top right" rowspan="2" width='35px'>DD</td>
+                    <td class="top right" rowspan="2" width='25px'>DD</td>
                     <td class="top right" rowspan="2">Ket</td>
                     <td class="top right" rowspan="2" width='20px'>Kurs</td>
                   </tr>
@@ -151,6 +159,9 @@
                       $classShift = 'blue';
                     }
 
+                    if (strpos($row->jettyCode,'S.')===0) $classJetty = 'kuning'; else $classJetty = '';
+                    if ($row->kurs == '$') $kurs = 'ungu'; else $kurs = '';
+
                     $tunda = json_decode($row->tunda);
                     if (in_array('GB', $tunda))$gb = 'GB';else $gb = '';
                     if (in_array('GC', $tunda))$gc = 'GC';else $gc = '';
@@ -158,33 +169,36 @@
                     if (in_array('MV', $tunda))$mv = 'MV';else $mv = '';
                     if (in_array('MG', $tunda))$mg = 'MG';else $mg = '';
 
+                    if ($row->kapalsJenis == '') $kapal =  $row->kapalsName; else $kapal = '('.$row->kapalsJenis.') '.$row->kapalsName;
+                    if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
+                    if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
 
                     echo '<tr>';
-                    echo '<td class="top right left">&nbsp;'.$i.'</td>';
+                    echo '<td class="top right left" align="center">&nbsp;'.$i.'</td>';
                     echo '<td class="top right" align="center">'.$ppjk.'</td>';
                     echo '<td class="top right" align="center">'.$row->agenCode.'</td>';
                     echo '<td class="top right" align="center">'.$date[0].'</td>';
                     echo '<td class="top right '.$classShift.'" align="center">'.$date[1].'</td>';
-                    echo '<td class="top right">&nbsp;'.'('.$row->kapalsJenis.') '.$row->kapalsName.'</td>';
-                    echo '<td class="top right">&nbsp;'.$row->kapalsGrt.'</td>';
-                    echo '<td class="top right">&nbsp;'.$row->kapalsLoa.'</td>';
+                    echo '<td class="top right">&nbsp;'.$kapal.'</td>';
+                    echo '<td class="top right" align="right">'.number_format($row->kapalsGrt).'&nbsp;</td>';
+                    echo '<td class="top right" align="right">'.number_format($row->kapalsLoa).'&nbsp;</td>';
                     echo '<td class="top right">&nbsp;'.$row->kapalsBendera.'</td>';
-                    echo '<td class="top right">&nbsp;'.'('. $row->jettyCode .')'.$row->jettyName.'</td>';
+                    echo '<td class="top right '.$classJetty.'">&nbsp;'.'('. $row->jettyCode .')'.$row->jettyName.'</td>';
                     echo '<td class="top right">&nbsp;'.$row->ops.'</td>';
                     echo '<td class="top right" align="center">'.$row->bapp.'</td>';
                     echo '<td class="top right" align="center">'.$row->pc.'</td>';
 
-                    echo '<td class="top right"  align="center">'.$gb.'</td>';
-                    echo '<td class="top right"  align="center">'.$gc.'</td>';
-                    echo '<td class="top right"  align="center">'.$gs.'</td>';
-                    echo '<td class="top right"  align="center"'.$mv.'</td>';
-                    echo '<td class="top right"  align="center"'.$mg.'</td>';
+                    echo '<td class="top right" align="center">'.$gb.'</td>';
+                    echo '<td class="top right" align="center">'.$gc.'</td>';
+                    echo '<td class="top right" align="center">'.$gs.'</td>';
+                    echo '<td class="top right" align="center"'.$mv.'</td>';
+                    echo '<td class="top right" align="center"'.$mg.'</td>';
 
-                    echo '<td class="top right" align="center">'.date("H:i",$row->tundaon).'</td>';
-                    echo '<td class="top right" align="center">'.date("H:i",$row->tundaoff).'</td>';
-                    echo '<td class="top right">&nbsp;'.$row->dd.'</td>';
+                    echo '<td class="top right" align="center">'.$tundaon.'</td>';
+                    echo '<td class="top right" align="center">'.$tundaoff.'</td>';
+                    echo '<td class="top right" align="center">'.$row->dd.'</td>';
                     echo '<td class="top right">&nbsp;'.$row->ket.'</td>';
-                    echo '<td class="top right" align="center">'.$row->kurs.'</td>';
+                    echo '<td class="top right '.$kurs.'" align="center">'.$row->kurs.'</td>';
                     echo '</tr>';
                     $i++;
                   }

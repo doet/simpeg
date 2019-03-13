@@ -259,13 +259,13 @@ class OprasionalApiController extends Controller
       switch ($datatb) {
         case 'dl':   // Vaariabel Master
           $qu = DB::table('tb_dls')
-            ->join('tb_agens', function ($join) {
+            ->leftJoin('tb_agens', function ($join) {
               $join->on('tb_dls.agens_id', '=', 'tb_agens.id');
             })
-            ->join('tb_kapals', function ($join) {
+            ->leftJoin('tb_kapals', function ($join) {
               $join->on('tb_dls.kapals_id', '=', 'tb_kapals.id');
             })
-            ->join('tb_jettys', function ($join) {
+            ->leftJoin('tb_jettys', function ($join) {
               $join->on('tb_dls.jetty_id', '=', 'tb_jettys.id');
             })
             ->where(function ($query) use ($mulai,$akhir){
@@ -317,23 +317,27 @@ class OprasionalApiController extends Controller
       foreach($query as $row) {
         switch ($datatb) {
           case 'dl':   // Variabel Master
+            if ($row->kapalsJenis == '') $kapal =  $row->kapalsName; else $kapal = '('.$row->kapalsJenis.') '.$row->kapalsName;
+            if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
+            if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
+
             $responce['rows'][$i]['id'] = $row->id;
             $responce['rows'][$i]['cell'] = array(
               $row->id,
               $row->ppjk,
               $row->agenCode,
               date("d-m-Y h:i",$row->date),
-              '('.$row->kapalsJenis.') '.$row->kapalsName,
-              $row->kapalsGrt,
-              $row->kapalsLoa,
+              $kapal,
+              number_format($row->kapalsGrt),
+              number_format($row->kapalsLoa),
               $row->kapalsBendera,
               '('. $row->jettyCode .')'.$row->jettyName,
               $row->ops,
               $row->bapp,
               $row->pc,
               $row->tunda,
-              date("H:i",$row->tundaon),
-              date("H:i",$row->tundaoff),
+              $tundaon,
+              $tundaoff,
               $row->dd,
               $row->ket,
               $row->kurs,

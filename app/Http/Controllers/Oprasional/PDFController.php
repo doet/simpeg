@@ -36,13 +36,13 @@ class PDFController extends Controller
     $sidx = $request->input('sidx', 'id');
 
     $result = DB::table('tb_dls')
-      ->join('tb_agens', function ($join) {
+      ->leftJoin('tb_agens', function ($join) {
         $join->on('tb_dls.agens_id', '=', 'tb_agens.id');
       })
-      ->join('tb_kapals', function ($join) {
+      ->leftJoin('tb_kapals', function ($join) {
         $join->on('tb_dls.kapals_id', '=', 'tb_kapals.id');
       })
-      ->join('tb_jettys', function ($join) {
+      ->leftJoin('tb_jettys', function ($join) {
         $join->on('tb_dls.jetty_id', '=', 'tb_jettys.id');
       })
       ->where(function ($query) use ($mulai,$akhir){

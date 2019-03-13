@@ -1,231 +1,5 @@
-@extends('backend.app_backend')
-
-@section('css')
-	<!-- page specific plugin styles -->
-	<link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}" />
-	<link href="{{ asset('/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
-	<link rel="stylesheet" href="{{ asset('css/ui.jqgrid.min.css') }}" />
-
-	<link href="{{ asset('/css/bootstrap-editable.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('css/bootstrap-multiselect.min.css') }}" rel="stylesheet">
-
-	<link href="{{ asset('/css/chosen.min.css') }}" rel="stylesheet">
-	<style>
-		.ui-autocomplete { position: absolute; cursor: default; z-index: 1100 !important;}
-	</style>
-@endsection
-
-@section('breadcrumb')
-		<div class="breadcrumbs ace-save-state" id="breadcrumbs">
-        <ul class="breadcrumb">
-            <li>
-                <i class="ace-icon fa fa-home home-icon"></i>
-                <a href="{{url('')}}">Home</a>
-            </li>
-
-            @foreach(array_reverse($aktif_menu) as $row)
-            <li>
-                {!!$row['nama']!!}
-            </li>
-            @endforeach
-        </ul><!-- /.breadcrumb -->
-        <div class="nav-search" id="nav-search">
-            <form class="form-search">
-                <span class="input-icon">
-                    <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-                    <i class="ace-icon fa fa-search nav-search-icon"></i>
-                </span>
-            </form>
-        </div><!-- /.nav-search -->
-    </div>
-@endsection
-
-@section('content')
-	<div id="modal" class="modal fade" tabindex="-1">
-	<div class="modal-dialog">
-			<div class="modal-content">
-				<!-- 01 Header -->
-				<form id="form">
-					<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h3 class="smaller lighter blue no-margin">Form Laporan </h3>
-					</div>
-					<!-- 01 end heder -->
-					<!-- 02 body -->
-					<div class="modal-body">
-						{{ csrf_field() }}
-						<!-- <input type="hidden" name="datatb" value="keluarga" />
-						<input type="hidden" id='oper-1' name="oper" value="add" />
-						<input type="hidden" id='id-1' name="id" value="id" /> -->
-						<div class="row">
-							<div class="col-xs-12 col-sm-6">
-
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PPJK</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="ppjk" name="ppjk"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Agen</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="agen" name="agen"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Date</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-8" type="text" id="date" name="date"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kapal</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm" type="text" id="kapal" name="kapal"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Dermaga</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix">
-												<select id="dermaga" name="dermaga" class="chosen-select" data-placeholder="Pilih Nama ..." >
-													<option></option>
-												</select>
-											</div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">ops</label>
-										<div class="col-xs-12 col-sm-6">
-											<div class="clearfix">
-												<select id="ops" name="ops" class="chosen-select" data-placeholder="Pilih Nama ..." >
-													<option ></option>
-													<option value="Berth">Berth</option>
-													<option value="Unberth">Unberth</option>
-												</select>
-											</div>
-										</div>
-									</div><div class="space-2"></div>
-								</div>
-
-							</div>
-							<div class="col-xs-12 col-sm-6">
-
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Bapp</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="bapp" name="bapp"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PC</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="pc" name="pc"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tunda</label>
-										<div class="col-xs-12 col-sm-9">
-												<select id="tunda" class="multiselect" multiple="">
-														<option value="GB">GB</option>
-														<option value="GC">GC</option>
-														<option value="GS">GS</option>
-														<option value="MV">MV</option>
-														<option value="MG">MG</option>
-												</select>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">On/Off</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="on" name="on"><span class="col-sm-2"> - </span><input class="input-sm col-sm-4" type="text" id="off" name="off"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">DD</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="dd" name="dd"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Ket</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm" type="text" id="ket" name="ket"></div>
-										</div>
-									</div><div class="space-2"></div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kurs</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="kurs" name="kurs"></div>
-										</div>
-									</div><div class="space-2"></div>
-								</div>
-
-							</div>
-						</div>
-
-					</div>
-					<!-- 02 end body -->
-
-					<!-- 03 footer -->
-					<div class="modal-footer">
-						<button class="btn btn-sm btn-danger pull-right" id='save'>
-								<i class="ace-icon fa fa-floppy-o"></i>Save
-						</button>
-						<button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
-								<i class="ace-icon fa fa-times"></i>Close
-						</button>
-					</div>
-					<!-- 03 end footer Form -->
-				</div>
-			</div>
-	</div><!-- /.modal-dialog -->
-
-
-
-
-      <div class="row">
-        <div class="col-xs-12">
-          <!-- PAGE CONTENT BEGINS -->
-
-					<div align="center">Kegiatan Operator<br />
-							<span class="editable" id="psdate"></span>
-					</div>
-					</br>
-					<form>
-
-					</form>
-					<form id="dompdf" role="form" method="POST" action="{{ url('oprasional/PDFAdmin') }}" target="_blank">
-						{!! csrf_field() !!}
-						<input name="page" value="" hidden/>
-						<input name="file" value="" hidden/>
-						<input name="start" value="" hidden/>
-					</form>
-					<table id="grid-table"></table>
-
-					<div id="grid-pager"></div>
-          <!-- PAGE CONTENT ENDS -->
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-@endsection
-
-@section('js')
-<script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
-
-<script src="{{ asset('/js/moment.min.js') }}"></script>
-<script src="{{ asset('/js/bootstrap-datepicker.min.js') }}"></script>
-<script src="{{ asset('/js/bootstrap-datetimepicker.min.js') }}"></script>
-<script src="{{ asset('js/jquery.jqGrid.min.js') }}"></script>
-<script src="{{ asset('js/grid.locale-en.js') }}"></script>
-
-<script src="{{ asset('js/bootstrap-multiselect.min.js') }}"></script>
-<script src="{{ asset('/js/bootstrap-editable.min.js') }}"></script>
-<script src="{{ asset('/js/ace-editable.min.js') }}"></script>
-
-<script src="{{ asset('/js/chosen.jquery.min.js') }}"></script>
+<table id="grid-table"></table>
+<div id="grid-pager"></div>
 
 <script type="text/javascript">
 	jQuery(function($) {
@@ -267,21 +41,18 @@
 			caption: "Data Kapal",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
-      postData: {datatb:'mkapal',_token:'{{ csrf_token() }}'},
+      postData: {datatb:'magen',_token:'{{ csrf_token() }}'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
-			sortname:'value',
+			sortname:'name',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:[' ', 'Kapal','Bendera','jenis','GRT','LOA',''],
+			colNames:[' ', 'code','name','user'],
 			colModel:[
 				{name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false, align: 'center'},
-				{name:'value',index:'value', width:150, editable: true},
-				{name:'bendera',index:'bendera', width:100, editable: true},
-				{name:'jenis',index:'jenis', width:80, editable: true},
-				{name:'grt',index:'grt', width:60, editable: true},
-				{name:'loa',index:'loa', width:60, editable: true},
-				{name:'x',index:'x', width:100, editable: false},
+				{name:'code',index:'code', width:200, editable: true},
+				{name:'name',index:'name', width:200, editable: true},
+				{name:'user',index:'user', width:200, editable: true},
 			],
 
 			viewrecords : true,
@@ -562,5 +333,3 @@
 		});
 	});
 </script>
-
-@endsection

@@ -240,6 +240,23 @@ class OprasionalApiController extends Controller
           'msg' => 'ok',
         );
       break;
+      case 'magen':
+        $datanya=array(
+          'code'=>$request->input('code',''),
+          'name'=>$request->input('name',''),
+          'user'=>$request->input('user',''),
+        );
+
+        if ($oper=='add')DB::table('tb_agens')->insert($datanya);
+        if ($oper=='edit')DB::table('tb_agens')->where('id', $id)->update($datanya);
+        if ($oper=='del')DB::table('tb_agens')->delete($id);
+
+        $responce = array(
+          'status' => $datanya,
+          //"suscces",
+          'msg' => 'ok',
+        );
+      break;
     }
 
     return  Response()->json($responce);
@@ -290,6 +307,9 @@ class OprasionalApiController extends Controller
         break;
         case 'mkapal':
           $qu = DB::table('tb_kapals');
+        break;
+        case 'magen':
+          $qu = DB::table('tb_agens');
         break;
       }
       $count = $qu->count();
@@ -347,12 +367,26 @@ class OprasionalApiController extends Controller
           case 'mkapal':   // Variabel Master
             $responce['rows'][$i]['id'] = $row->id;
             $responce['rows'][$i]['cell'] = array(
-              $i+1,
+              // $i+1,
+              $row->id,
               $row->value,
               $row->bendera,
               $row->jenis,
               $row->grt,
               $row->loa,
+            );
+            $i++;
+          break;
+          case 'magen':   // Variabel Master
+            $responce['rows'][$i]['id'] = $row->id;
+            $responce['rows'][$i]['cell'] = array(
+              // $i+1,
+              $row->id,
+              $row->code,
+              $row->name,
+              $row->user,
+              // $row->grt,
+              // $row->loa,
             );
             $i++;
           break;

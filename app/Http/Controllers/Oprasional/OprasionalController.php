@@ -54,12 +54,24 @@ class OprasionalController extends Controller
     $aktif_menu = menuadmins::aktif_menu($index['id']);
     return view('backend.oprasional.chart', compact('multilevel','aktif_menu'));
   }
-  public function mkapal()
+  public function masteroper()
   {
     $multilevel = menuadmins::get_data();
-    $index      = menuadmins::where('part','oprasional\mkapal')->first();
+    $index      = menuadmins::where('part','oprasional\masteroper')->first();
     $aktif_menu = menuadmins::aktif_menu($index['id']);
-    return view('backend.oprasional.mkapal', compact('multilevel','aktif_menu'));
+    return view('backend.oprasional.masteroper', compact('multilevel','aktif_menu'));
   }
 
+  public function magen(){
+      return view('backend.oprasional.submasterdata.magen');
+  }
+  public function mdermaga(){
+      return view('backend.oprasional.submasterdata.mdermaga');
+  }
+  public function mkapal(){
+      return view('backend.oprasional.submasterdata.mkapal');
+  }
+  public function mpc(){
+      return view('backend.oprasional.submasterdata.mpc');
+  }
 }

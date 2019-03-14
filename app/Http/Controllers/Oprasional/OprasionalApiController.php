@@ -431,6 +431,8 @@ class OprasionalApiController extends Controller
             $i++;
           break;
           case 'mkapal':   // Variabel Master
+            if (is_numeric($row->grt))$grt =  number_format($row->grt); else $grt = $row->grt;
+            if (is_numeric($row->loa))$loa =  number_format($row->loa); else $loa = $row->loa;
             $responce['rows'][$i]['id'] = $row->id;
             $responce['rows'][$i]['cell'] = array(
               // $i+1,
@@ -438,8 +440,8 @@ class OprasionalApiController extends Controller
               $row->value,
               $row->bendera,
               $row->jenis,
-              $row->grt,
-              $row->loa,
+              $grt,
+              $loa
             );
             $i++;
           break;

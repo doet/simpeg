@@ -407,6 +407,9 @@ class OprasionalApiController extends Controller
             if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
             if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
 
+            if (is_numeric($row->kapalsGrt))$grt =  number_format($row->kapalsGrt); else $grt = $row->kapalsGrt;
+            if (is_numeric($row->kapalsLoa))$loa =  number_format($row->kapalsLoa); else $loa = $row->kapalsLoa;
+
             $responce['rows'][$i]['id'] = $row->id;
             $responce['rows'][$i]['cell'] = array(
               $row->id,
@@ -414,8 +417,8 @@ class OprasionalApiController extends Controller
               $row->agenCode,
               date("d-m-Y H:i",$row->date),
               $kapal,
-              number_format($row->kapalsGrt),
-              number_format($row->kapalsLoa),
+              $grt,
+              $loa,
               $row->kapalsBendera,
               '('. $row->jettyCode .')'.$row->jettyName,
               $row->ops,

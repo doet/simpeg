@@ -159,6 +159,7 @@ class OprasionalApiController extends Controller
     switch ($datatb) {
       case 'dl':
 
+
         $agen = DB::table('tb_agens')
           ->where(function ($query) use ($request){
               $query->where('code',$request->input('agen'));
@@ -183,40 +184,42 @@ class OprasionalApiController extends Controller
           }
           $tunda = json_encode($tunda);
         }
-        $pcdate = str_replace('-', ',', $request->input('pcdate',''));
-        $pcdate = str_replace('/', '-', $pcdate);
-        $pcdate = explode(',',$pcdate);
 
-        $tundadate = str_replace('-', ',', $request->input('tundadate',''));
-        $tundadate = str_replace('/', '-', $tundadate);
-        $tundadate = explode(',',$tundadate);
+        if ($oper!='del'){
+          $pcdate = str_replace('-', ',', $request->input('pcdate',''));
+          $pcdate = str_replace('/', '-', $pcdate);
+          $pcdate = explode(',',$pcdate);
 
+          $tundadate = str_replace('-', ',', $request->input('tundadate',''));
+          $tundadate = str_replace('/', '-', $tundadate);
+          $tundadate = explode(',',$tundadate);
 
-        $datanya=array(
-          'ppjk'=>$request->input('ppjk'),
-          'agens_id'=>$agen->id,
-          'date'=>strtotime($date),
-          'kapals_id'=>$kapal->id,
-          'jetty_id'=>$request->input('dermaga',''),
-          'ops'=>$request->input('ops',''),
-          'bapp'=>$request->input('bapp',''),
-          'pc'=>$request->input('pc',''),
-          'pcon'=>strtotime($pcdate[0]),
-          'pcoff'=>strtotime($pcdate[1]),
-          'tunda'=>$tunda,
-          'tundaon'=>strtotime($tundadate[0]),
-          'tundaoff'=>strtotime($tundadate[1]),
-          'dd'=>$request->input('dd',''),
-          'ket'=>$request->input('ket',''),
-          'kurs'=>$request->input('kurs',''),
-        );
+          $datanya=array(
+            'ppjk'=>$request->input('ppjk'),
+            'agens_id'=>$agen->id,
+            'date'=>strtotime($date),
+            'kapals_id'=>$kapal->id,
+            'jetty_id'=>$request->input('dermaga',''),
+            'ops'=>$request->input('ops',''),
+            'bapp'=>$request->input('bapp',''),
+            'pc'=>$request->input('pc',''),
+            'pcon'=>strtotime($pcdate[0]),
+            'pcoff'=>strtotime($pcdate[1]),
+            'tunda'=>$tunda,
+            'tundaon'=>strtotime($tundadate[0]),
+            'tundaoff'=>strtotime($tundadate[1]),
+            'dd'=>$request->input('dd',''),
+            'ket'=>$request->input('ket',''),
+            'kurs'=>$request->input('kurs',''),
+          );
+        }
 
         if ($oper=='add')DB::table('tb_dls')->insert($datanya);
         if ($oper=='edit')DB::table('tb_dls')->where('id', $id)->update($datanya);
         if ($oper=='del')DB::table('tb_dls')->delete($id);
 
         $responce = array(
-          'status' => $datanya,
+          'status' => $id,
           //"suscces",
           'msg' => 'ok',
         );

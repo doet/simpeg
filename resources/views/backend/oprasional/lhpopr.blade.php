@@ -50,7 +50,7 @@
 				<form id="form">
 					<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h3 class="smaller lighter blue no-margin">Form Laporan </h3>
+							<h3 class="smaller lighter blue no-margin">Selec </h3>
 					</div>
 					<!-- 01 end heder -->
 					<!-- 02 body -->
@@ -62,14 +62,7 @@
 						<div class="row">
 							<div class="col-xs-12 col-sm-6">
 
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PPJK</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="ppjk" name="ppjk"></div>
-										</div>
-									</div><div class="space-2"></div>
-								</div>
+
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Agen</label>
@@ -97,7 +90,7 @@
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Dermaga</label>
-										<div class="col-xs-12 col-sm-6">
+										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix">
 												<select id="dermaga" name="dermaga" class="chosen-select" data-placeholder="Pilih Nama ..." >
 													<option></option>
@@ -109,7 +102,7 @@
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">ops</label>
-										<div class="col-xs-12 col-sm-4">
+										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix">
 												<select id="ops" name="ops" class="chosen-select" data-placeholder="Pilih Nama ..." >
 													<option ></option>
@@ -127,12 +120,13 @@
 											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="bapp" name="bapp"></div>
 										</div>
 									</div><div class="space-2"></div>
+
+
 								</div>
 							</div>
 							<div class="col-xs-12 col-sm-6">
 
 								<div class="row">
-
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PC</label>
 										<div class="col-xs-12 col-sm-9">
@@ -222,19 +216,29 @@
         <div class="col-xs-12">
           <!-- PAGE CONTENT BEGINS -->
 
-					<div align="center">Kegiatan Operator<br />
+					<div align="center">L H P<br />
 							<span class="editable" id="psdate"></span>
 					</div>
 					</br>
-					<form>
-
-					</form>
 					<form id="dompdf" role="form" method="POST" action="{{ url('oprasional/PDFAdmin') }}" target="_blank">
 						{!! csrf_field() !!}
 						<input name="page" value="" hidden/>
 						<input name="file" value="" hidden/>
 						<input name="start" value="" hidden/>
 					</form>
+					<div class="row">
+						<div class="col-xs-12 col-sm-3">
+							<div class="form-group">
+								<label class="control-label col-xs-12 col-sm-3 no-padding-right">List</label>
+
+								<div class="col-xs-12 col-sm-9">
+									<select id="ppjk" class="multiselect" multiple="">
+										<option value=""></option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</diV>
 
 					<table id="grid-table"></table>
 
@@ -263,29 +267,9 @@
 
 <script type="text/javascript">
 
-	var nowdate = new Date();
-	var monthStartDay = new Date(nowdate.getFullYear(), nowdate.getMonth(), 1);
-	var monthEndDay = new Date(nowdate.getFullYear(), nowdate.getMonth() + 1, 0);
-	var setdate = formatDate(nowdate);
-
-	function formatDate(date) {
-	  var monthNames = [
-	    "January", "February", "March",
-	    "April", "May", "June", "July",
-	    "August", "September", "October",
-	    "November", "December"
-	  ];
-
-	  var day = date.getDate();
-	  var monthIndex = date.getMonth();
-	  var year = date.getFullYear();
-
-	  return day + ' ' + monthNames[monthIndex] + ' ' + year;
-	}
-
 	jQuery(function($) {
-
-		$('#psdate').html(formatDate(nowdate));
+		var setdate = moment().format('D MMMM YYYY');
+		$('#psdate').html(moment().format('D MMMM YYYY'));
 		//editables on first profile page
     $.fn.editable.defaults.mode = 'inline';
     $.fn.editableform.loading = "<div class='editableform-loading'><i class='ace-icon fa fa-spinner fa-spin fa-2x light-blue'></i></div>";
@@ -307,11 +291,12 @@
         $(grid_selector).jqGrid('setGridParam',{postData:{start:params.newValue}}).trigger("reloadGrid");
         // $('input[name="start"]').val(params.newValue);
         setdate = params.newValue;
+				get_ppjk(setdate);
     });
 
 		if(!ace.vars['old_ie']) $('#date').datetimepicker({
 			format: 'DD-MM-YYYY HH:mm',//use this option to display seconds
-			date: nowdate,
+			date: moment().format('DD MMMM YYYY'),
 			icons: {
 				time: 'fa fa-clock-o',
 				date: 'fa fa-calendar',
@@ -327,47 +312,6 @@
 				$(this).prev().focus();
 		});
 
-		$('#on, #off').datetimepicker({
-				format: 'LT',
-				format: 'HH:mm',
-				date: nowdate,
-		});
-
-		$( "#agen" ).autocomplete({
-			source: function( request, response ) {
-				var postcar= {'datatb':'agen', cari: request.term, _token:'{{ csrf_token() }}'};
-				getparameter("{{url('/api/oprasional/autoc')}}",postcar,function(data){
-					response( $.map( data, function( item ) {
-						return {
-							label: item,
-							value: item
-						}
-					}));
-				},function(data){
-					//be4 send
-				});
-			},
-			autoFocus: true,
-			minLength: 0
-		});
-		//
-		$( "#kapal" ).autocomplete({
-			source: function( request, response ) {
-				var postcar= {'datatb':'kapal', cari: request.term, _token:'{{ csrf_token() }}'};
-				getparameter("{{url('/api/oprasional/autoc')}}",postcar,function(data){
-					response( $.map( data, function( item ) {
-						return {
-							label: item,
-							value: item
-						}
-					}));
-				},function(data){
-					//be4 send
-				});
-			},
-			autoFocus: true,
-			minLength: 0
-		});
 
 		if(!ace.vars['touch']) {
 			$('.chosen-select').chosen({
@@ -400,21 +344,11 @@
 			});
 		};
 
-		var posdata= {'datatb':'dermaga', _token:'{{ csrf_token() }}'};
-		var $select_elem = $("#dermaga");
-		$select_elem.empty();
-		getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
-	    $.each(data, function (idx, obj) {
-	    	$select_elem.append('<option value="'+idx+'">'+obj+'</option>');
-	    });
-			$select_elem.val('').trigger("chosen:updated");
-		},function(data){});
-
 		$('.multiselect').multiselect({
-		 enableFiltering: false,
-		 enableHTML: true,
-		 buttonClass: 'btn btn-white btn-primary',
-		 templates: {
+			enableFiltering: true,
+			enableHTML: true,
+			buttonClass: 'btn btn-white btn-primary',
+			templates: {
 				button: '<button type="button" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-selected-text"></span> &nbsp;<b class="fa fa-caret-down"></b></button>',
 				ul: '<ul class="multiselect-container dropdown-menu"></ul>',
 				filter: '<li class="multiselect-item filter"><div class="input-group"><span class="input-group-addon"><i class="fa fa-search"></i></span><input class="form-control multiselect-search" type="text"></div></li>',
@@ -422,8 +356,34 @@
 				li: '<li><a tabindex="0"><label></label></a></li>',
 				divider: '<li class="multiselect-item divider"></li>',
 				liGroup: '<li class="multiselect-item multiselect-group"><label></label></li>'
-		 }
+			},
+			onChange: function(option, checked, select) {
+	    	console.log(option.val()+' - '+checked);
+				postsave = {datatb:'lhp',ppjk:option.val(),checked:checked,lhp_date:setdate};
+				getparameter("{{url('/api/oprasional/cud')}}",postsave,	function(data){
+					console.log(setdate);
+					// $(grid_selector).jqGrid('setGridParam',{postData:{start:params.newValue}}).trigger("reloadGrid");
+					$(grid_selector).jqGrid('setGridParam',{postData:{start:setdate}}).trigger("reloadGrid");
+				},function(data){});
+	    }
 		});
+
+		function get_ppjk(setdate){
+			var posdata= {'datatb':'ppjk', _token:'{{ csrf_token() }}',lhp_date:setdate};
+			var $select_elem = $("#ppjk");
+			// $select_elem.empty();
+			$select_elem.html('');
+			getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
+				$.each(data.items, function (idx, obj) {
+					// $select_elem.append('<option value="'+idx+'" selected>'+obj+'</option>');
+					$select_elem.append('<option '+data.selected[idx]+' value="'+idx+'">'+obj+'</option>');
+				});
+				// console.log();
+				$select_elem.multiselect('rebuild');
+			},function(data){});
+		}
+
+		get_ppjk(setdate);
 
 		var postsave;
 		$('#save').click(function(e) {
@@ -483,13 +443,13 @@
 			caption: "Laporan",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
-      postData: {datatb:'dl',start:formatDate(nowdate),_token:'{{ csrf_token() }}'},
+      postData: {datatb:'lhp',start:setdate,_token:'{{ csrf_token() }}'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
 			sortname:'date',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','Tunda','ON','OFF','DD','Ket','Kurs'],
+			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','BSTDO'],
 			colModel:[
 				{name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false, align: 'center'},
 				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
@@ -508,7 +468,9 @@
         {name:'off',index:'off',width:40, editable: false},
         {name:'dd',index:'dd',width:40, editable: false},
         {name:'ket',index:'ket',width:100, editable: false},
-        {name:'kurs',index:'kurs',width:50, editable: false, align: 'center'}
+        {name:'kurs',index:'kurs',width:50, editable: false, align: 'center'},
+				{name:'lstp',index:'lstp',width:50, editable: false, align: 'center'},
+				{name:'bstdo',index:'bstdo',width:50, editable: false, align: 'center'}
 			],
 
 			viewrecords : true,
@@ -579,7 +541,7 @@
 				editicon : 'ace-icon fa fa-pencil blue',
 				add: false,
 				addicon : 'ace-icon fa fa-plus-circle purple',
-				del: true,
+				del: false,
 				delicon : 'ace-icon fa fa-trash-o red',
 				search: false,
 				searchicon : 'ace-icon fa fa-search orange',
@@ -657,138 +619,139 @@
 					form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
 				}
 			}
-		).jqGrid('navButtonAdd',pager_selector,{
-				keys: true,
-				caption:"DL",
-				buttonicon:"ace-icon fa fa-file-pdf-o orange",
-				position:"last",
-				onClickButton:function(){
-					// var data = $(this).jqGrid('getRowData'); Get all data
-
-					$('#dompdf input[name=page]').val('dl-dompdf');
-					$('#dompdf input[name=start]').val(setdate);
-					// console.log(setdate);
-
-					$('#dompdf').submit();
-				}
-		}).jqGrid('navButtonAdd',pager_selector,{
-				keys: true,
-				caption:"",
-				buttonicon:"ace-icon fa fa-pencil blue",
-				position:"first",
-				onClickButton:function(){
-					$('#form').trigger("reset");
-					$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
-
-					var gsr = $(this).jqGrid('getGridParam','selrow');
-					if(gsr){
-						var posdata= {'datatb':'loadlaporan','iddata':gsr};
-						getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
-							$('#ppjk').val(data.ppjk);
-
-							$( "#agen" ).val(data.agen);
-
-							$('#date').data("DateTimePicker").date(data.date);
-
-							$('#pcdate').daterangepicker({
-								'applyClass' : 'btn-sm btn-success',
-								'cancelClass' : 'btn-sm btn-default',
-								"opens": "center",
-								timePicker: true,
-								timePicker24Hour: true,
-								startDate: data.pcon,
-								endDate: data.pcoff,
-								locale: {
-										applyLabel: 'Apply',
-										cancelLabel: 'Cancel',
-										format: 'DD/MM/YY HH:mm'
-								}
-							})
-							.prev().on(ace.click_event, function(){
-									$(this).next().focus();
-							});
-
-							$('#tundadate').daterangepicker({
-								'applyClass' : 'btn-sm btn-success',
-								'cancelClass' : 'btn-sm btn-default',
-								"opens": "center",
-								timePicker: true,
-								timePicker24Hour: true,
-								startDate: data.tundaon,
-								endDate: data.tundaoff,
-								locale: {
-										applyLabel: 'Apply',
-										cancelLabel: 'Cancel',
-										format: 'DD/MM/YY HH:mm'
-								}
-							})
-							.prev().on(ace.click_event, function(){
-									$(this).next().focus();
-							});
-
-							// console.log();
-							$( "#kapal" ).val(data.kapal);
-
-							$('#dermaga').val(data.dermaga).trigger("chosen:updated");
-							$('#ops').val(data.ops).trigger("chosen:updated");
-
-							$('#bapp').val(data.bapp);
-							$('#pc').val(data.pc);
-
-							if (data.tunda != null) {
-								data.tunda.forEach(function(element) {
-									$('option[value="'+element+'"]', $('#tunda')).prop('selected', true);
-								});
-								$('#tunda').multiselect('refresh');
-							// console.log(data.tunda);
-							}
-							$('#dd').val(data.dd);
-							$('#ket').val(data.ket);
-							$('#kurs').val(data.kurs);
-
-							postsave ='';
-							postsave += 'oper=edit&id='+gsr+'&';
-						},function(data){ });
-
-						$('#modal').modal('show');
-					} else {
-						alert("pilih tabel")
-					}
-				}
-		}).jqGrid('navButtonAdd',pager_selector,{
-			keys: true,
-			caption:"",
-			buttonicon:"ace-icon fa fa-plus-circle purple",
-			position:"first",
-			onClickButton:function(){
-				$('#form').trigger("reset");
-				$('#date').data("DateTimePicker").date(new Date(setdate));
-
-				$('#pcdate, #tundadate').daterangepicker({
-					'applyClass' : 'btn-sm btn-success',
-					'cancelClass' : 'btn-sm btn-default',
-					"opens": "center",
-					timePicker: true,
-					timePicker24Hour: true,
-					startDate: moment().startOf('minute'),
-					endDate: moment().startOf('minute').add(1, 'minute'),
-					locale: {
-							applyLabel: 'Apply',
-							cancelLabel: 'Cancel',
-							format: 'DD/MM/YY HH:mm'
-					}
-				})
-				.prev().on(ace.click_event, function(){
-						$(this).next().focus();
-				});
-				// console.log(moment().startOf('minute'));
-				$('#dermaga, #ops').val('').trigger("chosen:updated");
-				$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
-				postsave ='';
-				postsave += 'oper=add&';
-				$('#modal').modal('show');
-			}
-		})
+		)
+		// .jqGrid('navButtonAdd',pager_selector,{
+		// 		keys: true,
+		// 		caption:"DL",
+		// 		buttonicon:"ace-icon fa fa-file-pdf-o orange",
+		// 		position:"last",
+		// 		onClickButton:function(){
+		// 			// var data = $(this).jqGrid('getRowData'); Get all data
+		//
+		// 			$('#dompdf input[name=page]').val('dl-dompdf');
+		// 			$('#dompdf input[name=start]').val(setdate);
+		// 			// console.log(setdate);
+		//
+		// 			$('#dompdf').submit();
+		// 		}
+		// }).jqGrid('navButtonAdd',pager_selector,{
+		// 		keys: true,
+		// 		caption:"",
+		// 		buttonicon:"ace-icon fa fa-pencil blue",
+		// 		position:"first",
+		// 		onClickButton:function(){
+		// 			$('#form').trigger("reset");
+		// 			$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
+		//
+		// 			var gsr = $(this).jqGrid('getGridParam','selrow');
+		// 			if(gsr){
+		// 				var posdata= {'datatb':'loadlaporan','iddata':gsr};
+		// 				getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
+		// 					$('#ppjk').val(data.ppjk);
+		//
+		// 					$( "#agen" ).val(data.agen);
+		//
+		// 					$('#date').data("DateTimePicker").date(data.date);
+		//
+		// 					$('#pcdate').daterangepicker({
+		// 						'applyClass' : 'btn-sm btn-success',
+		// 						'cancelClass' : 'btn-sm btn-default',
+		// 						"opens": "center",
+		// 						timePicker: true,
+		// 						timePicker24Hour: true,
+		// 						startDate: data.pcon,
+		// 						endDate: data.pcoff,
+		// 						locale: {
+		// 								applyLabel: 'Apply',
+		// 								cancelLabel: 'Cancel',
+		// 								format: 'DD/MM/YY HH:mm'
+		// 						}
+		// 					})
+		// 					.prev().on(ace.click_event, function(){
+		// 							$(this).next().focus();
+		// 					});
+		//
+		// 					$('#tundadate').daterangepicker({
+		// 						'applyClass' : 'btn-sm btn-success',
+		// 						'cancelClass' : 'btn-sm btn-default',
+		// 						"opens": "center",
+		// 						timePicker: true,
+		// 						timePicker24Hour: true,
+		// 						startDate: data.tundaon,
+		// 						endDate: data.tundaoff,
+		// 						locale: {
+		// 								applyLabel: 'Apply',
+		// 								cancelLabel: 'Cancel',
+		// 								format: 'DD/MM/YY HH:mm'
+		// 						}
+		// 					})
+		// 					.prev().on(ace.click_event, function(){
+		// 							$(this).next().focus();
+		// 					});
+		//
+		// 					// console.log();
+		// 					$( "#kapal" ).val(data.kapal);
+		//
+		// 					$('#dermaga').val(data.dermaga).trigger("chosen:updated");
+		// 					$('#ops').val(data.ops).trigger("chosen:updated");
+		//
+		// 					$('#bapp').val(data.bapp);
+		// 					$('#pc').val(data.pc);
+		//
+		// 					if (data.tunda != null) {
+		// 						data.tunda.forEach(function(element) {
+		// 							$('option[value="'+element+'"]', $('#tunda')).prop('selected', true);
+		// 						});
+		// 						$('#tunda').multiselect('refresh');
+		// 					// console.log(data.tunda);
+		// 					}
+		// 					$('#dd').val(data.dd);
+		// 					$('#ket').val(data.ket);
+		// 					$('#kurs').val(data.kurs);
+		//
+		// 					postsave ='';
+		// 					postsave += 'oper=edit&id='+gsr+'&';
+		// 				},function(data){ });
+		//
+		// 				$('#modal').modal('show');
+		// 			} else {
+		// 				alert("pilih tabel")
+		// 			}
+		// 		}
+		// }).jqGrid('navButtonAdd',pager_selector,{
+		// 	keys: true,
+		// 	caption:"",
+		// 	buttonicon:"ace-icon fa fa-plus-circle purple",
+		// 	position:"first",
+		// 	onClickButton:function(){
+		// 		$('#form').trigger("reset");
+		// 		$('#date').data("DateTimePicker").date(new Date(setdate));
+		//
+		// 		$('#pcdate, #tundadate').daterangepicker({
+		// 			'applyClass' : 'btn-sm btn-success',
+		// 			'cancelClass' : 'btn-sm btn-default',
+		// 			"opens": "center",
+		// 			timePicker: true,
+		// 			timePicker24Hour: true,
+		// 			startDate: moment().startOf('minute'),
+		// 			endDate: moment().startOf('minute').add(1, 'minute'),
+		// 			locale: {
+		// 					applyLabel: 'Apply',
+		// 					cancelLabel: 'Cancel',
+		// 					format: 'DD/MM/YY HH:mm'
+		// 			}
+		// 		})
+		// 		.prev().on(ace.click_event, function(){
+		// 				$(this).next().focus();
+		// 		});
+		// 		// console.log(moment().startOf('minute'));
+		// 		$('#dermaga, #ops').val('').trigger("chosen:updated");
+		// 		$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
+		// 		postsave ='';
+		// 		postsave += 'oper=add&';
+		// 		$('#modal').modal('show');
+		// 	}
+		// })
 
 
 

@@ -58,7 +58,8 @@ Route::prefix('papan')->group(function(){
 
 Route::prefix('oprasional')->group(function(){
   Route::get('/',             'Oprasional\OprasionalController@upload');
-  Route::get('/laporan',      'Oprasional\OprasionalController@laporan');
+  Route::get('/dl',           'Oprasional\OprasionalController@dl');
+  Route::get('/lhp',          'Oprasional\OprasionalController@lhp');
   Route::get('/upload',       'Oprasional\OprasionalController@upload');
   Route::get('/chart',        'Oprasional\OprasionalController@chart');
 

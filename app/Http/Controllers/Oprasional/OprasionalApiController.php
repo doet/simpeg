@@ -83,6 +83,26 @@ class OprasionalApiController extends Controller
           $responce[$row->id]=$row->name;
         }
       break;
+      case 'ppjk':
+        $lhp_date = $request->input('lhp_date', '');
+        $query = DB::table('tb_dls')
+          ->where(function ($query) use ($lhp_date){
+              $lhp_date = strtotime($lhp_date);
+              // $akhir = strtotime($akhir);
+              // if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
+              // $query->where('date', '>=', $mulai)
+              //   ->Where('date', '<=', $akhir);
+              $query->where('lhp_date','')
+                ->orWhere('lhp_date',$lhp_date)
+                ->orWhere('lhp_date',null);
+          })
+          ->get();
+        foreach($query as $row) {
+          $responce['items'][$row->ppjk]=$row->ppjk;
+          if ($row->lhp_date != '')$responce['selected'][$row->ppjk]='selected'; else $responce['selected'][$row->ppjk]='';
+        }
+        unset($responce['items'][null]);
+      break;
     }
     return  Response()->json($responce);
   }
@@ -317,6 +337,20 @@ class OprasionalApiController extends Controller
           'msg' => 'ok',
         );
       break;
+
+      case 'lhp':
+        if ($request->input('checked','') == 'true')$lhp = strtotime($request->input('lhp_date','')); else $lhp = '';
+        $datanya=array(
+          'lhp_date'=>$lhp,
+        );
+        DB::table('tb_dls')->where('ppjk', $request->input('ppjk',''))->update($datanya);
+
+        $responce = array(
+          'status' => $datanya,
+          //"suscces",
+          'msg' => 'ok',
+        );
+      break;
     }
 
     return  Response()->json($responce);
@@ -351,6 +385,41 @@ class OprasionalApiController extends Controller
                 if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
                 $query->where('date', '>=', $mulai)
                   ->Where('date', '<=', $akhir);
+            })
+            ->select(
+              'tb_agens.code as agenCode',
+              'tb_kapals.value as kapalsName',
+              'tb_kapals.jenis as kapalsJenis',
+              'tb_kapals.grt as kapalsGrt',
+              'tb_kapals.loa as kapalsLoa',
+              'tb_kapals.bendera as kapalsBendera',
+              'tb_jettys.name as jettyName',
+              'tb_jettys.code as jettyCode',
+              // 'tb_jettys.color as jettyColor',
+              'tb_dls.*'
+            );
+        break;
+        case 'lhp':   // Vaariabel Master
+          $qu = DB::table('tb_dls')
+            ->leftJoin('tb_agens', function ($join) {
+              $join->on('tb_dls.agens_id', '=', 'tb_agens.id');
+            })
+            ->leftJoin('tb_kapals', function ($join) {
+              $join->on('tb_dls.kapals_id', '=', 'tb_kapals.id');
+            })
+            ->leftJoin('tb_jettys', function ($join) {
+              $join->on('tb_dls.jetty_id', '=', 'tb_jettys.id');
+            })
+            ->where(function ($query) use ($mulai,$akhir){
+                $mulai = strtotime($mulai);
+                $akhir = strtotime($akhir);
+                // if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
+                // $query->where('date', '>=', $mulai)
+                //   ->Where('date', '<=', $akhir);
+
+                // $query->where('lhp_date', '!=', '');
+                $query->where('lhp_date', $mulai);
+
             })
             ->select(
               'tb_agens.code as agenCode',
@@ -406,6 +475,37 @@ class OprasionalApiController extends Controller
       foreach($query as $row) {
         switch ($datatb) {
           case 'dl':   // Variabel Master
+            if ($row->kapalsJenis == '') $kapal =  $row->kapalsName; else $kapal = '('.$row->kapalsJenis.') '.$row->kapalsName;
+            if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
+            if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
+
+            if (is_numeric($row->kapalsGrt))$grt =  number_format($row->kapalsGrt); else $grt = $row->kapalsGrt;
+            if (is_numeric($row->kapalsLoa))$loa =  number_format($row->kapalsLoa); else $loa = $row->kapalsLoa;
+
+            $responce['rows'][$i]['id'] = $row->id;
+            $responce['rows'][$i]['cell'] = array(
+              $row->id,
+              $row->ppjk,
+              $row->agenCode,
+              date("d-m-Y H:i",$row->date),
+              $kapal,
+              $grt,
+              $loa,
+              $row->kapalsBendera,
+              '('. $row->jettyCode .')'.$row->jettyName,
+              $row->ops,
+              $row->bapp,
+              $row->pc,
+              $row->tunda,
+              $tundaon,
+              $tundaoff,
+              $row->dd,
+              $row->ket,
+              $row->kurs,
+            );
+            $i++;
+          break;
+          case 'lhp':   // Variabel Master
             if ($row->kapalsJenis == '') $kapal =  $row->kapalsName; else $kapal = '('.$row->kapalsJenis.') '.$row->kapalsName;
             if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
             if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
@@ -503,6 +603,9 @@ class OprasionalApiController extends Controller
           break;
         }
       }
+      if(!isset($responce['rows']))$responce['rows'][0]['cell']=array('');
+      // print_r(empty($responce['rows']));
+      $responce['tambah'] = strtotime($mulai);
       return  Response()->json($responce);
   }
 }

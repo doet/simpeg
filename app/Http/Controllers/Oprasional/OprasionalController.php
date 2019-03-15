@@ -32,12 +32,19 @@ class OprasionalController extends Controller
   //   return view('backend.oprasional.uploadxls', compact('multilevel','aktif_menu'));
   // }
 
-  public function laporan()
+  public function dl()
   {
     $multilevel = menuadmins::get_data();
-    $index      = menuadmins::where('part','oprasional\laporan')->first();
+    $index      = menuadmins::where('part','oprasional\dl')->first();
     $aktif_menu = menuadmins::aktif_menu($index['id']);
     return view('backend.oprasional.laporanopr', compact('multilevel','aktif_menu'));
+  }
+  public function lhp()
+  {
+    $multilevel = menuadmins::get_data();
+    $index      = menuadmins::where('part','oprasional\lhp')->first();
+    $aktif_menu = menuadmins::aktif_menu($index['id']);
+    return view('backend.oprasional.lhpopr', compact('multilevel','aktif_menu'));
   }
 
   public function upload()

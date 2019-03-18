@@ -78,9 +78,17 @@ Route::prefix('oprasional')->group(function(){
   Route::match(['get', 'post'],   'Chart',	     	  		'Oprasional\FilesCrudController@chart');
 });
 
+Route::prefix('surat')->group(function(){
+  Route::get('/',             'Surat\SuratController@surat');
+  Route::get('/smasuk',       'Surat\SuratController@smasuk');
+
+});
+
 Route::prefix('inventaris')->group(function(){
   Route::get('/',             'Inventaris\InventarisController@index');
 });
+
+
 
 //Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('/', 'HomeController@index');

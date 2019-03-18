@@ -48,6 +48,13 @@ Route::prefix('papan')->group(function(){
   Route::post('/',           'Papan\PapanApiController@index');
 });
 
+Route::prefix('surat')->group(function(){
+  Route::post('/jqgrid',           'Surat\SuratApiController@jqgrid');
+  Route::post('/autoc',            'Surat\SuratApiController@autoc');
+  Route::post('/json',             'Surat\SuratApiController@json');
+  Route::post('/cud',              'Surat\SuratApiController@cud');
+});
+
 Route::prefix('oprasional')->group(function(){
   Route::post('/jqgrid',           'Oprasional\oprasionalApiController@jqgrid');
   Route::post('/autoc',            'Oprasional\oprasionalApiController@autoc');

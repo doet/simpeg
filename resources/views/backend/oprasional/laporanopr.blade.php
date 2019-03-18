@@ -211,9 +211,10 @@
 						</button>
 					</div>
 					<!-- 03 end footer Form -->
-				</div>
+				</form>
 			</div>
-	</div><!-- /.modal-dialog -->
+		</div>
+</div><!-- /.modal-dialog -->
 
 
 
@@ -226,9 +227,7 @@
 							<span class="editable" id="psdate"></span>
 					</div>
 					</br>
-					<form>
 
-					</form>
 					<form id="dompdf" role="form" method="POST" action="{{ url('oprasional/PDFAdmin') }}" target="_blank">
 						{!! csrf_field() !!}
 						<input name="page" value="" hidden/>

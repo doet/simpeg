@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Oprasional;
+namespace App\Http\Controllers\Surat;
 date_default_timezone_set('Asia/Jakarta');
 
 use App\Http\Requests;
@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Auth;
 
-class OprasionalApiController extends Controller
+class SuratApiController extends Controller
 {
   // /**
   //  * Create a new controller instance.
@@ -374,86 +374,8 @@ class OprasionalApiController extends Controller
       $mulai = $request->input('start', '0');
       $akhir = $request->input('end', '0');
       switch ($datatb) {
-        case 'dl':   // Vaariabel Master
-          $qu = DB::table('tb_dls')
-            ->leftJoin('tb_agens', function ($join) {
-              $join->on('tb_dls.agens_id', '=', 'tb_agens.id');
-            })
-            ->leftJoin('tb_kapals', function ($join) {
-              $join->on('tb_dls.kapals_id', '=', 'tb_kapals.id');
-            })
-            ->leftJoin('tb_jettys', function ($join) {
-              $join->on('tb_dls.jetty_id', '=', 'tb_jettys.id');
-            })
-            ->where(function ($query) use ($mulai,$akhir){
-                $mulai = strtotime($mulai);
-                $akhir = strtotime($akhir);
-                if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
-                $query->where('date', '>=', $mulai)
-                  ->Where('date', '<=', $akhir);
-            })
-            ->select(
-              'tb_agens.code as agenCode',
-              'tb_kapals.value as kapalsName',
-              'tb_kapals.jenis as kapalsJenis',
-              'tb_kapals.grt as kapalsGrt',
-              'tb_kapals.loa as kapalsLoa',
-              'tb_kapals.bendera as kapalsBendera',
-              'tb_jettys.name as jettyName',
-              'tb_jettys.code as jettyCode',
-              // 'tb_jettys.color as jettyColor',
-              'tb_dls.*'
-            );
-        break;
-        case 'lhp':   // Vaariabel Master
-          $qu = DB::table('tb_dls')
-            ->leftJoin('tb_agens', function ($join) {
-              $join->on('tb_dls.agens_id', '=', 'tb_agens.id');
-            })
-            ->leftJoin('tb_kapals', function ($join) {
-              $join->on('tb_dls.kapals_id', '=', 'tb_kapals.id');
-            })
-            ->leftJoin('tb_jettys', function ($join) {
-              $join->on('tb_dls.jetty_id', '=', 'tb_jettys.id');
-            })
-            ->where(function ($query) use ($mulai,$akhir){
-                $mulai = strtotime($mulai);
-                $akhir = strtotime($akhir);
-                // if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
-                // $query->where('date', '>=', $mulai)
-                //   ->Where('date', '<=', $akhir);
-
-                // $query->where('lhp_date', '!=', '');
-                $query->where('lhp_date', $mulai);
-
-            })
-            ->select(
-              'tb_agens.code as agenCode',
-              'tb_kapals.value as kapalsName',
-              'tb_kapals.jenis as kapalsJenis',
-              'tb_kapals.grt as kapalsGrt',
-              'tb_kapals.loa as kapalsLoa',
-              'tb_kapals.bendera as kapalsBendera',
-              'tb_jettys.name as jettyName',
-              'tb_jettys.code as jettyCode',
-              // 'tb_jettys.color as jettyColor',
-              'tb_dls.*'
-            );
-        break;
-        case 'mkapal':
-          $qu = DB::table('tb_kapals');
-        break;
-        case 'magen':
-          $qu = DB::table('tb_agens');
-        break;
-        case 'mpc':
-          $qu = DB::table('tb_pcs');
-        break;
-        case 'mdermaga':
-          $qu = DB::table('tb_jettys');
-        break;
-        case 'mmooring':
-          $qu = DB::table('tb_moorings');
+        case 'smasuk':
+          $qu = DB::table('tb_smasuk');
         break;
       }
       $count = $qu->count();
@@ -480,132 +402,21 @@ class OprasionalApiController extends Controller
       $i=0;
       foreach($query as $row) {
         switch ($datatb) {
-          case 'dl':   // Variabel Master
-            if ($row->kapalsJenis == '') $kapal =  $row->kapalsName; else $kapal = '('.$row->kapalsJenis.') '.$row->kapalsName;
-            if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
-            if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
+          case 'smasuk':   // Variabel Master
+            $responce['rows'][$i]['id'] = $row->id;
+            $responce['rows'][$i]['cell'] = array(
+              // $i+1,
+              $row->id,
+              $row->date,
+              $row->dari,
+              $row->perihal,
+              $row->ddari,
+              $row->duntuk,
+              $row->isi,
+              $row->lanjutan,
+              $row->file,
 
-            if (is_numeric($row->kapalsGrt))$grt =  number_format($row->kapalsGrt); else $grt = $row->kapalsGrt;
-            if (is_numeric($row->kapalsLoa))$loa =  number_format($row->kapalsLoa); else $loa = $row->kapalsLoa;
 
-            $responce['rows'][$i]['id'] = $row->id;
-            $responce['rows'][$i]['cell'] = array(
-              $row->id,
-              $row->ppjk,
-              $row->agenCode,
-              date("d-m-Y H:i",$row->date),
-              $kapal,
-              $grt,
-              $loa,
-              $row->kapalsBendera,
-              '('. $row->jettyCode .')'.$row->jettyName,
-              $row->ops,
-              $row->bapp,
-              $row->pc,
-              $row->tunda,
-              $tundaon,
-              $tundaoff,
-              $row->dd,
-              $row->ket,
-              $row->kurs,
-            );
-            $i++;
-          break;
-          case 'lhp':   // Variabel Master
-            if ($row->kapalsJenis == '') $kapal =  $row->kapalsName; else $kapal = '('.$row->kapalsJenis.') '.$row->kapalsName;
-            if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
-            if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
-
-            if (is_numeric($row->kapalsGrt))$grt =  number_format($row->kapalsGrt); else $grt = $row->kapalsGrt;
-            if (is_numeric($row->kapalsLoa))$loa =  number_format($row->kapalsLoa); else $loa = $row->kapalsLoa;
-
-            $responce['rows'][$i]['id'] = $row->id;
-            $responce['rows'][$i]['cell'] = array(
-              $row->id,
-              $row->ppjk,
-              $row->agenCode,
-              date("d-m-Y H:i",$row->date),
-              $kapal,
-              $grt,
-              $loa,
-              $row->kapalsBendera,
-              '('. $row->jettyCode .')'.$row->jettyName,
-              $row->ops,
-              $row->bapp,
-              $row->pc,
-              $row->tunda,
-              $tundaon,
-              $tundaoff,
-              $row->dd,
-              $row->ket,
-              $row->kurs,
-              $row->lstp,
-              $row->bstdo
-            );
-            $i++;
-          break;
-          case 'mkapal':   // Variabel Master
-            if (is_numeric($row->grt))$grt =  number_format($row->grt); else $grt = $row->grt;
-            if (is_numeric($row->loa))$loa =  number_format($row->loa); else $loa = $row->loa;
-            $responce['rows'][$i]['id'] = $row->id;
-            $responce['rows'][$i]['cell'] = array(
-              // $i+1,
-              $row->id,
-              $row->value,
-              $row->bendera,
-              $row->jenis,
-              $grt,
-              $loa
-            );
-            $i++;
-          break;
-          case 'magen':   // Variabel Master
-            $responce['rows'][$i]['id'] = $row->id;
-            $responce['rows'][$i]['cell'] = array(
-              // $i+1,
-              $row->id,
-              $row->code,
-              $row->name,
-              $row->alamat,
-              $row->user,
-              $row->tlp,
-              $row->npwp,
-              $row->ket,
-            );
-            $i++;
-          break;
-          case 'mpc':   // Variabel Master
-            $responce['rows'][$i]['id'] = $row->id;
-            $responce['rows'][$i]['cell'] = array(
-              // $i+1,
-              $row->id,
-              $row->code,
-              $row->name,
-            );
-            $i++;
-          break;
-          case 'mdermaga':   // Variabel Master
-            $responce['rows'][$i]['id'] = $row->id;
-            $responce['rows'][$i]['cell'] = array(
-              // $i+1,
-              $row->id,
-              $row->code,
-              $row->name,
-              $row->ket,
-            );
-            $i++;
-          break;
-          case 'mmooring':   // Variabel Master
-            $responce['rows'][$i]['id'] = $row->id;
-            $responce['rows'][$i]['cell'] = array(
-              // $i+1,
-              $row->id,
-              $row->code,
-              $row->name,
-              $row->alamat,
-              $row->user,
-              $row->tlp,
-              $row->npwp,
             );
             $i++;
           break;

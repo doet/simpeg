@@ -205,9 +205,10 @@
 						</button>
 					</div>
 					<!-- 03 end footer Form -->
-				</div>
+				</form>
 			</div>
-	</div><!-- /.modal-dialog -->
+		</div>
+</div><!-- /.modal-dialog -->
 
 
 
@@ -469,8 +470,8 @@
         {name:'dd',index:'dd',width:40, editable: false},
         {name:'ket',index:'ket',width:100, editable: false},
         {name:'kurs',index:'kurs',width:50, editable: false, align: 'center'},
-				{name:'lstp',index:'lstp',width:50, editable: false, align: 'center'},
-				{name:'bstdo',index:'bstdo',width:50, editable: false, align: 'center'}
+				{name:'lstp',index:'lstp',width:50, editable: true, align: 'center'},
+				{name:'bstdo',index:'bstdo',width:50, editable: true, align: 'center'}
 			],
 
 			viewrecords : true,
@@ -537,7 +538,7 @@
 		//navButtons
 		jQuery(grid_selector).jqGrid('navGrid',pager_selector,
 			{ 	//navbar options
-				edit: false,
+				edit: true,
 				editicon : 'ace-icon fa fa-pencil blue',
 				add: false,
 				addicon : 'ace-icon fa fa-plus-circle purple',
@@ -559,7 +560,10 @@
 					var form = $(e[0]);
 					form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
 					style_edit_form(form);
-				}
+				},
+				onclickSubmit: function () {
+		      return { datatb:'dl', _token:'<?php echo csrf_token();?>'};
+		    }
 			},
 			{
 				//new record form

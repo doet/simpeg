@@ -39,25 +39,26 @@
     </div>
 @endsection
 
-@section('content')                       <div class="row">
-        <div class="col-xs-12">
-            <!-- PAGE CONTENT BEGINS -->
-            <div class="content scrollbar-macosx">
-                <table class="table  table-bordered table-hover">
-                    <thead>
-                        <tr id="header">
-                        </tr>
+@section('content')
+  <div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <div class="content scrollbar-macosx">
+            <table class="table  table-bordered table-hover">
+                <thead>
+                    <tr id="header">
+                    </tr>
 
-                    </thead>
+                </thead>
 
-                    <tbody id="isinya">
-                    </tbody>
-                </table>
-            </div>
+                <tbody id="isinya">
+                </tbody>
+            </table>
+        </div>
 
-            <!-- PAGE CONTENT ENDS -->
-        </div><!-- /.col -->
-    </div><!-- /.row -->
+        <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+  </div><!-- /.row -->
 @endsection
 
 @section('js')

@@ -3,7 +3,7 @@
 	<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<!-- 01 Header -->
-				<!-- <form id="form"> -->
+				<form id="form">
 					<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 							<h3 class="smaller lighter blue no-margin">Form Surat Masuk </h3>
@@ -72,7 +72,7 @@
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-4 no-padding-right" for="comment">isi</label>
 										<div class="col-xs-12 col-sm-8">
-											<div class="clearfix"><input class="input-sm" type="text" id="isi" name="isi"></div>
+											<div class="clearfix"><input class="input-sm" type="text" id="disi" name="disi"></div>
 										</div>
 									</div>
 								</div>
@@ -82,7 +82,7 @@
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-4 no-padding-right" for="comment">Disposisi Lanjut</label>
 										<div class="col-xs-12 col-sm-8">
-											<div class="clearfix"><input class="input-sm" type="text" id="dlanjut" name="dlanjut"></div>
+											<div class="clearfix"><input class="input-sm" type="text" id="lanjutan" name="lanjutan"></div>
 										</div>
 									</div>
 								</div>
@@ -142,7 +142,7 @@
 					</div>
 					<!-- 03 end footer Form -->
 				</div>
-      <!-- </form> -->
+      </form>
 	</div>
 </div><!-- /.modal-dialog -->
 
@@ -171,9 +171,7 @@
         //dictRemoveFile: 'Remove',
 
         dictDefaultMessage :
-        '<span class="bigger-150 bolder"><i class="ace-icon fa fa-caret-right red"></i> Drop files</span> \
-        <br /> \
-        <i class="upload-icon ace-icon fa fa-cloud-upload blue fa-3x"></i>',
+        '<i class="upload-icon ace-icon fa fa-cloud-upload blue fa-3x"></i>',
 
         thumbnail: function(file, dataUrl) {
           if (file.previewElement) {
@@ -217,8 +215,27 @@
       alert('Dropzone.js does not support older browsers!');
     }
 
-
     $('#date').datepicker({format:'dd-mm-yyyy' , autoclose:true})
+
+    var postsave='';
+		$('#save').click(function(e) {
+			e.preventDefault();
+			postsave += $("#form").serialize()+'&datatb=smasuk';
+			console.log(postsave);
+			getparameter("{{url('/api/surat/cud')}}",postsave,	function(data){
+					var newHTML = '<i class="ace-icon fa fa-floppy-o"></i>Save';
+					$('#save').html(newHTML);
+    //
+					$('#form').trigger("reset");
+    //
+					$('#table').trigger("reloadGrid", [{current:true}]);
+					$('#modal').modal('hide');
+		// // 			// console.log(data);
+			},function(data){
+		// 			var newHTML = '<i class="ace-icon fa fa-spinner fa-spin "></i>Loading...';
+		// 			$('#save').html(newHTML);
+			});
+		});
 
     var tabel = "#table";
     var pager_tabel = "#pager";
@@ -394,6 +411,34 @@
           form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
         }
       }).jqGrid('navButtonAdd',pager_tabel,{
+  				keys: true,
+  				caption:"",
+  				buttonicon:"ace-icon fa fa-pencil blue",
+  				position:"first",
+  				onClickButton:function(){
+  					$('#form').trigger("reset");
+
+  					var gsr = $(this).jqGrid('getGridParam','selrow');
+  					if(gsr){
+  						var posdata= {'datatb':'smasuk','iddata':gsr};
+  						getparameter("{{url('/api/surat/json')}}",posdata,function(data){
+                $('#date').val(data.date);
+                $('#dari').val(data.dari);
+                $('#perihal').val(data.perihal);
+                $('#ddari').val(data.ddari);
+                $('#duntuk').val(data.duntuk);
+                $('#disi').val(data.isi);
+                $('#lanjutan').val(data.lanjutan);
+
+                postsave += 'oper=edit&id='+gsr+'&';
+  						},function(data){ });
+
+  						$('#modal').modal('show');
+  					} else {
+  						alert("pilih tabel")
+  					}
+  				}
+  		}).jqGrid('navButtonAdd',pager_tabel,{
   			keys: true,
   			caption:"",
   			buttonicon:"ace-icon fa fa-plus-circle purple",

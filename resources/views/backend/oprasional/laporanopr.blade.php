@@ -49,8 +49,8 @@
 				<!-- 01 Header -->
 				<form id="form">
 					<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h3 class="smaller lighter blue no-margin">Form Laporan </h3>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h3 class="smaller lighter blue no-margin">Form Laporan </h3>
 					</div>
 					<!-- 01 end heder -->
 					<!-- 02 body -->
@@ -68,86 +68,111 @@
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="ppjk" name="ppjk"></div>
 										</div>
-									</div><div class="space-2"></div>
+									</div>
 								</div>
+								<div class="space-2"></div>
+
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Agen</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="agen" name="agen"></div>
-										</div>
-									</div><div class="space-2"></div>
-								</div>
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Date</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-5" type="text" id="date" name="date"></div>
-										</div>
-									</div><div class="space-2"></div>
-								</div>
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kapal</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="kapal" name="kapal"></div>
-										</div>
-									</div><div class="space-2"></div>
-								</div>
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Dermaga</label>
-										<div class="col-xs-12 col-sm-6">
+										<div class="col-xs-12 col-sm-5">
 											<div class="clearfix">
-												<select id="dermaga" name="dermaga" class="chosen-select" data-placeholder="Pilih Nama ..." >
+												<select id="agen" name="agen" class="chosen-select" data-placeholder="Agen ..." >
 													<option></option>
 												</select>
 											</div>
 										</div>
-									</div><div class="space-2"></div>
+									</div>
 								</div>
+								<div class="space-2"></div>
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Date</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="date" name="date"></div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kapal</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix">
+												<select id="kapal" name="kapal" class="chosen-select" data-placeholder="Kapal ..." >
+													<option></option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Dermaga</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix">
+												<select id="dermaga" name="dermaga" class="chosen-select" data-placeholder="Dermaga ..." >
+													<option></option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">ops</label>
 										<div class="col-xs-12 col-sm-4">
 											<div class="clearfix">
-												<select id="ops" name="ops" class="chosen-select" data-placeholder="Pilih Nama ..." >
+												<select id="ops" name="ops" class="chosen-select" data-placeholder="Ops ..." >
 													<option ></option>
 													<option value="Berth">Berth</option>
 													<option value="Unberth">Unberth</option>
 												</select>
 											</div>
 										</div>
-									</div><div class="space-2"></div>
+									</div>
 								</div>
+								<div class="space-2"></div>
+
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">BAPP</label>
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="bapp" name="bapp"></div>
 										</div>
-									</div><div class="space-2"></div>
+									</div>
 								</div>
+								<div class="space-2"></div>
+
 							</div>
 							<div class="col-xs-12 col-sm-6">
 
 								<div class="row">
-
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PC</label>
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="pc" name="pc"></div>
 										</div>
-									</div><div class="space-2"></div>
+									</div>
 								</div>
+								<div class="space-2"></div>
+
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">On/Off</label>
 										<div class="col-xs-12 col-sm-9">
 												<div class="clearfix"><input class="input-sm col-sm-9" type="text" name="pcdate" id="pcdate" /></div>
 										</div>
-									</div><div class="space-2"></div>
+									</div>
 								</div>
+								<div class="space-2"></div>
+
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tunda</label>
@@ -160,40 +185,49 @@
 														<option value="MG">MG</option>
 												</select>
 										</div>
-									</div><div class="space-2"></div>
+									</div>
 								</div>
+								<div class="space-2"></div>
+
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">On/Off</label>
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="tundadate" name="tundadate"></div>
 										</div>
-									</div><div class="space-2"></div>
+									</div>
 								</div>
+								<div class="space-2"></div>
+
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">DD</label>
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="dd" name="dd"></div>
 										</div>
-									</div><div class="space-2"></div>
+									</div>
 								</div>
+								<div class="space-2"></div>
+
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Ket</label>
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix"><input class="input-sm" type="text" id="ket" name="ket"></div>
 										</div>
-									</div><div class="space-2"></div>
+									</div>
 								</div>
+								<div class="space-2"></div>
+
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kurs</label>
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="kurs" name="kurs"></div>
 										</div>
-									</div><div class="space-2"></div>
+									</div>
 								</div>
+								<div class="space-2"></div>
 
 							</div>
 						</div>
@@ -332,42 +366,6 @@
 				date: nowdate,
 		});
 
-		$( "#agen" ).autocomplete({
-			source: function( request, response ) {
-				var postcar= {'datatb':'agen', cari: request.term, _token:'{{ csrf_token() }}'};
-				getparameter("{{url('/api/oprasional/autoc')}}",postcar,function(data){
-					response( $.map( data, function( item ) {
-						return {
-							label: item,
-							value: item
-						}
-					}));
-				},function(data){
-					//be4 send
-				});
-			},
-			autoFocus: true,
-			minLength: 0
-		});
-		//
-		$( "#kapal" ).autocomplete({
-			source: function( request, response ) {
-				var postcar= {'datatb':'kapal', cari: request.term, _token:'{{ csrf_token() }}'};
-				getparameter("{{url('/api/oprasional/autoc')}}",postcar,function(data){
-					response( $.map( data, function( item ) {
-						return {
-							label: item,
-							value: item
-						}
-					}));
-				},function(data){
-					//be4 send
-				});
-			},
-			autoFocus: true,
-			minLength: 0
-		});
-
 		if(!ace.vars['touch']) {
 			$('.chosen-select').chosen({
 				allow_single_deselect:true,
@@ -399,14 +397,31 @@
 			});
 		};
 
-		var posdata= {'datatb':'dermaga', _token:'{{ csrf_token() }}'};
-		var $select_elem = $("#dermaga");
-		$select_elem.empty();
+		var posdata= {'datatb':'agen', _token:'{{ csrf_token() }}'};
+		$("#agen").empty();
 		getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
 	    $.each(data, function (idx, obj) {
-	    	$select_elem.append('<option value="'+idx+'">'+obj+'</option>');
+	    	$("#agen").append('<option value="'+idx+'">'+obj+'</option>');
 	    });
-			$select_elem.val('').trigger("chosen:updated");
+			$("#agen").val('').trigger("chosen:updated");
+		},function(data){});
+
+		var posdata= {'datatb':'kapal', _token:'{{ csrf_token() }}'};
+		$("#kapal").empty();
+		getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
+	    $.each(data, function (idx, obj) {
+	    	$("#kapal").append('<option value="'+idx+'">'+obj+'</option>');
+	    });
+			$("#kapal").val('').trigger("chosen:updated");
+		},function(data){});
+
+		var posdata= {'datatb':'dermaga', _token:'{{ csrf_token() }}'};
+		$("#dermaga").empty();
+		getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
+	    $.each(data, function (idx, obj) {
+	    	$("#dermaga").append('<option value="'+idx+'">'+obj+'</option>');
+	    });
+			$("#dermaga").val('').trigger("chosen:updated");
 		},function(data){});
 
 		$('.multiselect').multiselect({
@@ -685,10 +700,10 @@
 						getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
 							$('#ppjk').val(data.ppjk);
 
-							$( "#agen" ).val(data.agen);
-
+							$( "#agen" ).val(data.agen).trigger("chosen:updated");
+							//
 							$('#date').data("DateTimePicker").date(data.date);
-
+							//
 							$('#pcdate').daterangepicker({
 								'applyClass' : 'btn-sm btn-success',
 								'cancelClass' : 'btn-sm btn-default',
@@ -706,7 +721,7 @@
 							.prev().on(ace.click_event, function(){
 									$(this).next().focus();
 							});
-
+							//
 							$('#tundadate').daterangepicker({
 								'applyClass' : 'btn-sm btn-success',
 								'cancelClass' : 'btn-sm btn-default',
@@ -724,13 +739,13 @@
 							.prev().on(ace.click_event, function(){
 									$(this).next().focus();
 							});
-
-							// console.log();
-							$( "#kapal" ).val(data.kapal);
-
+							//
+							// // console.log();
+							$( "#kapal" ).val(data.kapal).trigger("chosen:updated");
+							//
 							$('#dermaga').val(data.dermaga).trigger("chosen:updated");
 							$('#ops').val(data.ops).trigger("chosen:updated");
-
+							//
 							$('#bapp').val(data.bapp);
 							$('#pc').val(data.pc);
 
@@ -739,7 +754,7 @@
 									$('option[value="'+element+'"]', $('#tunda')).prop('selected', true);
 								});
 								$('#tunda').multiselect('refresh');
-							// console.log(data.tunda);
+							// // console.log(data.tunda);
 							}
 							$('#dd').val(data.dd);
 							$('#ket').val(data.ket);
@@ -781,7 +796,7 @@
 						$(this).next().focus();
 				});
 				// console.log(moment().startOf('minute'));
-				$('#dermaga, #ops').val('').trigger("chosen:updated");
+				$('#agen, #kapal, #dermaga, #ops').val('').trigger("chosen:updated");
 				$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
 				postsave ='';
 				postsave += 'oper=add&';

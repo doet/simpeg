@@ -33,35 +33,35 @@ class OprasionalApiController extends Controller
     switch ($datatb) {
       case 'loadlaporan':
         $query = DB::table('tb_dls')
-          ->join('tb_agens', function ($join) {
-            $join->on('tb_dls.agens_id', '=', 'tb_agens.id');
-          })
-          ->join('tb_kapals', function ($join) {
-            $join->on('tb_dls.kapals_id', '=', 'tb_kapals.id');
-          })
-          ->join('tb_jettys', function ($join) {
-            $join->on('tb_dls.jetty_id', '=', 'tb_jettys.id');
-          })
-          ->select(
-            'tb_agens.code as agenCode',
-            'tb_kapals.value as kapalsName',
-            'tb_kapals.jenis as kapalsJenis',
-            'tb_kapals.grt as kapalsGrt',
-            'tb_kapals.loa as kapalsLoa',
-            'tb_kapals.bendera as kapalsBendera',
-            'tb_jettys.name as jettyName',
-            // 'tb_jettys.color as jettyColor',
-            'tb_dls.*'
-          )
+          // ->join('tb_agens', function ($join) {
+          //   $join->on('tb_dls.agens_id', '=', 'tb_agens.id');
+          // })
+          // ->join('tb_kapals', function ($join) {
+          //   $join->on('tb_dls.kapals_id', '=', 'tb_kapals.id');
+          // })
+          // ->join('tb_jettys', function ($join) {
+          //   $join->on('tb_dls.jetty_id', '=', 'tb_jettys.id');
+          // })
+          // ->select(
+          //   'tb_agens.code as agenCode',
+          //   'tb_kapals.value as kapalsName',
+          //   'tb_kapals.jenis as kapalsJenis',
+          //   'tb_kapals.grt as kapalsGrt',
+          //   'tb_kapals.loa as kapalsLoa',
+          //   'tb_kapals.bendera as kapalsBendera',
+          //   'tb_jettys.name as jettyName',
+          //   // 'tb_jettys.color as jettyColor',
+          //   'tb_dls.*'
+          // )
           ->where('tb_dls.id', $id)
           ->get();
         foreach($query as $row) {
           if ($row->pcon == '')$row->pcon = $row->date;
           if ($row->pcoff == '')$row->pcoff = $row->date;
           $responce['ppjk']=$row->ppjk;
-          $responce['agen']=$row->agenCode;
+          $responce['agen']=$row->agens_id;
           $responce['date']=date("d-m-Y H:i",$row->date);
-          $responce['kapal']=$row->kapalsName;
+          $responce['kapal']=$row->kapals_id;
           $responce['dermaga']=$row->jetty_id;
           $responce['ops']=$row->ops;
           $responce['bapp']=$row->bapp;
@@ -74,6 +74,20 @@ class OprasionalApiController extends Controller
           $responce['dd']=$row->dd;
           $responce['ket']=$row->ket;
           $responce['kurs']=$row->kurs;
+        }
+      break;
+      case 'agen':
+        $query = DB::table('tb_agens')
+        ->get();
+        foreach($query as $row) {
+          $responce[$row->id]=$row->code;
+        }
+      break;
+      case 'kapal':
+        $query = DB::table('tb_kapals')
+        ->get();
+        foreach($query as $row) {
+          $responce[$row->id]=$row->value;
         }
       break;
       case 'dermaga':
@@ -221,9 +235,9 @@ class OprasionalApiController extends Controller
 
             $datanya=array(
               'ppjk'=>$request->input('ppjk'),
-              'agens_id'=>$agen->id,
+              'agens_id'=>$request->input('agen',''),
               'date'=>$date,
-              'kapals_id'=>$kapal->id,
+              'kapals_id'=>$request->input('kapal',''),
               'jetty_id'=>$request->input('dermaga',''),
               'ops'=>$request->input('ops',''),
               'bapp'=>$request->input('bapp',''),

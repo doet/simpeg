@@ -132,7 +132,7 @@ echo '<table width="690px">
 	echo '<table width="800px" border="0" align="right">
 		<tr>
 		<td align="center" valign="top">Dibuat oleh, <br />
-		Spv. SDM & Hukum<br /><br /><br /><br /><br />Diana Dwi Wiyanti</td>
+		Spv. SDM & Hukum<br /><br /><br /><br /><br />Fajar Prasetya</td>
 		<td align="center" valign="top">Diperiksa oleh, <br />Mgr. SDM & Umum<br />
 		<br /><br /><br /><br />Herny Setiawanti</td></tr></table>';
 				//echo '<div style="page-break-after: always;"></div>';

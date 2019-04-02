@@ -18,28 +18,28 @@
 @endsection
 
 @section('breadcrumb')
-		<div class="breadcrumbs ace-save-state" id="breadcrumbs">
-        <ul class="breadcrumb">
-            <li>
-                <i class="ace-icon fa fa-home home-icon"></i>
-                <a href="{{url('')}}">Home</a>
-            </li>
+	<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+      <li>
+        <i class="ace-icon fa fa-home home-icon"></i>
+        <a href="{{url('')}}">Home</a>
+      </li>
 
-            @foreach(array_reverse($aktif_menu) as $row)
-            <li>
-                {!!$row['nama']!!}
-            </li>
-            @endforeach
-        </ul><!-- /.breadcrumb -->
-        <div class="nav-search" id="nav-search">
-            <form class="form-search">
-                <span class="input-icon">
-                    <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-                    <i class="ace-icon fa fa-search nav-search-icon"></i>
-                </span>
-            </form>
-        </div><!-- /.nav-search -->
-    </div>
+      @foreach(array_reverse($aktif_menu) as $row)
+      <li>
+        {!!$row['nama']!!}
+      </li>
+      @endforeach
+    </ul><!-- /.breadcrumb -->
+    <div class="nav-search" id="nav-search">
+      <form class="form-search">
+        <span class="input-icon">
+          <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+          <i class="ace-icon fa fa-search nav-search-icon"></i>
+        </span>
+      </form>
+    </div><!-- /.nav-search -->
+  </div>
 @endsection
 
 @section('content')
@@ -623,7 +623,21 @@
 					form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
 				}
 			}
-		)
+		).jqGrid('navButtonAdd',pager_selector,{
+				keys: true,
+				caption:"LHP",
+				buttonicon:"ace-icon fa fa-file-pdf-o orange",
+				position:"last",
+				onClickButton:function(){
+					// var data = $(this).jqGrid('getRowData'); Get all data
+
+					$('#dompdf input[name=page]').val('lhp1-dompdf');
+					$('#dompdf input[name=start]').val(setdate);
+					// console.log(setdate);
+
+					$('#dompdf').submit();
+				}
+		})
 		// .jqGrid('navButtonAdd',pager_selector,{
 		// 		keys: true,
 		// 		caption:"DL",

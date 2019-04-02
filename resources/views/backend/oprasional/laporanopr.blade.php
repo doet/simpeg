@@ -503,9 +503,9 @@
 			sortname:'date',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','Tunda','ON','OFF','DD','Ket','Kurs'],
+			colNames:['id', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','Tunda','ON','OFF','DD','Ket','Kurs'],
 			colModel:[
-				{name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false, align: 'center'},
+				{name:'id',index:'id', width:50, fixed:true, sortable:true, resize:false, align: 'center'},
 				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
 				{name:'agen',index:'agen',width:45, editable:false, align: 'center'},
 				{name:'date',index:'date', width:120,editable: false},

@@ -160,8 +160,8 @@ class FilesCrudController extends Controller
           if(!$kapal) $kapal['id'] = DB::table('tb_kapals')->insertGetId([
             'value'   => $row[6],
             'jenis'   => $row[5],
-            'grt'     => $row[7],
-            'loa'     => $row[8],
+            'grt'     => preg_replace("/[^0-9]/","",$row[7]),
+            'loa'     => preg_replace("/[^0-9]/","",$row[8]),
             'bendera' => $row[9]
           ]); $kapal = (object) $kapal;
 

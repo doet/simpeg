@@ -289,9 +289,9 @@
                 <td class=""> </td>
                 <td class=""> </td>
                 <td class=""> </td>
-                <td class="" rowspan="4" align="center">Dibuat Oleh,<br /><br /><br /><br />Aldi Gilang Riyadi<br />Dispatcher Jaga</td>
+                <td class="" rowspan="4" align="center">Dibuat Oleh,<br /><br /><br /><br /><br />Dispatcher Jaga</td>
                 <td class=""> </td>
-                <td class="" rowspan="4" align="center"><br /><br /><br /><br />Maurice Agustavio<br />Spv. Oprasional PDP</td>
+                <td class="" rowspan="4" align="center"><br /><br /><br /><br /><br />Spv. Oprasional PDP</td>
               </tr>
               <tr>
                 <td class=""> </td>

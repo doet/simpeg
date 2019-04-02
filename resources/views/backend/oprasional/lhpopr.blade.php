@@ -447,7 +447,7 @@
       postData: {datatb:'lhp',start:setdate,_token:'{{ csrf_token() }}'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
-			sortname:'date',
+			sortname:'ppjk',
 			sortorder: 'desc',
 			height: 'auto',
 			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','BSTDO'],

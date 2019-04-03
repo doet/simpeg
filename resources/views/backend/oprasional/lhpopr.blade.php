@@ -226,6 +226,7 @@
 						<input name="page" value="" hidden/>
 						<input name="file" value="" hidden/>
 						<input name="start" value="" hidden/>
+						<input name="sidx" value="" hidden/>
 					</form>
 					<div class="row">
 						<div class="col-xs-12 col-sm-3">
@@ -538,7 +539,7 @@
 		//navButtons
 		jQuery(grid_selector).jqGrid('navGrid',pager_selector,
 			{ 	//navbar options
-				edit: true,
+				edit: false,
 				editicon : 'ace-icon fa fa-pencil blue',
 				add: false,
 				addicon : 'ace-icon fa fa-plus-circle purple',
@@ -633,6 +634,8 @@
 
 					$('#dompdf input[name=page]').val('lhp1-dompdf');
 					$('#dompdf input[name=start]').val(setdate);
+					$('#dompdf input[name=sidx]').val('ppjk');
+
 					// console.log(setdate);
 
 					$('#dompdf').submit();

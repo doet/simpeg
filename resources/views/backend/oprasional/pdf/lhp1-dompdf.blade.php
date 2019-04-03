@@ -169,12 +169,14 @@
                   </tr>
                   <?php
                   $i=1;
+                  $jppjk=0;
                   $ppjk = '';
                   foreach ($result as $row ) {
                     $date = explode(" ", date("d-m-Y H:i",$row->date));
                     if ($ppjk != $row->ppjk){
                       $ppjk = $row->ppjk;
                       $classShift = '';
+                      $jppjk++;
                     }else{
                       $date[1] = 'SHIFT';
                       $classShift = 'blue';
@@ -264,10 +266,10 @@
               </tr>
               <tr>
                 <td class="" width="100px">1. Jumlah PPJK </td>
-                <td class="top right left" width="80px"> </td>
+                <td class="top right left" width="80px" align="center"> <?php echo $jppjk?></td>
                 <td class="" width="20px"> </td>
-                <td class="" width="100px">Jumlah PPJK </td>
-                <td class="top right left" width="80px"> </td>
+                <td class="" width="100px">Jumlah BAPP </td>
+                <td class="top right left" width="80px"> <?php echo $i?></td>
                 <td class=""> </td>
               </tr>
               <tr>

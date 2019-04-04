@@ -170,11 +170,14 @@
                   <?php
                   $i=1;
                   $jppjk=0;
-                  $ppjk = '';
+                  $ppjk = $datetime = '';
+
                   foreach ($result as $row ) {
                     $date = explode(" ", date("d-m-Y H:i",$row->date));
-                    if ($ppjk != $row->ppjk){
+                    // $datetime = $row->date;
+                    if (($ppjk != $row->ppjk)||($datetime != $row->date)){
                       $ppjk = $row->ppjk;
+                      $datetime = $row->date;
                       $classShift = '';
                       $jppjk++;
                     }else{
@@ -269,7 +272,7 @@
                 <td class="top right left" width="80px" align="center"> <?php echo $jppjk?></td>
                 <td class="" width="20px"> </td>
                 <td class="" width="100px">Jumlah BAPP </td>
-                <td class="top right left" width="80px"> <?php echo $i?></td>
+                <td class="top right left" width="80px" align="center"> <?php echo $i-1?></td>
                 <td class=""> </td>
               </tr>
               <tr>

@@ -67,7 +67,6 @@ class PDFController extends Controller
           // 'tb_jettys.color as jettyColor',
           'tb_dls.*'
           )
-          ->orderBy('ppjk', 'desc')
           ->orderBy($sidx, $sord)
           ->get();
           // $result = json_encode(json_decode($qu));
@@ -114,7 +113,8 @@ class PDFController extends Controller
           // 'tb_jettys.color as jettyColor',
           'tb_dls.*'
         )
-        ->orderBy($sidx, $sord)
+        ->orderBy($sidx,$sord)
+        ->orderBy('date', 'asc')
         ->get();
         // $result = json_encode(json_decode($qu));
         // $result = json_decode($result,true);

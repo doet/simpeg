@@ -634,7 +634,7 @@
 
 					$('#dompdf input[name=page]').val('lhp1-dompdf');
 					$('#dompdf input[name=start]').val(setdate);
-					$('#dompdf input[name=sidx]').val('ppjk');
+					$('#dompdf input[name=sidx]').val('date');
 
 					// console.log(setdate);
 

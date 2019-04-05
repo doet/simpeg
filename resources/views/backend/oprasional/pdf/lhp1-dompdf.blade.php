@@ -175,14 +175,32 @@
                   foreach ($result as $row ) {
                     $date = explode(" ", date("d-m-Y H:i",$row->date));
                     // $datetime = $row->date;
-                    if (($ppjk != $row->ppjk)||($datetime != $row->date)){
+                    // if ($ppjk != $row->ppjk){
+                    //   $ppjk = $row->ppjk;
+                    //   $classShift = '';
+                    //   $jppjk++;
+                    // }else{
+                    //   if ($datetime != $row->date){
+                    //     $datetime = $row->date;
+                    //   } else {
+                    //     $date[1] = 'SHIFT';
+                    //     $classShift = 'blue';
+                    //   }
+                    // }
+
+                    if ($ppjk == $row->ppjk){
+                      if ($datetime == $row->date){
+                        $date[1] = 'SHIFT';
+                        $classShift = 'blue';
+                      } else {
+                        $classShift = '';
+                        $datetime = $row->date;                        
+                      }
+                    }else{
                       $ppjk = $row->ppjk;
-                      $datetime = $row->date;
                       $classShift = '';
                       $jppjk++;
-                    }else{
-                      $date[1] = 'SHIFT';
-                      $classShift = 'blue';
+                      $datetime = $row->date;
                     }
 
                     if (strpos($row->jettyCode,'S.')===0) $classJetty = 'kuning'; else $classJetty = '';

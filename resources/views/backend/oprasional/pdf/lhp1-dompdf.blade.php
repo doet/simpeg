@@ -188,7 +188,7 @@
                       $jppjk++;
                       $datetime = $row->date;
                     }
-                    if ($row->bapp != '') $jbapp++;
+                    // if ($row->bapp != '') $jbapp++;
 
                     if (strpos($row->jettyCode,'S.')===0) $classJetty = 'kuning'; else $classJetty = '';
                     if ($row->kurs == '$') $kurs = 'ungu'; else $kurs = '';
@@ -277,7 +277,7 @@
                 <td class="top right left" width="80px" align="center"> <?php echo $jppjk?></td>
                 <td class="" width="20px"> </td>
                 <td class="" width="100px">Jumlah BAPP </td>
-                <td class="top right left" width="80px" align="center"> <?php echo $jbapp?></td>
+                <td class="top right left" width="80px" align="center"> <?php echo $i-1?></td>
                 <td class=""> </td>
               </tr>
               <tr>

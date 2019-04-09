@@ -169,7 +169,8 @@
                   </tr>
                   <?php
                   $i=1;
-                  $jppjk=$jbapp=0;
+                  $jppjk=0;
+                  $jbapp=array();
                   $ppjk = $datetime = '';
 
                   foreach ($result as $row ) {
@@ -188,7 +189,8 @@
                       $jppjk++;
                       $datetime = $row->date;
                     }
-                    // if ($row->bapp != '') $jbapp++;
+                    // if ($row->bapp != '') $jbapp = ;
+                    if (!in_array($row->bapp,$jbapp) && $row->bapp!='')$jbapp[]=$row->bapp;
 
                     if (strpos($row->jettyCode,'S.')===0) $classJetty = 'kuning'; else $classJetty = '';
                     if ($row->kurs == '$') $kurs = 'ungu'; else $kurs = '';
@@ -200,6 +202,7 @@
                     if (in_array('MV', $tunda))$mv = 'MV';else $mv = '';
                     if (in_array('MG', $tunda))$mg = 'MG';else $mg = '';
 
+                    // if ($row->kapalsLoa == '')$row->kapalsLoa =0;
                     if ($row->kapalsJenis == '') $kapal =  $row->kapalsName; else $kapal = '('.$row->kapalsJenis.') '.$row->kapalsName;
                     if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
                     if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
@@ -277,7 +280,7 @@
                 <td class="top right left" width="80px" align="center"> <?php echo $jppjk?></td>
                 <td class="" width="20px"> </td>
                 <td class="" width="100px">Jumlah BAPP </td>
-                <td class="top right left" width="80px" align="center"> <?php echo $i-1?></td>
+                <td class="top right left" width="80px" align="center"> <?php echo count($jbapp)?></td>
                 <td class=""> </td>
               </tr>
               <tr>

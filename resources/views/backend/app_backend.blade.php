@@ -63,8 +63,8 @@ left: 30%;" /></div>
 				<div class="navbar-header pull-left">
 					<a href="index.html" class="navbar-brand">
 						<small>
-							<i class="fa fa-leaf"></i>
-							Ace Admin
+							<i class="fa fa-ship"></i>
+							Sitem Terpadu PT.PCM
 						</small>
 					</a>
 				</div>

@@ -715,7 +715,7 @@
 								locale: {
 										applyLabel: 'Apply',
 										cancelLabel: 'Cancel',
-										format: 'DD/MM/YY HH:mm'
+										format: 'YYYY/MM/DD HH:mm'
 								}
 							})
 							.prev().on(ace.click_event, function(){
@@ -733,7 +733,7 @@
 								locale: {
 										applyLabel: 'Apply',
 										cancelLabel: 'Cancel',
-										format: 'DD/MM/YY HH:mm'
+										format: 'YYYY/MM/DD HH:mm'
 								}
 							})
 							.prev().on(ace.click_event, function(){

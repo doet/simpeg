@@ -242,11 +242,11 @@ class OprasionalApiController extends Controller
               'ops'=>$request->input('ops',''),
               'bapp'=>$request->input('bapp',''),
               'pc'=>$request->input('pc',''),
-              'pcon'=>strtotime($pcdate[0]),
-              'pcoff'=>strtotime($pcdate[1]),
+              'pcon'=>strtotime(date($pcdate[0])),
+              'pcoff'=>strtotime(date(ltrim($pcdate[1]," "))),
               'tunda'=>$tunda,
               'tundaon'=>strtotime($tundadate[0]),
-              'tundaoff'=>strtotime($tundadate[1]),
+              'tundaoff'=>strtotime(ltrim($tundadate[1]," ")),
               'dd'=>$request->input('dd',''),
               'ket'=>$request->input('ket',''),
               'kurs'=>$request->input('kurs','')
@@ -259,7 +259,7 @@ class OprasionalApiController extends Controller
         if ($oper=='del')DB::table('tb_dls')->delete($id);
 
         $responce = array(
-          'status' => $id,
+          'status' => $pcdate,
           //"suscces",
           'msg' => 'ok',
         );

@@ -472,7 +472,7 @@
         {name:'ket',index:'ket',width:100, editable: false},
         {name:'kurs',index:'kurs',width:50, editable: false, align: 'center'},
 				{name:'lstp',index:'lstp',width:50, editable: true, align: 'center'},
-				{name:'bstdo',index:'bstdo',width:50, editable: true, align: 'center'}
+				{name:'bstdo',index:'bstdo',width:50, editable: false, align: 'center'}
 			],
 
 			viewrecords : true,
@@ -539,7 +539,7 @@
 		//navButtons
 		jQuery(grid_selector).jqGrid('navGrid',pager_selector,
 			{ 	//navbar options
-				edit: false,
+				edit: true,
 				editicon : 'ace-icon fa fa-pencil blue',
 				add: false,
 				addicon : 'ace-icon fa fa-plus-circle purple',

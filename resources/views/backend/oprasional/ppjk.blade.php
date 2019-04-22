@@ -494,7 +494,7 @@
 		*/
 
 		jQuery(grid_selector).jqGrid({
-			caption: "Laporan",
+			caption: "Input PPJK",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
       postData: {datatb:'dl',start:formatDate(nowdate),_token:'{{ csrf_token() }}'},

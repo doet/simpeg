@@ -214,8 +214,8 @@
                     echo '<td class="top right" align="center">'.$date[0].'</td>';
                     echo '<td class="top right '.$classShift.'" align="center">'.$date[1].'</td>';
                     echo '<td class="top right">&nbsp;'.$kapal.'</td>';
-                    echo '<td class="top right" align="right">'.number_format($row->kapalsGrt).'&nbsp;</td>';
-                    echo '<td class="top right" align="right">'.number_format($row->kapalsLoa).'&nbsp;</td>';
+                    echo '<td class="top right" align="right">'.$row->kapalsGrt.'&nbsp;</td>';
+                    echo '<td class="top right" align="right">'.$row->kapalsLoa.'&nbsp;</td>';
                     echo '<td class="top right">&nbsp;'.$row->kapalsBendera.'</td>';
                     echo '<td class="top right '.$classJetty.'">&nbsp;'.'('. $row->jettyCode .')'.$row->jettyName.'</td>';
                     echo '<td class="top right">&nbsp;'.$row->ops.'</td>';

@@ -673,20 +673,6 @@
 			}
 		).jqGrid('navButtonAdd',pager_selector,{
 				keys: true,
-				caption:"DL",
-				buttonicon:"ace-icon fa fa-file-pdf-o orange",
-				position:"last",
-				onClickButton:function(){
-					// var data = $(this).jqGrid('getRowData'); Get all data
-
-					$('#dompdf input[name=page]').val('dl-dompdf');
-					$('#dompdf input[name=start]').val(setdate);
-					// console.log(setdate);
-
-					$('#dompdf').submit();
-				}
-		}).jqGrid('navButtonAdd',pager_selector,{
-				keys: true,
 				caption:"",
 				buttonicon:"ace-icon fa fa-pencil blue",
 				position:"first",
@@ -769,6 +755,39 @@
 						alert("pilih tabel")
 					}
 				}
+		}).jqGrid('navButtonAdd',pager_selector,{
+			keys: true,
+			caption:"",
+			buttonicon:"ace-icon fa fa-plus-circle purple",
+			position:"first",
+			onClickButton:function(){
+				$('#form').trigger("reset");
+				$('#date').data("DateTimePicker").date(new Date(setdate));
+
+				$('#pcdate, #tundadate').daterangepicker({
+					'applyClass' : 'btn-sm btn-success',
+					'cancelClass' : 'btn-sm btn-default',
+					"opens": "center",
+					timePicker: true,
+					timePicker24Hour: true,
+					startDate: moment().startOf('minute'),
+					endDate: moment().startOf('minute').add(1, 'minute'),
+					locale: {
+							applyLabel: 'Apply',
+							cancelLabel: 'Cancel',
+							format: 'DD/MM/YY HH:mm'
+					}
+				})
+				.prev().on(ace.click_event, function(){
+						$(this).next().focus();
+				});
+				// console.log(moment().startOf('minute'));
+				$('#agen, #kapal, #dermaga, #ops').val('').trigger("chosen:updated");
+				$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
+				postsave ='';
+				postsave += 'oper=add&';
+				$('#modal').modal('show');
+			}
 		})
 
 

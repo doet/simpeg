@@ -217,7 +217,7 @@
         <div class="col-xs-12">
           <!-- PAGE CONTENT BEGINS -->
 
-					<div align="center">L H P<br />
+					<div align="center">B S T D O<br />
 							<span class="editable" id="psdate"></span>
 					</div>
 					</br>
@@ -234,7 +234,7 @@
 								<label class="control-label col-xs-12 col-sm-3 no-padding-right">List</label>
 
 								<div class="col-xs-12 col-sm-9">
-									<select id="ppjk" class="multiselect" multiple="">
+									<select id="ppjk" class="multiselect" multiple="" disabled="disabled">
 										<option value=""></option>
 									</select>
 								</div>
@@ -387,7 +387,7 @@
 			},function(data){});
 		}
 
-		get_ppjk(setdate);
+		// get_ppjk(setdate);
 //////////////////////////////////////////////
 
 		var postsave;
@@ -454,16 +454,16 @@
 			sortname:'ppjk',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','BSTDO'],
+			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','Moring'],
 			colModel:[
 				{name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false, align: 'center'},
 				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
 				{name:'agen',index:'agen',width:45, editable:false, align: 'center'},
 				{name:'date',index:'date', width:120,editable: false},
 				{name:'kapal',index:'kapal', width:150, editable: false},
-				{name:'grt',index:'grt', width:50, editable: false, align: 'right'},
-				{name:'loa',index:'loa', width:50, sortable:false, align: 'right'},
-				{name:'bendera',index:'bendera', width:80, editable: false},
+				{name:'grt',index:'grt', width:50, editable: false, align: 'right',hidden:true},
+				{name:'loa',index:'loa', width:50, sortable:false, align: 'right',hidden:true},
+				{name:'bendera',index:'bendera', width:80, editable: false,hidden:true},
         {name:'dermaga',index:'dermaga', width:100, editable: false},
         {name:'ops',index: 'ops', width: 60,editable: false, align: 'center'},
         {name:'bapp',index:'bapp',width:50, editable: false, align: 'center'},
@@ -474,8 +474,8 @@
         {name:'dd',index:'dd',width:40, editable: false},
         {name:'ket',index:'ket',width:100, editable: false},
         {name:'kurs',index:'kurs',width:50, editable: false, align: 'center'},
-				{name:'lstp',index:'lstp',width:50, editable: true, align: 'center',hidden:true},
-				{name:'bstdo',index:'bstdo',width:50, editable: false, align: 'center',hidden:true}
+				{name:'lstp',index:'lstp',width:50, editable: true, align: 'center'},
+				{name:'moring',index:'moring',width:180, editable: true, align: 'center'}
 			],
 
 			viewrecords : true,
@@ -542,7 +542,7 @@
 		//navButtons
 		jQuery(grid_selector).jqGrid('navGrid',pager_selector,
 			{ 	//navbar options
-				edit: false,
+				edit: true,
 				editicon : 'ace-icon fa fa-pencil blue',
 				add: false,
 				addicon : 'ace-icon fa fa-plus-circle purple',

@@ -226,10 +226,10 @@ class OprasionalApiController extends Controller
           $tundadate = str_replace('/', '-', $tundadate);
           $tundadate = explode(',',$tundadate);
 
-          if ($request->input('lstp','') || $request->input('bstdo','') ){
+          if ($request->input('lstp','') || $request->input('moring','') ){
             $datanya=array(
               'lstp'=>$request->input('lstp',''),
-              'bstdo'=>$request->input('bstdo',''),
+              'moring'=>$request->input('moring',''),
             );
           } else {
 
@@ -554,7 +554,7 @@ class OprasionalApiController extends Controller
               $row->ket,
               $row->kurs,
               $row->lstp,
-              $row->bstdo
+              $row->moring
             );
             $i++;
           break;
@@ -625,9 +625,12 @@ class OprasionalApiController extends Controller
           break;
         }
       }
-      if(!isset($responce['rows']))$responce['rows'][0]['cell']=array('');
+      if(!isset($responce['rows'])){
+        $responce['rows'][0]['id'] = '';
+        $responce['rows'][0]['cell']=array('');
+      }
       // print_r(empty($responce['rows']));
-      $responce['tambah'] = strtotime($mulai);
+      // $responce['tambah'] = strtotime($mulai);
       return  Response()->json($responce);
   }
 }

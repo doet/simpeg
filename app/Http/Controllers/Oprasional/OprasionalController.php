@@ -32,6 +32,13 @@ class OprasionalController extends Controller
   //   return view('backend.oprasional.uploadxls', compact('multilevel','aktif_menu'));
   // }
 
+  public function ppjk()
+  {
+    $multilevel = menuadmins::get_data();
+    $index      = menuadmins::where('part','oprasional\ppjk')->first();
+    $aktif_menu = menuadmins::aktif_menu($index['id']);
+    return view('backend.oprasional.ppjk', compact('multilevel','aktif_menu'));
+  }
   public function dl()
   {
     $multilevel = menuadmins::get_data();

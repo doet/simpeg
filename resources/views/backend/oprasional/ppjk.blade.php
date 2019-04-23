@@ -88,7 +88,7 @@
 
 								<div class="row">
 									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Date</label>
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tgl Dok</label>
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="date" name="date"></div>
 										</div>
@@ -257,7 +257,7 @@
         <div class="col-xs-12">
           <!-- PAGE CONTENT BEGINS -->
 
-					<div align="center">Kegiatan Operator<br />
+					<div align="center">Daftar PPJK<br />
 							<span class="editable" id="psdate"></span>
 					</div>
 					</br>

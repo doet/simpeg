@@ -629,13 +629,13 @@
 			}
 		).jqGrid('navButtonAdd',pager_selector,{
 				keys: true,
-				caption:"LHP",
+				caption:"bstdo",
 				buttonicon:"ace-icon fa fa-file-pdf-o orange",
 				position:"last",
 				onClickButton:function(){
 					// var data = $(this).jqGrid('getRowData'); Get all data
 
-					$('#dompdf input[name=page]').val('lhp1-dompdf');
+					$('#dompdf input[name=page]').val('bstdo-dompdf');
 					$('#dompdf input[name=start]').val(setdate);
 					$('#dompdf input[name=sidx]').val('ppjk');
 

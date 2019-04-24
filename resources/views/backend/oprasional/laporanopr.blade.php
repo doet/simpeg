@@ -673,6 +673,18 @@
 			}
 		).jqGrid('navButtonAdd',pager_selector,{
 				keys: true,
+				caption:"DL",
+				buttonicon:"ace-icon fa fa-file-pdf-o orange",
+				position:"last",
+				onClickButton:function(){
+					// var data = $(this).jqGrid('getRowData'); Get all data
+					$('#dompdf input[name=page]').val('dl-dompdf');
+					$('#dompdf input[name=start]').val(setdate);
+					// console.log(setdate);
+					$('#dompdf').submit();
+				}
+		}).jqGrid('navButtonAdd',pager_selector,{
+				keys: true,
 				caption:"",
 				buttonicon:"ace-icon fa fa-pencil blue",
 				position:"first",

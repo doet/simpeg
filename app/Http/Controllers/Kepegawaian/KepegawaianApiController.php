@@ -90,7 +90,7 @@ class KepegawaianApiController extends Controller
               'updated_at' =>date("Y-m-d H:i:s")
           );
           pegawai::insert($datatambah4);
-
+          
           DB::commit();
 
           $status = 'success';

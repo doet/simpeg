@@ -52,49 +52,34 @@
 				<form id="form">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h3 class="smaller lighter blue no-margin">Form PPJK </h3>
+						<h3 class="smaller lighter blue no-margin">Form Laporan </h3>
 					</div>
 					<!-- 01 end heder -->
 					<!-- 02 body -->
 					<div class="modal-body">
 						{{ csrf_field() }}
 						<!-- <input type="hidden" name="datatb" value="keluarga" />
+						<input type="hidden" id='oper-1' name="oper" value="add" />
 						<input type="hidden" id='id-1' name="id" value="id" /> -->
-						<!-- <input type="hidden" id='oper' name="oper" value="" /> -->
-						<div class="row">
-							<div class="col-xs-12 col-sm-6">
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tgl Dok </label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-9 tgl" type="text" id="date_issue" name="date_issue" readonly></div>
-										</div>
-									</div>
-								</div>
-								<div class="space-2"></div>
-							</div>
-							<div class="col-xs-12 col-sm-6">
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">No. PPJK </label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="ppjk" name="ppjk"></div>
-										</div>
-									</div>
-								</div>
-								<div class="space-2"></div>
-							</div>
-						</div>
-						<div class="hr"></div>
 						<div class="row">
 							<div class="col-xs-12 col-sm-6">
 
 								<div class="row">
 									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Agen </label>
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PPJK</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="ppjk" name="ppjk"></div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Agen</label>
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix">
-												<select id="agen" name="agen" class="chosen-select" data-placeholder="Agen ..." >
+												<select id="agen" name="agen" class="chosen-select" data-placeholder="Agen ..." disabled >
 													<option></option>
 												</select>
 											</div>
@@ -102,41 +87,25 @@
 									</div>
 								</div>
 								<div class="space-2"></div>
+
 								<div class="row">
 									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Alamat </label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-7" type="text" id="alamat" name="alamat" disabled></div>
-										</div>
-									</div>
-								</div>
-								<div class="space-2"></div>
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">NPWP</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="npwp" name="npwp" disabled></div>
-										</div>
-									</div>
-								</div>
-								<div class="space-2"></div>
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">No. Tlp / Hp </label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="tlp" name="tlp" disabled></div>
-										</div>
-									</div>
-								</div>
-								<div class="space-2"></div>
-							</div>
-							<div class="col-xs-12 col-sm-6">
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kapal </label>
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tgl Aksi </label>
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix">
-												<select id="kapal" name="kapal" class="chosen-select" data-placeholder="Kapal ..." >
+												<input class="input-sm col-xs-12 col-sm-8" type="text" id="date" name="date" >
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kapal</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix">
+												<select id="kapal" name="kapal" class="chosen-select" data-placeholder="Kapal ..." disabled>
 													<option></option>
 												</select>
 											</div>
@@ -144,58 +113,13 @@
 									</div>
 								</div>
 								<div class="space-2"></div>
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Bendera </label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-7" type="text" id="bendera" name="bendera" disabled></div>
-										</div>
-									</div>
-								</div>
-								<div class="space-2"></div>
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">DWT </label>
-										<div class="col-xs-12 col-sm-3">
-											<div class="clearfix">
-												<input class="input-sm col-sm-12" type="text" id="dwt" name="dwt" disabled>
-											</div>
-										</div>
-										<label class="control-label col-xs-12 col-sm-2 no-padding-right" for="comment">GRT </label>
-										<div class="col-xs-12 col-sm-3">
-											<div class="clearfix"><input class="input-sm col-sm-12" type="text" id="grt" name="grt" disabled></div>
-										</div>
-									</div>
-								</div>
-								<div class="space-2"></div>
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">LOA </label>
-										<div class="col-xs-12 col-sm-3">
-											<div class="clearfix">
-												<input class="input-sm col-sm-12" type="text" id="loa" name="loa" disabled>
-											</div>
-										</div>
-										<label class="control-label col-xs-12 col-sm-2 no-padding-right" for="comment">Draft </label>
-										<div class="col-xs-12 col-sm-3">
-											<div class="clearfix"><input class="input-sm col-sm-12" type="text" id="draf" name="draf" disabled></div>
-										</div>
-									</div>
-								</div>
-								<div class="space-2"></div>
-							</div>
-						</div>
 
-						<div class="hr"></div>
-
-						<div class="row">
-							<div class="col-xs-12 col-sm-6">
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Dermaga</label>
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix">
-												<select id="jetty" name="jetty" class="chosen-select" data-placeholder="Dermaga ..." >
+												<select id="jetty" name="jetty" class="chosen-select" data-placeholder="Dermaga ..." disabled>
 													<option></option>
 												</select>
 											</div>
@@ -203,49 +127,30 @@
 									</div>
 								</div>
 								<div class="space-2"></div>
+
 								<div class="row">
 									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">ETA - ETD </label>
-										<div class="col-xs-12 col-sm-9">
-												<div class="clearfix"><input class="input-sm col-sm-9" type="text" name="etad" id="etad" readonly/></div>
-										</div>
-									</div>
-								</div>
-								<div class="space-2"></div>
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Etmal</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="etmal" name="etmal"></div>
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">ops</label>
+										<div class="col-xs-12 col-sm-4">
+											<div class="clearfix">
+												<select id="ops" name="ops" class="chosen-select" data-placeholder="Ops ..." >
+													<option ></option>
+													<option value="Berth">Berth</option>
+													<option value="Unberth">Unberth</option>
+												</select>
+											</div>
 										</div>
 									</div>
 								</div>
 								<div class="space-2"></div>
 							</div>
 							<div class="col-xs-12 col-sm-6">
+
 								<div class="row">
 									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">P Asal</label>
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PC</label>
 										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="asal" name="asal"></div>
-										</div>
-									</div>
-								</div>
-								<div class="space-2"></div>
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">P Tujuan</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="tujuan" name="tujuan"></div>
-										</div>
-									</div>
-								</div>
-								<div class="space-2"></div>
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Cargo</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm" type="text" id="cargo" name="cargo"></div>
+											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="pc" name="pc"></div>
 										</div>
 									</div>
 								</div>
@@ -253,15 +158,63 @@
 
 								<div class="row">
 									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Muat</label>
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tunda</label>
 										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="muat" name="muat"></div>
+												<select id="tunda" class="multiselect" multiple="">
+														<option value="GB">GB</option>
+														<option value="GC">GC</option>
+														<option value="GS">GS</option>
+														<option value="MV">MV</option>
+														<option value="MG">MG</option>
+												</select>
 										</div>
 									</div>
 								</div>
 								<div class="space-2"></div>
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">On/Off</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="tundadate" name="tundadate"></div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">DD</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="dd" name="dd"></div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Ket</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm" type="text" id="ket" name="ket"></div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kurs</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="kurs" name="kurs"></div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
 							</div>
 						</div>
+
 					</div>
 					<!-- 02 end body -->
 
@@ -280,11 +233,14 @@
 		</div>
 </div><!-- /.modal-dialog -->
 
+
+
+
       <div class="row">
         <div class="col-xs-12">
           <!-- PAGE CONTENT BEGINS -->
 
-					<div align="center">Daftar PPJK<br />
+					<div align="center">Kegiatan Operator<br />
 							<span class="editable" id="psdate"></span>
 					</div>
 					</br>
@@ -322,15 +278,14 @@
 	<script src="{{ asset('/js/chosen.jquery.min.js') }}"></script>
 
 <script type="text/javascript">
-
 	jQuery(function($) {
 
+		$('#psdate').html(moment().format("DD MMMM YYYY"));
 		//editables on first profile page
     $.fn.editable.defaults.mode = 'inline';
     $.fn.editableform.loading = "<div class='editableform-loading'><i class='ace-icon fa fa-spinner fa-spin fa-2x light-blue'></i></div>";
     $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="ace-icon fa fa-check"></i></button>'+
                                 '<button type="button" class="btn editable-cancel"><i class="ace-icon fa fa-times"></i></button>';
-		$('#psdate').html();
 		$('#psdate').editable({
         type: 'adate',
         date: {
@@ -349,7 +304,48 @@
         setdate = params.newValue;
     });
 
+		$('#date').datetimepicker({
+			format: 'DD-MM-YYYY HH:mm',//use this option to display seconds
+			date: moment(),
+			icons: {
+				time: 'fa fa-clock-o',
+				date: 'fa fa-calendar',
+				up: 'fa fa-chevron-up',
+				down: 'fa fa-chevron-down',
+				previous: 'fa fa-chevron-left',
+				next: 'fa fa-chevron-right',
+				today: 'fa fa-arrows ',
+				clear: 'fa fa-trash',
+				close: 'fa fa-times'
+			},
+		})
+		.prev().on(ace.click_event, function(){
+				$(this).next().focus();
+		});
 
+		$('#date').datetimepicker({
+			format: 'DD-MM-YYYY HH:mm',//use this option to display seconds
+			date:moment(),
+			icons: {
+				time: 'fa fa-clock-o',
+				date: 'fa fa-calendar',
+				up: 'fa fa-chevron-up',
+				down: 'fa fa-chevron-down',
+				previous: 'fa fa-chevron-left',
+				next: 'fa fa-chevron-right',
+				today: 'fa fa-arrows ',
+				clear: 'fa fa-trash',
+				close: 'fa fa-times'
+			},
+		}).next().on(ace.click_event, function(){
+				$(this).prev().focus();
+		});
+		//
+		// $('#on, #off').datetimepicker({
+		// 		format: 'LT',
+		// 		format: 'HH:mm',
+		// 		date: nowdate,
+		// });
 
 		if(!ace.vars['touch']) {
 			$('.chosen-select').chosen({
@@ -382,8 +378,6 @@
 			});
 		};
 
-		// $('.tgl').datepicker({format:'dd MM yyyy', viewformat: 'dd MM yyyy', autoclose:true});
-
 		$('.tgl').datepicker({
 				format:'dd MM yyyy',
 				viewformat: 'dd MM yyyy',
@@ -395,47 +389,22 @@
 				$(this).prev().focus();
 		});
 
-		$('#etad').daterangepicker({
-			'applyClass' : 'btn-sm btn-success',
-			'cancelClass' : 'btn-sm btn-default',
-			"opens": "center",
-			timePicker: true,
-			timePicker24Hour: true,
-			// 	startDate: moment().startOf('minute'),
-			// 	endDate: moment().startOf('minute').add(1, 'hour')
-			locale: {
-					applyLabel: 'Apply',
-					cancelLabel: 'Cancel',
-					format: 'DD/MM/YY HH:mm'
-			}
-		})
-		.prev().on(ace.click_event, function(){
-				$(this).next().focus();
-		});
-
-		// $('#on, #off').datetimepicker({
-		// 		format: 'LT',
-		// 		format: 'HH:mm',
-		// 		date: nowdate,
-		// });
-		// alert(moment().startOf('minute'));
-
 		var posdata = {'datatb':'agen', _token:'{{ csrf_token() }}'};
 		posdata.src="{{url('/api/oprasional/json')}}";
 		posdata.elm="agen";
 		src_chosen_full(posdata,function(data){
 			$.each(data, function (idx, obj) {
-	      $('#agen').append('<option value="'+obj['id']+'">('+obj['code']+') '+obj['name']+'</option>');
-	    });
+				$('#agen').append('<option value="'+obj['id']+'">('+obj['code']+') '+obj['name']+'</option>');
+			});
 		},function(data){
 			if (data === undefined || data.length == 0) {
-				$("#alamat").val('');
-				$("#npwp").val('');
-				$("#tlp").val('');
+				// $("#alamat").val('');
+				// $("#npwp").val('');
+				// $("#tlp").val('');
 			} else {
-				$("#alamat").val(data[0].alamat);
-				$("#npwp").val(data[0].npwp);
-				$("#tlp").val(data[0].tlp);
+				// $("#alamat").val(data[0].alamat);
+				// $("#npwp").val(data[0].npwp);
+				// $("#tlp").val(data[0].tlp);
 			}
 		});
 
@@ -448,17 +417,17 @@
 	    });
 		},function(data){
 			if (data === undefined || data.length == 0) {
-				$("#bendera").val('');
-				$("#dwt").val('');
-				$("#grt").val('');
-				$("#loa").val('');
-				$("#draft").val('');
+				// $("#bendera").val('');
+				// $("#dwt").val('');
+				// $("#grt").val('');
+				// $("#loa").val('');
+				// $("#draft").val('');
 			} else {
-				$("#bendera").val(data[0].bendera);
-				$("#dwt").val(Numbers(data[0].dwt));
-				$("#grt").val(Numbers(data[0].grt));
-				$("#loa").val(Numbers(data[0].loa));
-				$("#draft").val(Numbers(data[0].draft));
+				// $("#bendera").val(data[0].bendera);
+				// $("#dwt").val(Numbers(data[0].dwt));
+				// $("#grt").val(Numbers(data[0].grt));
+				// $("#loa").val(Numbers(data[0].loa));
+				// $("#draft").val(Numbers(data[0].draft));
 			}
 		});
 
@@ -472,13 +441,47 @@
 		},function(data){});
 
 
+		$('.multiselect').multiselect({
+		 enableFiltering: false,
+		 enableHTML: true,
+		 buttonClass: 'btn btn-white btn-primary',
+		 templates: {
+				button: '<button type="button" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-selected-text"></span> &nbsp;<b class="fa fa-caret-down"></b></button>',
+				ul: '<ul class="multiselect-container dropdown-menu"></ul>',
+				filter: '<li class="multiselect-item filter"><div class="input-group"><span class="input-group-addon"><i class="fa fa-search"></i></span><input class="form-control multiselect-search" type="text"></div></li>',
+				filterClearBtn: '<span class="input-group-btn"><button class="btn btn-default btn-white btn-grey multiselect-clear-filter" type="button"><i class="fa fa-times-circle red2"></i></button></span>',
+				li: '<li><a tabindex="0"><label></label></a></li>',
+				divider: '<li class="multiselect-item divider"></li>',
+				liGroup: '<li class="multiselect-item multiselect-group"><label></label></li>'
+		 }
+		});
+
+		// var postsave;
+		// $('#save').click(function(e) {
+		// 	e.preventDefault();
+		// 	postsave += $("#form").serialize()+'&tunda='+$('#tunda').val()+'&datatb=dl';
+		// 	console.log(postsave);
+		// 	getparameter("{{url('/api/oprasional/cud')}}",postsave,	function(data){
+		// 			var newHTML = '<i class="ace-icon fa fa-floppy-o"></i>Save';
+		// 			$('#save').html(newHTML);
+		//
+		// 			$('#form').trigger("reset");
+		//
+		// 			$('#grid-table').trigger("reloadGrid", [{current:true}]);
+		// 			$('#modal').modal('hide');
+		// // 			// console.log(data);
+		// 	},function(data){
+		// 			var newHTML = '<i class="ace-icon fa fa-spinner fa-spin "></i>Loading...';
+		// 			$('#save').html(newHTML);
+		// 	});
+		// });
 		var postsave={};
 		postsave.url = "{{url('/api/oprasional/cud')}}";
 		postsave.grid = '#grid-table';
 		postsave.modal = '#modal';
 		$('#save').click(function(e) {
 			e.preventDefault();
-			postsave.post += $("#form").serialize()+'&datatb=ppjk';
+			postsave.post += $("#form").serialize()+'&datatb=dl';
 			SaveGrid(postsave);
 		});
 
@@ -499,7 +502,7 @@
 					$(grid_selector).jqGrid( 'setGridWidth', parent_column.width() );
 				}, 20);
 			}
-		})
+			})
 
 		//if your grid is inside another element, for example a tab pane, you should use its parent's width:
 		/**
@@ -520,26 +523,32 @@
 			caption: "Input PPJK",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
-      postData: {datatb:'ppjk',_token:'{{ csrf_token() }}'},
+      postData: {datatb:'dl',start:moment().format("DD MMMM YYYY"),_token:'{{ csrf_token() }}'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
-			sortname:'date_issue',
+			sortname:'date',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:['id', 'PPJK','AGEN','Kapal','Jetty','ETA','ETD','Asal','Tujuan','Etmal','Cargo','Muatan'],
+			colNames:['id', 'PPJK','AGEN','ETA','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','Tunda','ON','OFF','DD','Ket','Kurs'],
 			colModel:[
 				{name:'id',index:'id', width:50, fixed:true, sortable:true, resize:false, align: 'center'},
-				{name:'PPJK',index:'PPJK', width:55, sorttype:"int", editable: false},
-				{name:'AGEN',index:'AGEN',width:45, editable:false, align: 'center'},
-				{name:'Kapal',index:'Kapal', width:80,editable: false},
-				{name:'Jetty',index:'Jetty', width:80, editable: false},
-				{name:'ETA',index:'ETA', width:100, editable: false, align: 'center'},
-				{name:'ETD',index:'ETD', width:100, sortable:false, align: 'center'},
-				{name:'Asal',index:'Asal', width:70, editable: false},
-        {name:'Tujuan',index:'Tujuan', width:70, editable: false},
-        {name:'Etmal',index: 'Etmal', width: 80,editable: false, align: 'center'},
-        {name:'Cargo',index:'Cargo',width:50, editable: false, align: 'center'},
-				{name:'Muatan',index:'Muatan',width:50, editable: false, align: 'center'}
+				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
+				{name:'agen',index:'agen',width:45, editable:false, align: 'center'},
+				{name:'date',index:'date', width:120,editable: false},
+				{name:'kapal',index:'kapal', width:150, editable: false},
+				{name:'grt',index:'grt', width:50, editable: false, align: 'right'},
+				{name:'loa',index:'loa', width:50, sortable:false, align: 'right'},
+				{name:'bendera',index:'bendera', width:80, editable: false},
+        {name:'dermaga',index:'dermaga', width:100, editable: false},
+        {name:'ops',index: 'ops', width: 60,editable: false, align: 'center'},
+        {name:'bapp',index:'bapp',width:50, editable: false, align: 'center'},
+        {name:'pc',index: 'pc', width: 40, editable: false, align: 'center'},
+        {name:'tunda',index:'tunda',width:100, editable: false},
+        {name:'on',index:'on',width:40, editable: false},
+        {name:'off',index:'off',width:40, editable: false},
+        {name:'dd',index:'dd',width:40, editable: false},
+        {name:'ket',index:'ket',width:100, editable: false},
+        {name:'kurs',index:'kurs',width:50, editable: false, align: 'center'}
 			],
 
 			viewrecords : true,
@@ -659,7 +668,7 @@
 					//alert(1);
 				},
 				onclickSubmit: function () {
-		      return { datatb:'ppjk', _token:'<?php echo csrf_token();?>'};
+		      return { datatb:'dl', _token:'<?php echo csrf_token();?>'};
 		    }
 			},
 			{
@@ -690,39 +699,90 @@
 			}
 		).jqGrid('navButtonAdd',pager_selector,{
 				keys: true,
+				caption:"DL",
+				buttonicon:"ace-icon fa fa-file-pdf-o orange",
+				position:"last",
+				onClickButton:function(){
+					// var data = $(this).jqGrid('getRowData'); Get all data
+					$('#dompdf input[name=page]').val('dl-dompdf');
+					$('#dompdf input[name=start]').val(setdate);
+					// console.log(setdate);
+					$('#dompdf').submit();
+				}
+		}).jqGrid('navButtonAdd',pager_selector,{
+				keys: true,
 				caption:"",
 				buttonicon:"ace-icon fa fa-pencil blue",
 				position:"first",
 				onClickButton:function(){
 					$('#form').trigger("reset");
-
 					var gsr = $(this).jqGrid('getGridParam','selrow');
 					if(gsr){
-						var posdata= {'datatb':'ppjk','search':gsr};
+						$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
+
+						var posdata= {'datatb':'dl','iddata':gsr};
 						getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
-							$('#ppjk').val(data[0].ppjk);
+							$('#ppjk').val(data.ppjk);
+							$('#agen').val(data.agen).trigger("chosen:updated");
+							$('#date').data("DateTimePicker").date(data.date);
+							$('#kapal').val(data.kapal).trigger("chosen:updated");
+							$('#jetty').val(data.jetty).trigger("chosen:updated");
+							$('#ops').val(data.ops).trigger("chosen:updated");
 
-  						$('#date').datepicker("setDate", moment.unix(data[0].date).format("DD MMMM YYYY"));
+							$('#pc').val(data.pc);
 
-							$('#agen').val(data[0].agens_id).trigger('chosen:updated').trigger("change");
-							$('#kapal').val(data[0].kapals_id).trigger('chosen:updated').trigger("change");
-							$('#jetty').val(data[0].jettys_id).trigger('chosen:updated');
+							if (data.tunda != null) {
+								data.tunda.forEach(function(element) {
+									$('option[value="'+element+'"]', $('#tunda')).prop('selected', true);
+								});
+								$('#tunda').multiselect('refresh');
+							// // console.log(data.tunda);
+							}
+							$('#tundadate').daterangepicker({
+								'applyClass' : 'btn-sm btn-success',
+								'cancelClass' : 'btn-sm btn-default',
+								"opens": "center",
+								timePicker: true,
+								timePicker24Hour: true,
+								startDate: data.tundaon,
+								endDate: data.tundaoff,
+								locale: {
+									applyLabel: 'Apply',
+									cancelLabel: 'Cancel',
+									format: 'DD/MM/YY HH:mm'
+								}
+							})
+							.prev().on(ace.click_event, function(){
+								$(this).next().focus();
+							});
 
-							$('#etad')
-								.data('daterangepicker')
-								.setStartDate(moment.unix(data[0].eta).format("DD/MM/YY HH:mm"));
-							$('#etad')
-								.data('daterangepicker')
-								.setEndDate(moment.unix(data[0].etd).format("DD/MM/YY HH:mm"));
+							$('#dd').val(data.dd);
+							$('#ket').val(data.ket);
+							$('#kurs').val(data.kurs);
+							// $('#bapp').val(data.bapp);
+							// //
+							// $('#pcdate').daterangepicker({
+							// 	'applyClass' : 'btn-sm btn-success',
+							// 	'cancelClass' : 'btn-sm btn-default',
+							// 	"opens": "center",
+							// 	timePicker: true,
+							// 	timePicker24Hour: true,
+							// 	startDate: data.pcon,
+							// 	endDate: data.pcoff,
+							// 	locale: {
+							// 			applyLabel: 'Apply',
+							// 			cancelLabel: 'Cancel',
+							// 			format: 'DD/MM/YY HH:mm'
+							// 	}
+							// })
+							// .prev().on(ace.click_event, function(){
+							// 		$(this).next().focus();
+							// });
+							// //
+							postsave.post = '';
+							postsave.post += 'oper=edit&id='+gsr+'&';
+						},function(data){ });
 
-							$('#etmal').val(data[0].etmal);
-							$('#asal').val(data[0].asal);
-							$('#tujuan').val(data[0].tujuan);
-							$('#cargo').val(data[0].cargo);
-							$('#muat').val(data[0].muat);
-						});
-						postsave.post = '';
-						postsave.post += 'oper=edit&id='+gsr+'&';
 						$('#modal').modal('show');
 					} else {
 						alert("pilih tabel")
@@ -735,15 +795,9 @@
 			position:"first",
 			onClickButton:function(){
 				$('#form').trigger("reset");
-				$('.tgl').datepicker("setDate", '{{date("d F Y")}}');
-				$('#agen, #kapal, #jetty').val('').trigger("chosen:updated");
 
-				$('#etad')
-					.data('daterangepicker')
-					.setStartDate('{{date("d/m/y H:i")}}');
-				$('#etad')
-					.data('daterangepicker')
-					.setEndDate('{{date("d/m/y H:i",strtotime("+1 hours"))}}');
+				$('#agen, #kapal, #dermaga, #ops').val('').trigger("chosen:updated");
+				$('#date').data("DateTimePicker").date(moment());
 
 				postsave.post = '';
 				postsave.post += 'oper=add&';

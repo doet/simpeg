@@ -51,7 +51,7 @@
       sortname:'id',
       sortorder: 'desc',
       height: 250,
-      colNames:[' ', 'Kapal','Bendera','jenis','GRT','LOA',''],
+      colNames:[' ', 'Kapal','Bendera','Jenis','DWT','GRT','LOA','Draft'],
       colModel:[
         {name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false,
           // formatter:'actions',
@@ -67,6 +67,7 @@
 				{name:'bendera',index:'bendera', width:100, editable: true},
 				{name:'jenis',index:'jenis', width:80, editable: true},
 				{name:'grt',index:'grt', width:60, editable: true},
+        {name:'grt',index:'grt', width:60, editable: true},
 				{name:'loa',index:'loa', width:60, editable: true},
 				{name:'x',index:'x', width:100, editable: false},
       ],

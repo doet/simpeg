@@ -109,7 +109,7 @@ echo '<table width="650px">
 	<tr>
 		<td align="center" valign="top">17 '.date('M Y').'<br />Yang Mengajukan, <br />Spv. SDM & Hukum<br /><br /><br /><br /><br />Fajar Prasetya</td>
 		<td align="center" valign="top"><br />Mengetahui Oleh, <br />Mgr. SDM & Umum<br />
-	<br /><br /><br /><br />Herny Setiawanti</td></tr></table>';
+	<br /><br /><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr></table>';
 	
 	function Terbilang($x)
 	{

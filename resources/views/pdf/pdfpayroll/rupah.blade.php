@@ -165,7 +165,7 @@ echo '<table width="1150px">
 					<td align="center" valign="top">Diajukan Oleh, <br />
 					Spv. SDM & Hukum<br /><br /><br /><br /><br />Fajar Prasetya</td>
 					<td align="center" valign="top">Mengetahui, <br />Mgr. SDM & Umum<br />
-					<br /><br /><br /><br />Herny Setiawanti</td></tr></table>';
+					<br /><br /><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr></table>';
 				//echo '<div style="page-break-after: always;"></div>';
 		
 

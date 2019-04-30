@@ -197,7 +197,7 @@ class AppHelpers {
         }
 
         $jatcut=explode("/",$pegawai['cutitahun']);
-        $jumlahhari=$jatcut[1]-$total;        
+        $jumlahhari=$jatcut[1]-$total;
         return $jumlahhari;
 
     }
@@ -358,4 +358,30 @@ class AppHelpers {
         //$responce = $str[0];
         return  $responce;
     }
+
+    public static function formatNomer($data) {
+      if (is_numeric($data))$responce =  number_format($data); else $responce =$data;
+      return  $responce;
+    }
+
+    public static function dateNtime($data) {
+      $date=explode(' ', $data);
+      if (empty($date[0]))$date[0]=0;
+      if (empty($date[1]))$date[1]=0;
+      $date[0]=explode('/', $date[0]);
+      $responce['date']=strtotime($date[0][0].'-'.$date[0][1].'-20'.$date[0][2].' '.$date[1]);
+
+      return $responce;
+    }
+
+    public static function RangeDate($data) {
+      if (empty($data)) return $responce['startDate']=$responce['endDate']=0;
+      $date=explode('-', $data);
+      if (empty($date[0]))$date[0]=0;
+      if (empty($date[1]))$date[1]=0;
+      $responce['startDate']=AppHelpers::dateNtime($date[0])['date'];
+      $responce['endDate']=AppHelpers::dateNtime(trim($date[1]))['date'];
+      return $responce;
+    }
+
 }

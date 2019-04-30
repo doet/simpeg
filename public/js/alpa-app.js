@@ -38,6 +38,10 @@ function load(page,div){
 // 	});
 //
 // }
+function Numbers(x) {
+  if (!x) return;
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 
 function formatNumber(input)
 {
@@ -66,6 +70,7 @@ function addCommas(n){
         return w;
     });
 }
+
 
 function getparameter(url,posdata,success){
   $.ajax({
@@ -96,11 +101,33 @@ function getparameter2(url,posdata,success,beforeSend){
   });
 }
 
+function SaveGrid(postsave){
+  getparameter2(postsave.url,postsave.post,
+    function(data){
+      var newHTML = '<i class="ace-icon fa fa-floppy-o"></i>Save';
+      $('#save').html(newHTML);
+
+      if(data.status == "success"){
+        console.log(data.status);
+        $(postsave.grid.toString()).trigger("reloadGrid");
+        $(postsave.modal.toString()).modal('hide');
+        $('#form').trigger("reset");
+
+      } else {
+        alert (data.msg);
+      }
+    },
+    function(data){
+      var newHTML = '<i class="ace-icon fa fa-spinner fa-spin "></i>Loading...';
+      $('#save').html(newHTML);
+    }
+  )
+}
+
 function saveGrid(prm){
   var posdata = $("#form-1").serialize();
   //  alert(JSON.stringify(postData));
 
-  //alert (JSON.stringify(postData1));
   $.ajax({
     type: "POST",
     dataType: "json",
@@ -122,9 +149,9 @@ function saveGrid(prm){
         $(prm.grid).trigger("reloadGrid");
         $(prm.modal).modal('hide');
         $('#form-1').trigger("reset");
-
+        console.log(msg.msg);
       } else {
-        alert (msg.msg);
+        console.log(msg.msg);
       }
     },
     error: function(xhr, Status, err) {
@@ -133,35 +160,6 @@ function saveGrid(prm){
         alert ("terjadi kesalahan harap hubungi administrator");
     }
   });
-  // $.ajax({
-  //   type: 'POST',
-  //   url: '/api/bank/save',
-  //   data: postData,
-  //   beforeSend:function(){
-  //       var newHTML = '<i class="ace-icon fa fa-spinner fa-spin "></i>Loading...';
-  //       document.getElementById('save').innerHTML = newHTML;
-  //   },
-  //   success: function(msg) {
-  //
-  //     var newHTML = '<i class="ace-icon fa fa-floppy-o"></i>Save';
-  //     document.getElementById('save').innerHTML = newHTML;
-  //
-  //     if(msg.status == "success"){
-  //       $(grid_selector).trigger("reloadGrid");
-  //       $('#my-modal').modal('hide');
-  //       document.getElementById("form-1").reset()
-  //
-  //     } else {
-  //       alert (msg.msg);
-  //     }
-  //
-  //   },
-  //   error: function(xhr, Status, err) {
-  //     //alert("Terjadi error : "+Status);
-  //     alert (JSON.stringify(xhr));
-  //     alert ("terjadi kesalahan harap hubungi administrator");
-  //   }
-  // });
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -178,8 +176,28 @@ function src_chosen(posdata,val){
     $select_elem.trigger("chosen:updated");
     $select_elem.val(val).trigger("chosen:updated");
   });
-
 };
+
+function src_chosen_full(posdata,items,search){
+  var $select_elem = $("#"+posdata.elm);
+  $select_elem.empty();
+  getparameter(posdata.src,posdata,function(data){
+
+    $select_elem.append('<option value=""></option>');
+    items(data);
+
+    $select_elem.trigger("chosen:updated");
+  });
+
+  $select_elem.change(function(e) {
+    e.preventDefault();
+    posdata.search = $select_elem.val();
+    getparameter(posdata.src,posdata,function(data){
+      search(data);
+    },function(data){})
+  });
+};
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

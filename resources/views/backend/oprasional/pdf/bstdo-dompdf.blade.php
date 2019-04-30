@@ -217,9 +217,7 @@
                     echo '<td class="top right" align="center"'.$mv.'</td>';
                     echo '<td class="top right" align="center"'.$mg.'</td>';
 
-                    echo '<td class="top right" align="center">'.$tundaon.'</td>';
-                    echo '<td class="top right" align="center">'.$tundaoff.'</td>';
-                    echo '<td class="top right" align="center">'.$row->dd.'</td>';
+                    echo '<td class="top right" align="center">'.$row->lstp.'</td>';
                     echo '<td class="top right">&nbsp;'.$row->ket.'</td>';
                     echo '</tr>';
                     $i++;
@@ -254,8 +252,8 @@
 
             <table width="350px">
               <tr>
-                <td class="top left" rowspan="2"> Dibuat Oleh, <br> <br> <br> <u>Maurice Agustavio</u><br>Spv. Oprasional PDP</td>
-                <td class="top right" rowspan="2"> Diterima Oleh,<br><br><br>______________________<br>(keuangan)  </td>
+                <td class="top left" rowspan="2"> Dibuat Oleh, <br> <br> <br> <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u><br>Spv. Oprasional PDP</td>
+                <td class="top right" rowspan="2"> Diterima Oleh,<br><br><br><u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(keuangan)  </td>
                 <td class="top right" align="center" width="100px"> Nomor BSTDO </td>
                 <td class="top right" align="center" width="150px"> none </td>
               </tr>

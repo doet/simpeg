@@ -184,7 +184,7 @@ Terbilang :<br />
     <td align="center" valign="top">
 			<br />
       Manager SDM &amp; Hukum<br /><br /><br /><br /><br />
-			Herny Setiawanti
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		</td>
 	</tr>
 </table>

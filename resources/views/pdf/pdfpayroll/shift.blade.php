@@ -167,7 +167,7 @@ echo '
 		<td align="center" valign="top">Dibuat oleh, <br />
 		Spv. SDM & Hukum<br /><br /><br /><br /><br />Fajar Prasetya</td>
 		<td align="center" valign="top">Diperiksa oleh, <br />Mgr. SDM & Umum<br />
-		<br /><br /><br /><br />Herny Setiawanti</td></tr></table>';
+		<br /><br /><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr></table>';
 	//echo '<div style="page-break-after: always;"></div>';
 
 	function Terbilang($x)

@@ -308,13 +308,14 @@ class OprasionalApiController extends Controller
           $date = strtotime($request->input('date',''));
 
           if($request->input('tunda') !== ''){
-            $tunda = $request->input('tunda');
+            if($request->input('tunda') == 'null') $tunda =''; else $tunda = $request->input('tunda');
             $t = explode(",",$tunda);
             $tunda = array();
             foreach($t as $row) {
               array_push($tunda, $row);
             }
             $tunda = json_encode($tunda);
+          } else {
           }
 
           $tundadate = str_replace('-', ',', $request->input('tundadate',''));

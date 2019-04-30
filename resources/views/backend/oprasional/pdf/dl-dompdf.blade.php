@@ -162,6 +162,7 @@
                     if (strpos($row->jettyCode,'S.')===0) $classJetty = 'kuning'; else $classJetty = '';
                     if ($row->kurs == '$') $kurs = 'ungu'; else $kurs = '';
 
+                    if($row->tunda == '')$row->tunda="['']";
                     $tunda = json_decode($row->tunda);
                     if (in_array('GB', $tunda))$gb = 'GB';else $gb = '';
                     if (in_array('GC', $tunda))$gc = 'GC';else $gc = '';

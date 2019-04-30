@@ -702,7 +702,7 @@
 						getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
 							$('#ppjk').val(data[0].ppjk);
 
-  						$('#date').datepicker("setDate", moment.unix(data[0].date).format("DD MMMM YYYY"));
+  						$('#date_issue').datepicker("setDate", moment.unix(data[0].date_issue).format("DD MMMM YYYY"));
 
 							$('#agen').val(data[0].agens_id).trigger('chosen:updated').trigger("change");
 							$('#kapal').val(data[0].kapals_id).trigger('chosen:updated').trigger("change");

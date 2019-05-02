@@ -524,6 +524,7 @@ class OprasionalApiController extends Controller
               'tb_agens.code as agenCode',
               'tb_kapals.name as kapalsName',
               'tb_jettys.code as jettyCode',
+              'tb_jettys.name as jettyName',
             //   // 'tb_jettys.color as jettyColor',
               'tb_ppjks.*'
             );
@@ -642,6 +643,7 @@ class OprasionalApiController extends Controller
         ->get();
 
       $i=0;
+      // dd($query);
       foreach($query as $row) {
         switch ($datatb) {
           case 'ppjk':   // Variabel Master
@@ -651,7 +653,7 @@ class OprasionalApiController extends Controller
               $row->ppjk,
               $row->agenCode,
               $row->kapalsName,
-              $row->jettyCode,
+              '('.$row->jettyCode.') '.$row->jettyName,
               date("d/m/Y H:i",$row->eta),
               date("d/m/Y H:i",$row->etd),
               $row->asal,

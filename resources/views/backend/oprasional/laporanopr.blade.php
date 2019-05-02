@@ -231,7 +231,7 @@
 
 					<!-- 03 footer -->
 					<div class="modal-footer">
-						<button class="btn btn-sm btn-danger pull-right" id='save'>
+						<button class="btn btn-sm btn-danger pull-right" id='save' disabled>
 								<i class="ace-icon fa fa-floppy-o"></i>Save
 						</button>
 						<button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
@@ -419,6 +419,7 @@
 				$('#agen').val(data[0].agens_id).trigger("chosen:updated");
 				$('#kapal').val(data[0].kapals_id).trigger("chosen:updated");
 				$('#jetty').val(data[0].jettys_id).trigger("chosen:updated");
+				$("#save").prop('disabled', false);
 			}
 		});
 

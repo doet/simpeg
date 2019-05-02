@@ -288,7 +288,7 @@ class OprasionalApiController extends Controller
           DB::commit();
 
           $responce = array(
-            'msg' => $request->input('date_issue',''),
+            'msg' => $request->input('lstp',''),
             'status' => 'success',
           );
 
@@ -353,6 +353,33 @@ class OprasionalApiController extends Controller
         if ($request->input('checked','') == 'true')$lhp = strtotime($request->input('bstdo','')); else $lhp = null;
         $datanya=array(
           'bstdo'=>$lhp,
+        );
+        DB::table('tb_ppjks')->where('id', $request->input('id',''))->update($datanya);
+        //
+        $responce = array(
+          'status' => $request->input(),
+          //"suscces",
+          'msg' => 'ok',
+        );
+      break;
+
+      case 'lstp_ck':
+        if ($request->input('checked','') == 'true')$lhp = strtotime($request->input('lstp_ck','')); else $lhp = null;
+        $datanya=array(
+          'lstp_ck'=>$lhp,
+        );
+        DB::table('tb_ppjks')->where('id', $request->input('id',''))->update($datanya);
+        //
+        $responce = array(
+          'status' => $request->input(),
+          //"suscces",
+          'msg' => 'ok',
+        );
+      break;
+      case 'lstp':
+        $datanya=array(
+          'lstp'=>$request->input('lstp',''),
+          'moring'=>$request->input('moring',''),
         );
         DB::table('tb_ppjks')->where('id', $request->input('id',''))->update($datanya);
         //
@@ -518,6 +545,8 @@ class OprasionalApiController extends Controller
           ->where(function ($query) use ($mulai,$akhir,$request){
               if (array_key_exists("bstdo",$request->input())){
                 $query->where('tb_ppjks.bstdo', strtotime($request->input('bstdo')));
+              } else if (array_key_exists("lstp_ck",$request->input())){
+                $query->where('tb_ppjks.lstp_ck', strtotime($request->input('lstp_ck')));
               } else {
                 $mulai = strtotime($mulai);
                 $akhir = strtotime($akhir);
@@ -657,6 +686,9 @@ class OprasionalApiController extends Controller
               $row->dd,
               $row->ket,
               $row->kurs,
+              $row->lstp,
+              $row->moring,
+              $row->ppjks_id,
             );
             $i++;
           break;

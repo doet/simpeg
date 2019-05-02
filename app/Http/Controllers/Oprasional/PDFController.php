@@ -150,39 +150,46 @@ class PDFController extends Controller
       break;
       case 'bstdo-dompdf':
         $result = DB::table('tb_dls')
-        ->leftJoin('tb_agens', function ($join) {
-          $join->on('tb_dls.agens_id', '=', 'tb_agens.id');
-        })
-        ->leftJoin('tb_kapals', function ($join) {
-          $join->on('tb_dls.kapals_id', '=', 'tb_kapals.id');
-        })
-        ->leftJoin('tb_jettys', function ($join) {
-          $join->on('tb_dls.jetty_id', '=', 'tb_jettys.id');
-        })
-        ->where(function ($query) use ($mulai,$akhir){
-          $mulai = strtotime($mulai);
-          $akhir = strtotime($akhir);
-          if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
-          $query
-            ->where('lhp_date', '>=', $mulai)
-            ->Where('lhp_date', '<', $akhir);
-          // $query->where('lhp_date', '!=', '');
-        })
-        ->select(
-          'tb_agens.code as agenCode',
-          'tb_kapals.value as kapalsName',
-          'tb_kapals.jenis as kapalsJenis',
-          'tb_kapals.grt as kapalsGrt',
-          'tb_kapals.loa as kapalsLoa',
-          'tb_kapals.bendera as kapalsBendera',
-          'tb_jettys.name as jettyName',
-          'tb_jettys.code as jettyCode',
-          // 'tb_jettys.color as jettyColor',
-          'tb_dls.*'
-        )
-        ->orderBy($sidx,$sord)
-        ->orderBy('date', 'asc')
-        ->get();
+          ->join('tb_ppjks', function ($join) {
+            $join->on('tb_ppjks.id','tb_dls.ppjks_id');
+          })
+          ->leftJoin('tb_jettys', function ($join) {
+            $join->on('tb_jettys.id', '=', 'tb_ppjks.jettys_id');
+          })
+          ->leftJoin('tb_kapals', function ($join) {
+            $join->on('tb_kapals.id', 'tb_ppjks.kapals_id');
+          })
+          ->leftJoin('tb_agens', function ($join) {
+            $join->on('tb_agens.id', '=', 'tb_ppjks.agens_id');
+          })
+          ->where(function ($query) use ($mulai,$akhir){
+            $mulai = strtotime($mulai);
+            $akhir = strtotime($akhir);
+            if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
+            $query
+              ->where('lstp_ck', '>=', $mulai)
+              ->Where('lstp_ck', '<', $akhir);
+            // $query->where('lhp_date', '!=', '');
+          })
+          ->select(
+            'tb_jettys.code as jettyCode',
+            'tb_kapals.jenis as kapalsJenis',
+            'tb_agens.code as agenCode',
+            'tb_kapals.name as kapalsName',
+            'tb_kapals.grt as kapalsGrt',
+            'tb_kapals.loa as kapalsLoa',
+            'tb_kapals.bendera as kapalsBendera',
+            'tb_jettys.name as jettyName',
+            // 'tb_jettys.color as jettyColor',
+            // 'tb_kapals.*',
+            // 'tb_agens.*',
+            // 'tb_jettys.*',
+            'tb_ppjks.*',
+            'tb_dls.*'
+          )
+          ->orderBy($sidx,$sord)
+          ->orderBy('date', 'asc')
+          ->get();
         // $result = json_encode(json_decode($qu));
         // $result = json_decode($result,true);
         // if ($result['records']>1) $result = $result['rows']; else $result = array();
@@ -190,7 +197,7 @@ class PDFController extends Controller
         // print_r ($query);
 
         // $mulai = strtotime($mulai);
-        // dd($mulai);
+        // dd($result);
 
         $page = 'backend.oprasional.pdf.'.$request->input('page');
         $nfile = $request->input('file');

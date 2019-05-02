@@ -43,11 +43,181 @@
 @endsection
 
 @section('content')
+<div id="modal" class="modal fade" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<!-- 01 Header -->
+				<form id="form">
+					<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h3 class="smaller lighter blue no-margin">Selec </h3>
+					</div>
+					<!-- 01 end heder -->
+					<!-- 02 body -->
+					<div class="modal-body">
+						{{ csrf_field() }}
+						<!-- <input type="hidden" name="datatb" value="keluarga" />
+						<input type="hidden" id='oper-1' name="oper" value="add" />
+						<input type="hidden" id='id-1' name="id" value="id" /> -->
+						<div class="row">
+							<div class="col-xs-12 col-sm-6">
+
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Agen</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="agen" name="agen"></div>
+										</div>
+									</div><div class="space-2"></div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Date</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-5" type="text" id="date" name="date"></div>
+										</div>
+									</div><div class="space-2"></div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kapal</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="kapal" name="kapal"></div>
+										</div>
+									</div><div class="space-2"></div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Dermaga</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix">
+												<select id="dermaga" name="dermaga" class="chosen-select" data-placeholder="Pilih Nama ..." >
+													<option></option>
+												</select>
+											</div>
+										</div>
+									</div><div class="space-2"></div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">ops</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix">
+												<select id="ops" name="ops" class="chosen-select" data-placeholder="Pilih Nama ..." >
+													<option ></option>
+													<option value="Berth">Berth</option>
+													<option value="Unberth">Unberth</option>
+												</select>
+											</div>
+										</div>
+									</div><div class="space-2"></div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">BAPP</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="bapp" name="bapp"></div>
+										</div>
+									</div><div class="space-2"></div>
+
+
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6">
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PC</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="pc" name="pc"></div>
+										</div>
+									</div><div class="space-2"></div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">On/Off</label>
+										<div class="col-xs-12 col-sm-9">
+												<div class="clearfix"><input class="input-sm col-sm-9" type="text" name="pcdate" id="pcdate" /></div>
+										</div>
+									</div><div class="space-2"></div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tunda</label>
+										<div class="col-xs-12 col-sm-9">
+												<select id="tunda" class="multiselect" multiple="">
+														<option value="GB">GB</option>
+														<option value="GC">GC</option>
+														<option value="GS">GS</option>
+														<option value="MV">MV</option>
+														<option value="MG">MG</option>
+												</select>
+										</div>
+									</div><div class="space-2"></div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">On/Off</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="tundadate" name="tundadate"></div>
+										</div>
+									</div><div class="space-2"></div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">DD</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="dd" name="dd"></div>
+										</div>
+									</div><div class="space-2"></div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Ket</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm" type="text" id="ket" name="ket"></div>
+										</div>
+									</div><div class="space-2"></div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kurs</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="kurs" name="kurs"></div>
+										</div>
+									</div><div class="space-2"></div>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+					<!-- 02 end body -->
+
+					<!-- 03 footer -->
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-danger pull-right" id='save'>
+								<i class="ace-icon fa fa-floppy-o"></i>Save
+						</button>
+						<button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
+								<i class="ace-icon fa fa-times"></i>Close
+						</button>
+					</div>
+					<!-- 03 end footer Form -->
+				</form>
+			</div>
+		</div>
+</div><!-- /.modal-dialog -->
+
+
+
+
       <div class="row">
         <div class="col-xs-12">
           <!-- PAGE CONTENT BEGINS -->
 
-					<div align="center">L H P<br />
+					<div align="center">B S T D O<br />
 							<span class="editable" id="psdate"></span>
 					</div>
 					</br>
@@ -105,7 +275,6 @@
     $.fn.editableform.loading = "<div class='editableform-loading'><i class='ace-icon fa fa-spinner fa-spin fa-2x light-blue'></i></div>";
     $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="ace-icon fa fa-check"></i></button>'+
                                 '<button type="button" class="btn editable-cancel"><i class="ace-icon fa fa-times"></i></button>';
-
 		var setdate = moment().format('D MMMM YYYY');
 		$('#psdate').html(moment().format('D MMMM YYYY'));
 		$('#psdate').editable({
@@ -121,11 +290,30 @@
             //viewformat: 'yyyy-mm-dd'
         }
     }).on('save', function(e, params) {
-        $(grid_selector).jqGrid('setGridParam',{postData:{bstdo:params.newValue}}).trigger("reloadGrid");
-
+        $(grid_selector).jqGrid('setGridParam',{postData:{start:params.newValue}}).trigger("reloadGrid");
+        // $('input[name="start"]').val(params.newValue);
         setdate = params.newValue;
 				get_ppjk(setdate);
     });
+
+		if(!ace.vars['old_ie']) $('#date').datetimepicker({
+			format: 'DD-MM-YYYY HH:mm',//use this option to display seconds
+			date: moment().format('DD MMMM YYYY'),
+			icons: {
+				time: 'fa fa-clock-o',
+				date: 'fa fa-calendar',
+				up: 'fa fa-chevron-up',
+				down: 'fa fa-chevron-down',
+				previous: 'fa fa-chevron-left',
+				next: 'fa fa-chevron-right',
+				today: 'fa fa-arrows ',
+				clear: 'fa fa-trash',
+				close: 'fa fa-times'
+			},
+		}).next().on(ace.click_event, function(){
+				$(this).prev().focus();
+		});
+
 
 		if(!ace.vars['touch']) {
 			$('.chosen-select').chosen({
@@ -172,12 +360,43 @@
 				liGroup: '<li class="multiselect-item multiselect-group"><label></label></li>'
 			},
 			onChange: function(option, checked, select) {
-				postsave = {datatb:'lhp',id:option.val(),checked:checked,bstdo:setdate};
+	    	console.log(option.val()+' - '+checked);
+				postsave = {datatb:'lhp',ppjk:option.val(),checked:checked,lhp_date:setdate};
 				getparameter("{{url('/api/oprasional/cud')}}",postsave,	function(data){
-					$(grid_selector).jqGrid('setGridParam',{postData:{bstdo:setdate}}).trigger("reloadGrid");
+					console.log(setdate);
+					// $(grid_selector).jqGrid('setGridParam',{postData:{start:params.newValue}}).trigger("reloadGrid");
+					$(grid_selector).jqGrid('setGridParam',{postData:{start:setdate}}).trigger("reloadGrid");
 				},function(data){});
 	    }
 		});
+
+		/////////////////////////////////////////////////
+		////////////////////////// combobox select
+		// function get_ppjk(setdate){
+		// 	var posdata= {'datatb':'ppjk', _token:'{{ csrf_token() }}',lhp_date:setdate};
+		// 	var $select_elem = $("#ppjk");
+		// 	// $select_elem.empty();
+		// 	$select_elem.html('');
+		// 	getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
+		// 		// console.log(data);
+		// 		$.each(data, function (idx, obj) {
+		// 			// if (data[idx].bstdo === null){
+		// 			// 	var selected = '';
+		// 			// } else {
+		// 			// 	selected = 'selected';
+		// 			// }
+		// 			//
+		// 			// if ((moment(setdate, "D MMMM YYYY") == data[idx].bstdo+'000') || (data[idx].bstdo === null)){
+		// 				$select_elem.append('<option value="'+data[idx].id+'" '+selected+'>'+data[idx].ppjk+'</option>');
+		// 			// }
+		// 			console.log(data[idx].ppjk);
+		// 		});
+		//
+		// 		$select_elem.multiselect('rebuild');
+		// 	},function(data){});
+		// }
+		//
+		// get_ppjk(setdate);
 
 /////////////////////////////////////////////////
 ////////////////////////// combobox select
@@ -187,25 +406,37 @@
 			// $select_elem.empty();
 			$select_elem.html('');
 			getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
-				// console.log(data);
-				$.each(data, function (idx, obj) {
-					if (data[idx].bstdo === null){
-						var selected = '';
-					} else {
-						selected = 'selected';
-					}
-
-					if ((moment(setdate, "D MMMM YYYY") == data[idx].bstdo+'000') || (data[idx].bstdo === null)){
-						$select_elem.append('<option value="'+data[idx].id+'" '+selected+'>'+data[idx].ppjk+'</option>');
-					}
+				$.each(data.items, function (idx, obj) {
+					// $select_elem.append('<option value="'+idx+'" selected>'+obj+'</option>');
+					$select_elem.append('<option '+data.selected[idx]+' value="'+idx+'">'+obj+'</option>');
 				});
-
+				// console.log();
 				$select_elem.multiselect('rebuild');
 			},function(data){});
 		}
 
-		get_ppjk(setdate);
+		// get_ppjk(setdate);
 //////////////////////////////////////////////
+
+		var postsave;
+		$('#save').click(function(e) {
+			e.preventDefault();
+			postsave += $("#form").serialize()+'&tunda='+$('#tunda').val()+'&datatb=dl';
+			console.log(postsave);
+			getparameter("{{url('/api/oprasional/cud')}}",postsave,	function(data){
+					var newHTML = '<i class="ace-icon fa fa-floppy-o"></i>Save';
+					$('#save').html(newHTML);
+
+					$('#form').trigger("reset");
+
+					$('#grid-table').trigger("reloadGrid", [{current:true}]);
+					$('#modal').modal('hide');
+		// 			// console.log(data);
+			},function(data){
+					var newHTML = '<i class="ace-icon fa fa-spinner fa-spin "></i>Loading...';
+					$('#save').html(newHTML);
+			});
+		});
 
 		var grid_selector = "#grid-table";
 		var pager_selector = "#grid-pager";
@@ -245,7 +476,7 @@
 			caption: "Laporan",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
-      postData: {datatb:'dl',bstdo:setdate,_token:'{{ csrf_token() }}'},
+      postData: {datatb:'dl',start:setdate,_token:'{{ csrf_token() }}'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
 			sortname:'ppjk',
@@ -339,7 +570,7 @@
 		//navButtons
 		jQuery(grid_selector).jqGrid('navGrid',pager_selector,
 			{ 	//navbar options
-				edit: false,
+				edit: true,
 				editicon : 'ace-icon fa fa-pencil blue',
 				add: false,
 				addicon : 'ace-icon fa fa-plus-circle purple',
@@ -426,13 +657,13 @@
 			}
 		).jqGrid('navButtonAdd',pager_selector,{
 				keys: true,
-				caption:"LHP",
+				caption:"bstdo",
 				buttonicon:"ace-icon fa fa-file-pdf-o orange",
 				position:"last",
 				onClickButton:function(){
 					// var data = $(this).jqGrid('getRowData'); Get all data
 
-					$('#dompdf input[name=page]').val('lhp1-dompdf');
+					$('#dompdf input[name=page]').val('bstdo-dompdf');
 					$('#dompdf input[name=start]').val(setdate);
 					$('#dompdf input[name=sidx]').val('ppjk');
 
@@ -575,6 +806,124 @@
 		// })
 
 
+
+		function style_edit_form(form) {
+			//enable datepicker on "sdate" field and switches for "stock" field
+			form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
+
+			form.find('input[name=stock]').addClass('ace ace-switch ace-switch-5').after('<span class="lbl"></span>');
+						 //don't wrap inside a label element, the checkbox value won't be submitted (POST'ed)
+						//.addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
+
+
+			//update buttons classes
+			var buttons = form.next().find('.EditButton .fm-button');
+			buttons.addClass('btn btn-sm').find('[class*="-icon"]').hide();//ui-icon, s-icon
+			buttons.eq(0).addClass('btn-primary').prepend('<i class="ace-icon fa fa-check"></i>');
+			buttons.eq(1).prepend('<i class="ace-icon fa fa-times"></i>')
+
+			buttons = form.next().find('.navButton a');
+			buttons.find('.ui-icon').hide();
+			buttons.eq(0).append('<i class="ace-icon fa fa-chevron-left"></i>');
+			buttons.eq(1).append('<i class="ace-icon fa fa-chevron-right"></i>');
+		}
+
+		function style_delete_form(form) {
+			var buttons = form.next().find('.EditButton .fm-button');
+			buttons.addClass('btn btn-sm btn-white btn-round').find('[class*="-icon"]').hide();//ui-icon, s-icon
+			buttons.eq(0).addClass('btn-danger').prepend('<i class="ace-icon fa fa-trash-o"></i>');
+			buttons.eq(1).addClass('btn-default').prepend('<i class="ace-icon fa fa-times"></i>')
+		}
+
+		function style_search_filters(form) {
+			form.find('.delete-rule').val('X');
+			form.find('.add-rule').addClass('btn btn-xs btn-primary');
+			form.find('.add-group').addClass('btn btn-xs btn-success');
+			form.find('.delete-group').addClass('btn btn-xs btn-danger');
+		}
+		function style_search_form(form) {
+			var dialog = form.closest('.ui-jqdialog');
+			var buttons = dialog.find('.EditTable')
+			buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'ace-icon fa fa-retweet');
+			buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'ace-icon fa fa-comment-o');
+			buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'ace-icon fa fa-search');
+		}
+
+		function beforeDeleteCallback(e) {
+			var form = $(e[0]);
+			if(form.data('styled')) return false;
+
+			form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+			style_delete_form(form);
+
+			form.data('styled', true);
+		}
+
+		function beforeEditCallback(e) {
+			var form = $(e[0]);
+			form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+			style_edit_form(form);
+		}
+
+
+
+		//it causes some flicker when reloading or navigating grid
+		//it may be possible to have some custom formatter to do this as the grid is being created to prevent this
+		//or go back to default browser checkbox styles for the grid
+		function styleCheckbox(table) {
+		/**
+			$(table).find('input:checkbox').addClass('ace')
+			.wrap('<label />')
+			.after('<span class="lbl align-top" />')
+
+
+			$('.ui-jqgrid-labels th[id*="_cb"]:first-child')
+			.find('input.cbox[type=checkbox]').addClass('ace')
+			.wrap('<label />').after('<span class="lbl align-top" />');
+		*/
+		}
+
+
+		//unlike navButtons icons, action icons in rows seem to be hard-coded
+		//you can change them like this in here if you want
+		function updateActionIcons(table) {
+			/**
+			var replacement =
+			{
+				'ui-ace-icon fa fa-pencil' : 'ace-icon fa fa-pencil blue',
+				'ui-ace-icon fa fa-trash-o' : 'ace-icon fa fa-trash-o red',
+				'ui-icon-disk' : 'ace-icon fa fa-check green',
+				'ui-icon-cancel' : 'ace-icon fa fa-times red'
+			};
+			$(table).find('.ui-pg-div span.ui-icon').each(function(){
+				var icon = $(this);
+				var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+				if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+			})
+			*/
+		}
+
+		//replace icons with FontAwesome icons like above
+		function updatePagerIcons(table) {
+			var replacement =
+			{
+				'ui-icon-seek-first' : 'ace-icon fa fa-angle-double-left bigger-140',
+				'ui-icon-seek-prev' : 'ace-icon fa fa-angle-left bigger-140',
+				'ui-icon-seek-next' : 'ace-icon fa fa-angle-right bigger-140',
+				'ui-icon-seek-end' : 'ace-icon fa fa-angle-double-right bigger-140'
+			};
+			$('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+				var icon = $(this);
+				var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+
+				if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+			})
+		}
+
+		function enableTooltips(table) {
+			$('.navtable .ui-pg-button').tooltip({container:'body'});
+			$(table).find('.ui-pg-div').tooltip({container:'body'});
+		}
 
 		//var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
 

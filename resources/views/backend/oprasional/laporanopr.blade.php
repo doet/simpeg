@@ -43,8 +43,6 @@
 @endsection
 
 @section('content')
-{{ date_default_timezone_set('Asia/Jakarta')}}
-
 <div id="modal" class="modal fade" tabindex="-1">
 	<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -536,7 +534,7 @@
 		*/
 
 		jQuery(grid_selector).jqGrid({
-			caption: "Input PPJK",
+			caption: "LIST DL",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
       postData: {datatb:'dl',start:moment().format("DD MMMM YYYY"),_token:'{{ csrf_token() }}'},

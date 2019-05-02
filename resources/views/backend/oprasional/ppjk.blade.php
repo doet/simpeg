@@ -1,7 +1,7 @@
 @extends('backend.app_backend')
 
 @section('css')
-	{{ date_default_timezone_set('Asia/Jakarta') }}
+
 	<!-- page specific plugin styles -->
 	<link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}" />
 	<link href="{{ asset('/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
@@ -331,6 +331,9 @@
     $.fn.editableform.loading = "<div class='editableform-loading'><i class='ace-icon fa fa-spinner fa-spin fa-2x light-blue'></i></div>";
     $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="ace-icon fa fa-check"></i></button>'+
                                 '<button type="button" class="btn editable-cancel"><i class="ace-icon fa fa-times"></i></button>';
+
+		var setdate = moment().format('D MMMM YYYY');
+		$('#psdate').html(moment().format('D MMMM YYYY'));
 		$('#psdate').html();
 		$('#psdate').editable({
         type: 'adate',
@@ -521,7 +524,7 @@
 			caption: "Input PPJK",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
-      postData: {datatb:'ppjk',_token:'{{ csrf_token() }}'},
+      postData: {datatb:'ppjk',start:setdate,_token:'{{ csrf_token() }}'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
 			sortname:'date_issue',

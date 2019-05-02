@@ -309,7 +309,7 @@
               <tr>
                 <td class=""> </td>
                 <td class="">Tanggal</td>
-                <td class="top right left" align="center"><?php echo $mulai;?></td>
+                <td class="top right left" align="center"><?php echo date("d/m/Y",$mulai);?></td>
                 <td class=""> </td>
                 <td class=""> </td>
               </tr>

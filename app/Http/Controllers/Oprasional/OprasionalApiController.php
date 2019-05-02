@@ -326,16 +326,9 @@ class OprasionalApiController extends Controller
         }
 
         $datanya=array(
-          // 'ppjk'=>$request->input('ppjk'),
-          // 'agens_id'=>$request->input('agen',''),
           'date'=>$date,
-          // 'kapals_id'=>$request->input('kapal',''),
-          // 'jetty_id'=>$request->input('dermaga',''),
           'ops'=>$request->input('ops',''),
-          // 'bapp'=>$request->input('bapp',''),
           'pc'=>$request->input('pc',''),
-          // 'pcon'=>strtotime(date($pcdate[0])),
-          // 'pcoff'=>strtotime(date(ltrim($pcdate[1]," "))),
           'tunda'=>$tunda,
           'tundaon'=>$tundaon,
           'tundaoff'=>$tundaoff,
@@ -355,6 +348,21 @@ class OprasionalApiController extends Controller
           'msg' => $request->input('tunda'),
         );
       break;
+
+      case 'lhp':
+        if ($request->input('checked','') == 'true')$lhp = strtotime($request->input('bstdo','')); else $lhp = null;
+        $datanya=array(
+          'bstdo'=>$lhp,
+        );
+        DB::table('tb_ppjks')->where('id', $request->input('id',''))->update($datanya);
+        //
+        $responce = array(
+          'status' => $request->input(),
+          //"suscces",
+          'msg' => 'ok',
+        );
+      break;
+
       case 'mkapal':
         $datanya=array(
           'value'=>$request->input('value',''),
@@ -449,19 +457,7 @@ class OprasionalApiController extends Controller
         );
       break;
 
-      case 'lhp':
-        if ($request->input('checked','') == 'true')$lhp = strtotime($request->input('lhp_date','')); else $lhp = '';
-        $datanya=array(
-          'lhp_date'=>$lhp,
-        );
-        DB::table('tb_dls')->where('ppjk', $request->input('ppjk',''))->update($datanya);
 
-        $responce = array(
-          'status' => $datanya,
-          //"suscces",
-          'msg' => 'ok',
-        );
-      break;
     }
 
     return  Response()->json($responce);
@@ -490,13 +486,13 @@ class OprasionalApiController extends Controller
             ->leftJoin('tb_jettys', function ($join) {
               $join->on('tb_ppjks.jettys_id', '=', 'tb_jettys.id');
             })
-            // ->where(function ($query) use ($mulai,$akhir){
-            //     $mulai = strtotime($mulai);
-            //     $akhir = strtotime($akhir);
-            //     if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
-            //     $query->where('date', '>=', $mulai)
-            //       ->Where('date', '<=', $akhir);
-            // })
+            ->where(function ($query) use ($mulai,$akhir){
+                $mulai = strtotime($mulai);
+                $akhir = strtotime($akhir);
+                if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
+                $query->where('date_issue', '>=', $mulai)
+                  ->Where('date_issue', '<=', $akhir);
+            })
             ->select(
               'tb_agens.code as agenCode',
               'tb_kapals.name as kapalsName',
@@ -519,12 +515,16 @@ class OprasionalApiController extends Controller
           ->leftJoin('tb_jettys', function ($join) {
             $join->on('tb_jettys.id','tb_ppjks.jettys_id');
           })
-          ->where(function ($query) use ($mulai,$akhir){
-              $mulai = strtotime($mulai);
-              $akhir = strtotime($akhir);
-              if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
-              $query->where('tb_dls.date', '>=', $mulai)
-                ->Where('tb_dls.date', '<=', $akhir);
+          ->where(function ($query) use ($mulai,$akhir,$request){
+              if (array_key_exists("bstdo",$request->input())){
+                $query->where('tb_ppjks.bstdo', strtotime($request->input('bstdo')));
+              } else {
+                $mulai = strtotime($mulai);
+                $akhir = strtotime($akhir);
+                if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
+                $query->where('tb_dls.date', '>=', $mulai)
+                  ->Where('tb_dls.date', '<=', $akhir);
+              }
           })
           ->select(
             'tb_agens.code as agenCode',

@@ -228,7 +228,7 @@
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">P Asal</label>
 										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="asal" name="asal"></div>
+											<div class="clearfix"><input class="input-sm col-sm-8" type="text" id="asal" name="asal"></div>
 										</div>
 									</div>
 								</div>
@@ -237,7 +237,7 @@
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">P Tujuan</label>
 										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="tujuan" name="tujuan"></div>
+											<div class="clearfix"><input class="input-sm col-sm-8" type="text" id="tujuan" name="tujuan"></div>
 										</div>
 									</div>
 								</div>
@@ -286,7 +286,7 @@
           <!-- PAGE CONTENT BEGINS -->
 
 					<div align="center">Daftar PPJK<br />
-							<span class="editable" id="psdate"></span>
+							Priode : <span class="editable" id="psdate"></span> s.d. <span class="editable" id="pedate"></span>
 					</div>
 					</br>
 
@@ -332,9 +332,7 @@
     $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="ace-icon fa fa-check"></i></button>'+
                                 '<button type="button" class="btn editable-cancel"><i class="ace-icon fa fa-times"></i></button>';
 
-		var setdate = moment().format('D MMMM YYYY');
-		$('#psdate').html(moment().format('D MMMM YYYY'));
-		$('#psdate').html();
+		$('#psdate').html(moment().startOf('month').format('D MMMM YYYY'));
 		$('#psdate').editable({
         type: 'adate',
         date: {
@@ -353,7 +351,28 @@
         setdate = params.newValue;
     });
 
+		$('#pedate').html(moment().endOf('month').format('D MMMM YYYY'));
+		$('#pedate').editable({
+        type: 'adate',
+        date: {
+            //datepicker plugin options
+                format: 'dd MM yyyy',
+            viewformat: 'dd MM yyyy',
+             weekStart: 1
 
+            //,nativeUI: true//if true and browser support input[type=date], native browser control will be used
+            //,format: 'yyyy-mm-dd',
+            //viewformat: 'yyyy-mm-dd'
+        }
+    }).on('save', function(e, params) {
+        $(grid_selector).jqGrid('setGridParam',{postData:{end:params.newValue}}).trigger("reloadGrid");
+        // $('input[name="start"]').val(params.newValue);
+        setdate = params.newValue;
+    });
+
+		var setdate = moment().format('D MMMM YYYY');
+		var start = $('#psdate').html();
+    var end = $('#pedate').html();
 
 		if(!ace.vars['touch']) {
 			$('.chosen-select').chosen({
@@ -524,15 +543,16 @@
 			caption: "Input PPJK",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
-      postData: {datatb:'ppjk',start:setdate,_token:'{{ csrf_token() }}'},
+      postData: {datatb:'ppjk',start:start,end:end,_token:'{{ csrf_token() }}'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
 			sortname:'date_issue',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:['id', 'PPJK','AGEN','Kapal','Jetty','ETA','ETD','Asal','Tujuan','Etmal','Cargo','Muatan'],
+			colNames:['id','Date Issue','PPJK','AGEN','Kapal','Jetty','ETA','ETD','Asal','Tujuan','Etmal','Cargo','Muatan'],
 			colModel:[
 				{name:'id',index:'id', width:50, fixed:true, sortable:true, resize:false, align: 'center'},
+				{name:'date_issue',index:'date_issue', width:55, sorttype:"int", editable: false},
 				{name:'PPJK',index:'PPJK', width:55, sorttype:"int", editable: false},
 				{name:'AGEN',index:'AGEN',width:45, editable:false, align: 'center'},
 				{name:'Kapal',index:'Kapal', width:80,editable: false},

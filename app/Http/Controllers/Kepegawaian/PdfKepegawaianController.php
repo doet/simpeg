@@ -53,53 +53,54 @@ class PdfKepegawaianController extends Controller
             $download=0;
 
             switch ($category) {
-                case 'rawatjalan1': //Pengajuan Pembiyayaan
-                    $orientation = 'portrait';
-                    $query = mrawatjalan2::orderBy('tb_mrawatjalan2.id_u', 'asc')
-    //                  ->join('tb_kk2 as user1','tb_mrawatjalan2.id_u', '=', 'user1.id_u')
+              case 'rawatjalan1': //Pengajuan Pembiyayaan
+                $orientation = 'portrait';
+                $query = mrawatjalan2::orderBy('tb_mrawatjalan2.id_u', 'asc')
+                //                  ->join('tb_kk2 as user1','tb_mrawatjalan2.id_u', '=', 'user1.id_u')
 
-                        ->join('tb_kk2 as user1', function ($join) {
-                            $join->on('tb_mrawatjalan2.id_u', '=', 'user1.id_u')
-                            ->where('user1.hub', '=', 'karyawan');
-                        })
+                  ->join('tb_kk2 as user1', function ($join) {
+                      $join->on('tb_mrawatjalan2.id_u', '=', 'user1.id_u')
+                      ->where('user1.hub', '=', 'karyawan');
+                  })
 
-                        ->join('tb_kk2 as user2','tb_mrawatjalan2.id_p', '=', 'user2.id')
-                        ->join('tbl_datapegawai','tb_mrawatjalan2.id_u', '=', 'tbl_datapegawai.id')
-                       // ->join('tb_mrawatjalan','tb_mrawatjalan2.id_u', '=', 'tb_mrawatjalan.id')
-                        ->leftJoin('tb_mrawatjalan', function ($join) {
-                            $join->on('tb_mrawatjalan2.id_u', '=', 'tb_mrawatjalan.id_u')
-                            ->where('tb_mrawatjalan.platform', 'like', date('y').'/%');
-                        })
-                        ->orderBy('tb_mrawatjalan2.no', 'asc')
-                        ->where('tb_mrawatjalan2.tgldoc', '>=', strtotime($start))
-                        ->where('tb_mrawatjalan2.tgldoc', '<=', strtotime($end))
-                        ->where('tbl_datapegawai.aktif', '=', 1)
-                        ->select('tb_mrawatjalan2.id as urut','user1.nama as karyawan','user2.nama as pasien','tb_mrawatjalan2.*','tb_mrawatjalan.*','tbl_datapegawai.rekbank')
-                        ->get();
+                  ->join('tb_kk2 as user2','tb_mrawatjalan2.id_p', '=', 'user2.id')
+                  ->join('tbl_datapegawai','tb_mrawatjalan2.id_u', '=', 'tbl_datapegawai.id')
+                 // ->join('tb_mrawatjalan','tb_mrawatjalan2.id_u', '=', 'tb_mrawatjalan.id')
+                  ->leftJoin('tb_mrawatjalan', function ($join) {
+                      $join->on('tb_mrawatjalan2.id_u', '=', 'tb_mrawatjalan.id_u')
+                      ->where('tb_mrawatjalan.platform', 'like', date('y').'/%');
+                  })
+                  ->orderBy('tb_mrawatjalan2.no', 'asc')
+                  ->where('tb_mrawatjalan2.tgldoc', '>=', strtotime($start))
+                  ->where('tb_mrawatjalan2.tgldoc', '<=', strtotime($end))
+                  ->where('tbl_datapegawai.aktif', '=', 1)
+                  ->select('tb_mrawatjalan2.id as urut','user1.nama as karyawan','user2.nama as pasien','tb_mrawatjalan2.*','tb_mrawatjalan.*','tbl_datapegawai.rekbank')
+                  ->get();
 
-                    foreach ($query  as $row) {
-                        $query2 = mrawatjalan2::where('tb_mrawatjalan2.id_u', '=', $row->id_u)
-                            ->where('tb_mrawatjalan2.tgldoc', '<', strtotime($start))
-                            ->join('tb_mrawatjalan','tb_mrawatjalan2.id_u', '=', 'tb_mrawatjalan.id')
-                            //->where('tb_mrawatjalan.platform', 'like', '17/%')
+                foreach ($query  as $row) {
+                  $query2 = mrawatjalan2::where('tb_mrawatjalan2.id_u', '=', $row->id_u)
+                    ->where('tb_mrawatjalan2.tgldoc', '<', strtotime($start))
+                    ->join('tb_mrawatjalan','tb_mrawatjalan2.id_u', '=', 'tb_mrawatjalan.id')
+                    //->where('tb_mrawatjalan.platform', 'like', '17/%')
 
-                            ->get();
-                            $dana=explode('/', $row->platform);
-                            if (empty($dana[1]))$dana[1]=1;
-                            $saldo[$row->id_u] = 0;
-                            if ($saldo[$row->id_u] == 0) $saldo[$row->id_u] = $dana[1];
-                            foreach ($query2  as $row2) {
-                                $saldo[$row->id_u] = $saldo[$row->id_u] - $row2->debit;
-                            }
+                    ->get();
+                    $dana=explode('/', $row->platform);
+                    if (empty($dana[1]))$dana[1]=1;
+                    $saldo[$row->id_u] = 0;
+                    if ($saldo[$row->id_u] == 0) $saldo[$row->id_u] = $dana[1];
+                    foreach ($query2  as $row2) {
+                      $saldo[$row->id_u] = $saldo[$row->id_u] - $row2->debit;
                     }
-                    $view =  \View::make($page, compact('query','saldo','start','end'));
-  //                  return view($page, compact('query','saldo','start','end'));
-                break;
+                }
+                // dd($query);
+                // $view =  \View::make($page, compact('query','saldo','start','end'));
+                                 return view($page, compact('query','saldo','start','end'));
+              break;
                 case 'bulanan2': //Pengajuan Pembiyayaan
                     $orientation = 'portrait';
 
                     $query = mrawatjalan2::orderBy('tb_mrawatjalan2.id_u', 'asc')
-    //                  ->join('tb_kk2 as user1','tb_mrawatjalan2.id_u', '=', 'user1.id_u')
+                    //                  ->join('tb_kk2 as user1','tb_mrawatjalan2.id_u', '=', 'user1.id_u')
 
                         ->join('tb_kk2 as user1', function ($join) {
                             $join->on('tb_mrawatjalan2.id_u', '=', 'user1.id_u')

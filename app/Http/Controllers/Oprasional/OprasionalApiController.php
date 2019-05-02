@@ -45,11 +45,11 @@ class OprasionalApiController extends Controller
         // ->join('tb_jettys', function ($join) {
         //   $join->on('tb_jettys.id','tb_ppjks.jettys_id');
         // })
-        // ->where(function ($query) use ($request){
-        //     if ($request->input('search')){
-        //       $query->where('id',$request->input('search'));
-        //     };
-        // })
+        ->where(function ($query) use ($request){
+          if ($request->input('search')){
+            $query->where('id',$request->input('search'));
+          };
+        })
         ->select(
         //   'tb_agens.code as agenCode',
         //   'tb_kapals.name as kapalsName',
@@ -81,7 +81,7 @@ class OprasionalApiController extends Controller
           // ->join('tb_jettys', function ($join) {
           //   $join->on('tb_dls.jetty_id', '=', 'tb_jettys.id');
           // })
-          // ->select(
+          ->select(
           //   'tb_agens.code as agenCode',
           //   'tb_kapals.name as kapalsName',
           //   'tb_kapals.jenis as kapalsJenis',
@@ -91,8 +91,12 @@ class OprasionalApiController extends Controller
           //   'tb_jettys.name as jettyName',
           //   // 'tb_jettys.color as jettyColor',
           //   'tb_dls.*'
-          // )
-          // ->where('tb_dls.id', $id)
+          )
+          ->where(function ($query) use ($request){
+            if ($request->input('search')){
+              $query->where('tb_dls.id',$request->input('search'));
+            };
+          })
           ->get();
         foreach($query as $row) {
           $responce['ppjk']=$row->ppjks_id;
@@ -650,6 +654,7 @@ class OprasionalApiController extends Controller
             $responce['rows'][$i]['id'] = $row->id;
             $responce['rows'][$i]['cell'] = array(
               $row->id,
+              date("d/m/Y",$row->date_issue),
               $row->ppjk,
               $row->agenCode,
               $row->kapalsName,
@@ -674,7 +679,7 @@ class OprasionalApiController extends Controller
               $row->id,
               $row->ppjk,
               $row->agenCode,
-              date("d/m/y H:i",$row->eta),
+              date("d/m/y H:i",$row->date),
               $kapal,
               AppHelpers::formatNomer($row->kapalsGrt),
               AppHelpers::formatNomer($row->kapalsLoa),

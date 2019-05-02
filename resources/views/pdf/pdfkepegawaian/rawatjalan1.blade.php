@@ -88,6 +88,7 @@
 		$newArray[$row['karyawan']][$i]['rekbank'] = $row['rekbank'];
 		$i++;
 	}
+	// dd(count($newArray));
 	echo '<table>
 	  <tr>
 	    <th class="left top right">Nama Karyawan</th>
@@ -104,36 +105,42 @@
 		foreach($newArray as $key => $val) {
 			$i=0;
 			$total = 0;
-
+			//
 			echo '<tr  bgcolor="';
 				if($no%2==0) echo"#f9f9f9"/*warna genap*/;else echo"#DCDCDC";/*warna ganjil*/
 			echo '">';
-			echo '<td class="left top right" rowspan="'.count($val).'">'.$key.'</td>';
-
-			foreach($val as $key) {
-				$total = $key['debit'] + $total;
-			}
-			foreach($val as $key) {
-				if ($i != 0){
-					echo '<tr  bgcolor="';
-						if($no%2==0) echo"#f9f9f9"/*warna genap*/;else echo"#DCDCDC";/*warna ganjil*/
-					echo '">';
-				}
-				$str=explode('/', $key['no']);
-				echo '
-					<td class="top right">'.$str[1].'/'.$str[0].'</td>
-					<td class="top right">'.$key['pasien'].'</td>
-					<td class="top right number"><span style=" position:absolute;">Rp.</span>'.number_format($key['debit']).'</td>
-					';
-				if ($i == 0){
-					echo '<td class="top right number" rowspan="'.count($val).'"><span style=" position:absolute;">Rp.</span>'.number_format($total).'</td>';
-					echo '<td class="top right" rowspan="'.count($val).'">'.$key['rekbank'].'</td>';
-				}
+			echo '<td class="left top right">'.$key.'</td>';
+			echo '<td class="left top right">'.$key.'</td>';
+			echo '<td class="left top right">'.$key.'</td>';
+			echo '<td class="left top right">'.$key.'</td>';
+			echo '<td class="left top right">'.$key.'</td>';
+			echo '<td class="left top right">'.$key.'</td>';
+			// echo '<td class="left top right" rowspan="'.count($val).'">'.$key.'</td>';
+			//
+			// foreach($val as $key) {
+			// 	$total = $key['debit'] + $total;
+			// }
+			// foreach($val as $key) {
+			// 	if ($i != 0){
+			// 		echo '<tr  bgcolor="';
+			// 			if($no%2==0) echo"#f9f9f9"/*warna genap*/;else echo"#DCDCDC";/*warna ganjil*/
+			// 		echo '">';
+			// 	}
+			// 	$str=explode('/', $key['no']);
+			// 	echo '
+			// 		<td class="top right">'.$str[1].'/'.$str[0].'</td>
+			// 		<td class="top right">'.$key['pasien'].'</td>
+			// 		<td class="top right number"><span style=" position:absolute;">Rp.</span>'.number_format($key['debit']).'</td>
+			// 		';
+			// 	if ($i == 0){
+			// 		echo '<td class="top right number" rowspan="'.count($val).'"><span style=" position:absolute;">Rp.</span>'.number_format($total).'</td>';
+			// 		echo '<td class="top right" rowspan="'.count($val).'">'.$key['rekbank'].'</td>';
+			// 	}
 				echo '</tr>';
 				$i++;
 
-			}
-			$total2 = $total + $total2; $no++;
+			// }
+			// $total2 = $total + $total2; $no++;
 		}
 	}
 	echo '<tr>

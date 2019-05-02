@@ -252,7 +252,7 @@
           <!-- PAGE CONTENT BEGINS -->
 
 					<div align="center">Kegiatan Operator<br />
-							<span class="editable" id="psdate"></span>
+						Priode : <span class="editable" id="psdate"></span> s.d. <span class="editable" id="pedate"></span>
 					</div>
 					</br>
 
@@ -296,9 +296,8 @@
     $.fn.editableform.loading = "<div class='editableform-loading'><i class='ace-icon fa fa-spinner fa-spin fa-2x light-blue'></i></div>";
     $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="ace-icon fa fa-check"></i></button>'+
                                 '<button type="button" class="btn editable-cancel"><i class="ace-icon fa fa-times"></i></button>';
-		var setdate = moment();
 
-		$('#psdate').html(moment().format("DD MMMM YYYY"));
+		$('#psdate').html(moment().startOf('month').format('D MMMM YYYY'));
 		$('#psdate').editable({
         type: 'adate',
         date: {
@@ -316,6 +315,29 @@
         // $('input[name="start"]').val(params.newValue);
         setdate = params.newValue;
     });
+
+		$('#pedate').html(moment().endOf('month').format('D MMMM YYYY'));
+		$('#pedate').editable({
+        type: 'adate',
+        date: {
+            //datepicker plugin options
+                format: 'dd MM yyyy',
+            viewformat: 'dd MM yyyy',
+             weekStart: 1
+
+            //,nativeUI: true//if true and browser support input[type=date], native browser control will be used
+            //,format: 'yyyy-mm-dd',
+            //viewformat: 'yyyy-mm-dd'
+        }
+    }).on('save', function(e, params) {
+        $(grid_selector).jqGrid('setGridParam',{postData:{end:params.newValue}}).trigger("reloadGrid");
+        // $('input[name="start"]').val(params.newValue);
+        setdate = params.newValue;
+    });
+
+		var setdate = moment().format('D MMMM YYYY');
+		var start = $('#psdate').html();
+    var end = $('#pedate').html();
 
 		$('#date').datetimepicker({
 			format: 'DD-MM-YYYY HH:mm',//use this option to display seconds
@@ -538,7 +560,7 @@
 			caption: "LIST DL",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
-      postData: {datatb:'dl',start:moment().format("DD MMMM YYYY"),_token:'{{ csrf_token() }}'},
+      postData: {datatb:'dl',start:start,end:end,_token:'{{ csrf_token() }}'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
 			sortname:'date',
@@ -734,8 +756,9 @@
 					if(gsr){
 						$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
 						$('#ppjk').prop('disabled', true).trigger("chosen:updated");
+						$("#save").prop('disabled', false);
 
-						var posdata= {'datatb':'dl','iddata':gsr};
+						var posdata= {'datatb':'dl','search':gsr};
 						getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
 
 							$('#ppjk').val(data.ppjk).trigger("chosen:updated");

@@ -195,6 +195,27 @@ class OprasionalApiController extends Controller
     $datatb = $request->input('datatb', '');
 
     switch ($datatb) {
+      case 'bstdo':
+        $cari = $request->input('cari');
+        $query = DB::table('tb_ppjks')
+          // ->distinct('code')
+          ->where('bstdo','like',$cari.'%')
+          ->orderBy('bstdo', 'asc')
+          ->get();
+        $i=0;
+        $value_n='';
+        foreach($query as $row) {
+          if ($row->bstdo != $value_n){
+            // $responce[$i] = '('.$row->jenis.') '.$row->value;
+            $responce[$i]['value'] = $row->bstdo;
+            $i++;
+            $value_n=$row->bstdo;
+          }
+        }
+
+
+        if(empty($responce))$responce[0]='null';
+      break;
       case 'agen':
         $cari = $request->input('cari');
         $query = DB::table('tb_agens')
@@ -269,7 +290,7 @@ class OprasionalApiController extends Controller
             'ppjk'      => $request->input('ppjk',''),
             'agens_id'  => $request->input('agen',''),
             'kapals_id' => $request->input('kapal',''),
-            'jettys_id' => $request->input('jetty',''),
+            'jettys_idx' => $request->input('jetty',''),
             'eta'       => AppHelpers::RangeDate($request->input('etad'))['startDate'],
             'etd'       => AppHelpers::RangeDate($request->input('etad'))['endDate'],
             'etmal'     => $request->input('etmal',''),
@@ -284,6 +305,7 @@ class OprasionalApiController extends Controller
 
           $data_dl=array(
             'ppjks_id'   => DB::getPdo()->lastInsertId(),
+            'jettys_id' => $request->input('jetty',''),
             'date'       => AppHelpers::RangeDate($request->input('etad'))['startDate'],
           );
           if ($oper=='add')DB::table('tb_dls')->insert($data_dl);
@@ -304,11 +326,9 @@ class OprasionalApiController extends Controller
           );
         }
       break;
-
       case 'dl':
-      $date = $tunda = $tundaon = $tundaoff = '';
+        $date = $tunda = $tundaon = $tundaoff = '';
         if ($oper!='del'){
-
           $date = strtotime($request->input('date',''));
 
           if($request->input('tunda') !== ''){
@@ -319,7 +339,6 @@ class OprasionalApiController extends Controller
               array_push($tunda, $row);
             }
             $tunda = json_encode($tunda);
-          } else {
           }
 
           $tundadate = str_replace('-', ',', $request->input('tundadate',''));
@@ -327,22 +346,25 @@ class OprasionalApiController extends Controller
           $tundadate = explode(',',$tundadate);
           $tundaon = strtotime($tundadate[0]);
           $tundaoff = strtotime(ltrim($tundadate[1]," "));
+
+          $datanya=array(
+            'jettys_id' =>$request->input('jetty',''),
+            'date'      =>$date,
+            'ops'       =>$request->input('ops',''),
+            'pc'        =>$request->input('pc',''),
+            'tunda'     =>$tunda,
+            'tundaon'   =>$tundaon,
+            'tundaoff'  =>$tundaoff,
+            'dd'        =>$request->input('dd',''),
+            'ket'       =>$request->input('ket',''),
+            'kurs'      =>$request->input('kurs','')
+          );
         }
 
-        $datanya=array(
-          'date'=>$date,
-          'ops'=>$request->input('ops',''),
-          'pc'=>$request->input('pc',''),
-          'tunda'=>$tunda,
-          'tundaon'=>$tundaon,
-          'tundaoff'=>$tundaoff,
-          'dd'=>$request->input('dd',''),
-          'ket'=>$request->input('ket',''),
-          'kurs'=>$request->input('kurs','')
-        );
-
-
-        if ($oper=='add')DB::table('tb_dls')->insert($datanya);
+        if ($oper=='add'){
+          $datanya['ppjks_id']=$request->input('ppjk','');
+          DB::table('tb_dls')->insert($datanya);
+        }
         if ($oper=='edit')DB::table('tb_dls')->where('id', $id)->update($datanya);
         if ($oper=='del')DB::table('tb_dls')->delete($id);
 
@@ -352,11 +374,23 @@ class OprasionalApiController extends Controller
           'msg' => $request->input('tunda'),
         );
       break;
+      case 'dl-bapp':
+        if ($oper=='edit'){
+          $datanya['bapp']=$request->input('bapp','');
+        }
+        DB::table('tb_dls')->where('id', $id)->update($datanya);
+
+        $responce = array(
+          'status' => 'success',
+          //"suscces",
+          'msg' => $id,
+        );
+      break;
 
       case 'lhp':
-        if ($request->input('checked','') == 'true')$lhp = strtotime($request->input('bstdo','')); else $lhp = null;
+        if ($request->input('checked','') == 'true')$lhp = strtotime($request->input('lhp','')); else $lhp = null;
         $datanya=array(
-          'bstdo'=>$lhp,
+          'lhp'=>$lhp,
         );
         DB::table('tb_ppjks')->where('id', $request->input('id',''))->update($datanya);
         //
@@ -367,10 +401,10 @@ class OprasionalApiController extends Controller
         );
       break;
 
-      case 'lstp_ck':
-        if ($request->input('checked','') == 'true')$lhp = strtotime($request->input('lstp_ck','')); else $lhp = null;
+      case 'bstdo':
+        if ($request->input('checked','') == 'true')$bstdo = $request->input('bstdo',''); else $bstdo = null;
         $datanya=array(
-          'lstp_ck'=>$lhp,
+          'bstdo'=>$bstdo,
         );
         DB::table('tb_ppjks')->where('id', $request->input('id',''))->update($datanya);
         //
@@ -515,7 +549,7 @@ class OprasionalApiController extends Controller
               $join->on('tb_ppjks.kapals_id', '=', 'tb_kapals.id');
             })
             ->leftJoin('tb_jettys', function ($join) {
-              $join->on('tb_ppjks.jettys_id', '=', 'tb_jettys.id');
+              $join->on('tb_ppjks.jettys_idx', '=', 'tb_jettys.id');
             })
             ->where(function ($query) use ($mulai,$akhir){
                 $mulai = strtotime($mulai);
@@ -545,13 +579,13 @@ class OprasionalApiController extends Controller
             $join->on('tb_kapals.id','tb_ppjks.kapals_id');
           })
           ->leftJoin('tb_jettys', function ($join) {
-            $join->on('tb_jettys.id','tb_ppjks.jettys_id');
+            $join->on('tb_jettys.id','tb_dls.jettys_id');
           })
           ->where(function ($query) use ($mulai,$akhir,$request){
-              if (array_key_exists("bstdo",$request->input())){
-                $query->where('tb_ppjks.bstdo', strtotime($request->input('bstdo')));
-              } else if (array_key_exists("lstp_ck",$request->input())){
-                $query->where('tb_ppjks.lstp_ck', strtotime($request->input('lstp_ck')));
+              if (array_key_exists("lhp",$request->input())){
+                $query->where('tb_ppjks.lhp', strtotime($request->input('lhp')));
+              } else if (array_key_exists("bstdo",$request->input())){
+                $query->where('tb_ppjks.bstdo', $request->input('bstdo'));
               } else {
                 $mulai = strtotime($mulai);
                 $akhir = strtotime($akhir);
@@ -686,6 +720,7 @@ class OprasionalApiController extends Controller
               $row->kapalsBendera,
               '('. $row->jettyCode .') '.$row->jettyName,
               $row->ops,
+              $row->bapp,
               $row->pc,
               $row->tunda,
               $tundaon,

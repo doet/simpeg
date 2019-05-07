@@ -130,7 +130,7 @@
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Dermaga</label>
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix">
-												<select id="jetty" name="jetty" class="chosen-select" data-placeholder="Dermaga ..." disabled>
+												<select id="jetty" name="jetty" class="chosen-select" data-placeholder="Dermaga ...">
 													<option></option>
 												</select>
 											</div>
@@ -252,7 +252,7 @@
           <!-- PAGE CONTENT BEGINS -->
 
 					<div align="center">Kegiatan Operator<br />
-						Priode : <span class="editable" id="psdate"></span> s.d. <span class="editable" id="pedate"></span>
+						<span class="editable" id="psdate"></span>
 					</div>
 					</br>
 
@@ -261,6 +261,8 @@
 						<input name="page" value="" hidden/>
 						<input name="file" value="" hidden/>
 						<input name="start" value="" hidden/>
+						<input name="sidx" value="" hidden/>
+						<input name="sord" value="" hidden/>
 					</form>
 
 					<table id="grid-table"></table>
@@ -297,7 +299,7 @@
     $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="ace-icon fa fa-check"></i></button>'+
                                 '<button type="button" class="btn editable-cancel"><i class="ace-icon fa fa-times"></i></button>';
 
-		$('#psdate').html(moment().startOf('month').format('D MMMM YYYY'));
+		$('#psdate').html(moment().format('D MMMM YYYY'));
 		$('#psdate').editable({
         type: 'adate',
         date: {
@@ -316,28 +318,8 @@
         setdate = params.newValue;
     });
 
-		$('#pedate').html(moment().endOf('month').format('D MMMM YYYY'));
-		$('#pedate').editable({
-        type: 'adate',
-        date: {
-            //datepicker plugin options
-                format: 'dd MM yyyy',
-            viewformat: 'dd MM yyyy',
-             weekStart: 1
-
-            //,nativeUI: true//if true and browser support input[type=date], native browser control will be used
-            //,format: 'yyyy-mm-dd',
-            //viewformat: 'yyyy-mm-dd'
-        }
-    }).on('save', function(e, params) {
-        $(grid_selector).jqGrid('setGridParam',{postData:{end:params.newValue}}).trigger("reloadGrid");
-        // $('input[name="start"]').val(params.newValue);
-        setdate = params.newValue;
-    });
-
 		var setdate = moment().format('D MMMM YYYY');
 		var start = $('#psdate').html();
-    var end = $('#pedate').html();
 
 		$('#date').datetimepicker({
 			format: 'DD-MM-YYYY HH:mm',//use this option to display seconds
@@ -560,13 +542,13 @@
 			caption: "LIST DL",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
-      postData: {datatb:'dl',start:start,end:end,_token:'{{ csrf_token() }}'},
+      postData: {datatb:'dl',start:start,_token:'{{ csrf_token() }}'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
-			sortname:'date',
+			sortname:'ppjks_id',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:['id', 'PPJK','AGEN','Waktu','Kapal','GRT','LOA','Bendera','Dermaga','OPS','PC','Tunda','ON','OFF','DD','Ket','Kurs'],
+			colNames:['id', 'PPJK','AGEN','Waktu','Kapal','GRT','LOA','Bendera','Dermaga','OPS','bapp','PC','Tunda','ON','OFF','DD','Ket','Kurs'],
 			colModel:[
 				{name:'id',index:'id', width:50, fixed:true, sortable:true, resize:false, align: 'center'},
 				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
@@ -578,6 +560,7 @@
 				{name:'bendera',index:'bendera', width:80, editable: false},
         {name:'dermaga',index:'dermaga', width:100, editable: false},
         {name:'ops',index: 'ops', width: 60,editable: false, align: 'center'},
+				{name:'bapp',index:'bapp',width:50, editable: false, align: 'center',hidden:true},
         {name:'pc',index: 'pc', width: 40, editable: false, align: 'center'},
         {name:'tunda',index:'tunda',width:100, editable: false},
         {name:'on',index:'on',width:40, editable: false},
@@ -739,10 +722,14 @@
 				buttonicon:"ace-icon fa fa-file-pdf-o orange",
 				position:"last",
 				onClickButton:function(){
-					// var data = $(this).jqGrid('getRowData'); Get all data
+					// console.log($(this).getGridParam("postData").sidx);
+					// // var data = $(this).jqGrid('getRowData'); Get all data
 					$('#dompdf input[name=page]').val('dl-dompdf');
 					$('#dompdf input[name=start]').val(setdate);
-					// console.log(setdate);
+					$('#dompdf input[name=sidx]').val($(this).getGridParam("postData").sidx);
+					$('#dompdf input[name=sord]').val($(this).getGridParam("postData").sord);
+					//
+					// // console.log(setdate);
 					$('#dompdf').submit();
 				}
 		}).jqGrid('navButtonAdd',pager_selector,{
@@ -835,8 +822,25 @@
 			onClickButton:function(){
 				$('#form').trigger("reset");
 				$('#ppjk').prop('disabled', false).trigger("chosen:updated");
-				$('#ppjk, #agen, #kapal, #dermaga, #ops').val('').trigger("chosen:updated");
+				$('#ppjk, #agen, #kapal, #jetty, #ops').val('').trigger("chosen:updated");
 				$('#date').data("DateTimePicker").date(moment());
+
+				$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
+				$('#tundadate').daterangepicker({
+					'applyClass' : 'btn-sm btn-success',
+					'cancelClass' : 'btn-sm btn-default',
+					"opens": "center",
+					timePicker: true,
+					timePicker24Hour: true,
+					locale: {
+						applyLabel: 'Apply',
+						cancelLabel: 'Cancel',
+						format: 'DD/MM/YY HH:mm'
+					}
+				})
+				.prev().on(ace.click_event, function(){
+					$(this).next().focus();
+				});
 
 				postsave.post = '';
 				postsave.post += 'oper=add&';

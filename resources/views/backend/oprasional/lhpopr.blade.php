@@ -172,7 +172,7 @@
 				liGroup: '<li class="multiselect-item multiselect-group"><label></label></li>'
 			},
 			onChange: function(option, checked, select) {
-				postsave = {datatb:'lhp',id:option.val(),checked:checked,bstdo:setdate};
+				postsave = {datatb:'lhp',id:option.val(),checked:checked,lhp:setdate};
 				getparameter("{{url('/api/oprasional/cud')}}",postsave,	function(data){
 					$(grid_selector).jqGrid('setGridParam',{postData:{bstdo:setdate}}).trigger("reloadGrid");
 				},function(data){});
@@ -189,13 +189,13 @@
 			getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
 				// console.log(data);
 				$.each(data, function (idx, obj) {
-					if (data[idx].bstdo === null){
+					if (data[idx].lhp === null){
 						var selected = '';
 					} else {
 						selected = 'selected';
 					}
 
-					if ((moment(setdate, "D MMMM YYYY") == data[idx].bstdo+'000') || (data[idx].bstdo === null)){
+					if ((moment(setdate, "D MMMM YYYY") == data[idx].lhp+'000') || (data[idx].lhp === null)){
 						$select_elem.append('<option value="'+data[idx].id+'" '+selected+'>'+data[idx].ppjk+'</option>');
 					}
 				});
@@ -245,13 +245,13 @@
 			caption: "Laporan",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
-      postData: {datatb:'dl',bstdo:setdate,_token:'{{ csrf_token() }}'},
+      postData: {datatb:'dl',lhp:setdate,_token:'{{ csrf_token() }}'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
 			sortname:'ppjk',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','BSTDO'],
+			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','lstpx',"ppjks_id"],
 			colModel:[
 				{name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false, align: 'center'},
 				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
@@ -263,7 +263,7 @@
 				{name:'bendera',index:'bendera', width:80, editable: false},
         {name:'dermaga',index:'dermaga', width:100, editable: false},
         {name:'ops',index: 'ops', width: 60,editable: false, align: 'center'},
-        {name:'bapp',index:'bapp',width:50, editable: false, align: 'center'},
+        {name:'bapp',index:'bapp',width:50, editable: true, align: 'center'},
         {name:'pc',index: 'pc', width: 40, editable: false, align: 'center'},
         {name:'tunda',index:'tunda',width:100, editable: false},
         {name:'on',index:'on',width:40, editable: false},
@@ -271,8 +271,9 @@
         {name:'dd',index:'dd',width:40, editable: false},
         {name:'ket',index:'ket',width:100, editable: false},
         {name:'kurs',index:'kurs',width:50, editable: false, align: 'center'},
-				{name:'lstp',index:'lstp',width:50, editable: true, align: 'center',hidden:true},
-				{name:'bstdo',index:'bstdo',width:50, editable: false, align: 'center',hidden:true}
+				{name:'lstp',index:'lstp',width:50, editable: false, align: 'center',hidden:true},
+				{name:'',index:'lstpx',width:50, editable: false, align: 'center',hidden:true},
+				{name:'ppjks_id',index:'ppjks_id',width:50, editable: false, align: 'center',hidden:true}
 			],
 
 			viewrecords : true,
@@ -339,7 +340,7 @@
 		//navButtons
 		jQuery(grid_selector).jqGrid('navGrid',pager_selector,
 			{ 	//navbar options
-				edit: false,
+				edit: true,
 				editicon : 'ace-icon fa fa-pencil blue',
 				add: false,
 				addicon : 'ace-icon fa fa-plus-circle purple',
@@ -363,7 +364,9 @@
 					style_edit_form(form);
 				},
 				onclickSubmit: function () {
-		      return { datatb:'dl', _token:'<?php echo csrf_token();?>'};
+					var gsr = $(this).jqGrid('getGridParam','selrow');
+					var ppjks_id = $(this).jqGrid('getCell',gsr,'ppjks_id');
+		      return { datatb:'dl-bapp', _token:'<?php echo csrf_token();?>'};
 		    }
 			},
 			{

@@ -3,18 +3,14 @@
 @section('css')
 	<!-- page specific plugin styles -->
 	<link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}" />
-	<link href="{{ asset('/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('/css/daterangepicker.min.css') }}" rel="stylesheet">
 	<link rel="stylesheet" href="{{ asset('css/ui.jqgrid.min.css') }}" />
 
-	<link href="{{ asset('/css/bootstrap-editable.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('css/bootstrap-multiselect.min.css') }}" rel="stylesheet">
+	<link rel="stylesheet" href="{{ asset('/css/bootstrap-editable.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('/css/bootstrap-datepicker3.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('/css/typeahead.js-bootstrap.css') }}" />
 
-	<link href="{{ asset('/css/chosen.min.css') }}" rel="stylesheet">
-	<style>
-		.ui-autocomplete { position: absolute; cursor: default; z-index: 1100 !important;}
-	</style>
+	<link rel="stylesheet" href="{{ asset('/css/chosen.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('css/bootstrap-multiselect.min.css') }}" />
 @endsection
 
 @section('breadcrumb')
@@ -47,33 +43,42 @@
         <div class="col-xs-12">
           <!-- PAGE CONTENT BEGINS -->
 
-					<div align="center">L H P<br />
-							<span class="editable" id="psdate"></span>
-					</div>
-					</br>
 					<form id="dompdf" role="form" method="POST" action="{{ url('oprasional/PDFAdmin') }}" target="_blank">
 						{!! csrf_field() !!}
 						<input name="page" value="" hidden/>
 						<input name="file" value="" hidden/>
 						<input name="start" value="" hidden/>
+						<input name="bstdo" value="" hidden/>
 						<input name="sidx" value="" hidden/>
 					</form>
-					<div class="row">
-						<div class="col-xs-12 col-sm-3">
-							<div class="form-group">
-								<label class="control-label col-xs-12 col-sm-3 no-padding-right">List</label>
 
-								<div class="col-xs-12 col-sm-9">
-									<select id="ppjk" class="multiselect" multiple="">
-										<option value=""></option>
-									</select>
-								</div>
+					<div align="center">BSTDO<br />
+						<span class="editable" id="psdate"></span>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-5">
+							<div class="profile-user-info profile-user-info-striped ">
+									<div class="profile-info-row">
+										<div class="profile-info-name"> No BSTDO </div>
+
+										<div class="profile-info-value">
+											<span id="NoBSTDO" data-pk="1" data-placement="right" data-title="No BSTDO"></span>
+										</div>
+									</div>
+									<div class="profile-info-row">
+										<div class="profile-info-name"> LIST PPJK </div>
+
+										<div class="profile-info-value">
+											<select id="ppjk" class="multiselect" multiple="">
+												<option value=""></option>
+											</select>
+										</div>
+									</div>
 							</div>
 						</div>
-					</diV>
+					</div>
 
 					<table id="grid-table"></table>
-
 					<div id="grid-pager"></div>
           <!-- PAGE CONTENT ENDS -->
         </div><!-- /.col -->
@@ -84,20 +89,19 @@
 	<script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 
 	<script src="{{ asset('/js/moment.min.js') }}"></script>
-	<script src="{{ asset('/js/bootstrap-datepicker.min.js') }}"></script>
-	<script src="{{ asset('/js/bootstrap-datetimepicker.min.js') }}"></script>
-	<script src="{{ asset('/js/daterangepicker.min.js') }}"></script>
-
 	<script src="{{ asset('js/jquery.jqGrid.min.js') }}"></script>
 	<script src="{{ asset('js/grid.locale-en.js') }}"></script>
 
-	<script src="{{ asset('js/bootstrap-multiselect.min.js') }}"></script>
 	<script src="{{ asset('/js/bootstrap-editable.min.js') }}"></script>
 	<script src="{{ asset('/js/ace-editable.min.js') }}"></script>
 
-	<script src="{{ asset('/js/chosen.jquery.min.js') }}"></script>
+	<script src="{{ asset('/js/typeahead.js') }}"></script>
+	<script src="{{ asset('/js/typeaheadjs.js') }}"></script>
+	<script src="{{ asset('/js/bootstrap-datepicker.min.js') }}"></script>
 
-<script type="text/javascript">
+	<script src="{{ asset('/js/chosen.jquery.min.js') }}"></script>
+	<script src="{{ asset('/js/bootstrap-multiselect.min.js') }}"></script>
+	<script type="text/javascript">
 
 	jQuery(function($) {
 		//editables on first profile page
@@ -106,26 +110,64 @@
     $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="ace-icon fa fa-check"></i></button>'+
                                 '<button type="button" class="btn editable-cancel"><i class="ace-icon fa fa-times"></i></button>';
 
-		var setdate = moment().format('D MMMM YYYY');
 		$('#psdate').html(moment().format('D MMMM YYYY'));
 		$('#psdate').editable({
-        type: 'adate',
-        date: {
-            //datepicker plugin options
-                format: 'dd MM yyyy',
-            viewformat: 'dd MM yyyy',
-             weekStart: 1
+				type: 'adate',
+				date: {
+						//datepicker plugin options
+								format: 'dd MM yyyy',
+						viewformat: 'dd MM yyyy',
+						 weekStart: 1
 
-            //,nativeUI: true//if true and browser support input[type=date], native browser control will be used
-            //,format: 'yyyy-mm-dd',
-            //viewformat: 'yyyy-mm-dd'
-        }
-    }).on('save', function(e, params) {
-        $(grid_selector).jqGrid('setGridParam',{postData:{bstdo:params.newValue}}).trigger("reloadGrid");
+						//,nativeUI: true//if true and browser support input[type=date], native browser control will be used
+						//,format: 'yyyy-mm-dd',
+						//viewformat: 'yyyy-mm-dd'
+				}
+		}).on('save', function(e, params) {
+				// $(grid_selector).jqGrid('setGridParam',{postData:{start:params.newValue}}).trigger("reloadGrid");
+				// // $('input[name="start"]').val(params.newValue);
+				setdate = params.newValue;
+		});
+		var setdate = moment().format('D MMMM YYYY');
 
-        setdate = params.newValue;
-				get_ppjk(setdate);
-    });
+		var nobstdo = '';
+		var posdata= {'datatb':'ppjk', _token:'{{ csrf_token() }}'};
+		$.ajax({
+			type: "POST",
+		  url: "{{url('/api/oprasional/json')}}",
+			data: posdata,
+		  async: false,
+		  success: function(data) {
+				var No = new Array();
+				$.each(data, function (idx, obj) {
+					No.push(data[idx].bstdo);
+				});
+				No.sort();
+				$('#NoBSTDO')
+					// .editable('setValue',No[0])
+					.val(No[0])
+					.html(No[0]);
+				nobstdo = $('#NoBSTDO').html();
+				get_ppjk(No[0]);
+		  }
+		});
+
+		$('#NoBSTDO').editable({
+			type:'typeaheadjs',
+			success: function(response, newValue) {
+        // if(response.status == 'error') return response.msg; //msg will be shown in editable form
+				get_ppjk(newValue);
+				$(grid_selector).jqGrid('setGridParam',{postData:{bstdo:newValue}}).trigger("reloadGrid");
+			},
+			typeahead: {
+				name: 'bsto',
+				remote: {
+			    wildcard: '%QUERY',
+			    url: "{{url('/api/oprasional/autoc')}}?datatb=bstdo&cari=%QUERY",
+			  }
+			}
+		});
+
 
 		if(!ace.vars['touch']) {
 			$('.chosen-select').chosen({
@@ -151,10 +193,10 @@
 			});
 
 			$('#chosen-multiple-style .btn').on('click', function(e){
-				var target = $(this).find('input[type=radio]');
-				var which = parseInt(target.val());
-				if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
-				else $('#form-field-select-4').removeClass('tag-input-style');
+				// var target = $(this).find('input[type=radio]');
+				// var which = parseInt(target.val());
+				// if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
+				// else $('#form-field-select-4').removeClass('tag-input-style');
 			});
 		};
 
@@ -172,39 +214,30 @@
 				liGroup: '<li class="multiselect-item multiselect-group"><label></label></li>'
 			},
 			onChange: function(option, checked, select) {
-				postsave = {datatb:'lstp_ck',id:option.val(),checked:checked,lstp_ck:setdate};
+				postsave = {datatb:'bstdo',id:option.val(),checked:checked,bstdo:$('#NoBSTDO').html()};
 				getparameter("{{url('/api/oprasional/cud')}}",postsave,	function(data){
-					$(grid_selector).jqGrid('setGridParam',{postData:{lstp_ck:setdate}}).trigger("reloadGrid");
+					$(grid_selector).jqGrid('setGridParam',{postData:{bstdo:$('#NoBSTDO').html()}}).trigger("reloadGrid");
 				},function(data){});
 	    }
 		});
 
-/////////////////////////////////////////////////
-////////////////////////// combobox select
-		function get_ppjk(setdate){
-			var posdata= {'datatb':'ppjk', _token:'{{ csrf_token() }}',lhp_date:setdate};
+		function get_ppjk(setbstdo){
+			var posdata= {'datatb':'ppjk', _token:'{{ csrf_token() }}'};
 			var $select_elem = $("#ppjk");
 			// $select_elem.empty();
 			$select_elem.html('');
 			getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
-				// console.log(data);
+				var No = new Array();
 				$.each(data, function (idx, obj) {
-					if (data[idx].lstp_ck === null){
-						var selected = '';
-					} else {
-						selected = 'selected';
-					}
-
-					if ((moment(setdate, "D MMMM YYYY") == data[idx].lstp_ck+'000') || (data[idx].lstp_ck === null) && (data[idx].bstdo !== null)){
-						$select_elem.append('<option value="'+data[idx].id+'" '+selected+'>'+data[idx].ppjk+'</option>');
+					if (data[idx].bstdo == setbstdo){
+						$select_elem.append('<option value="'+data[idx].id+'" selected>'+data[idx].ppjk+'</option>');
+					} else if (data[idx].bstdo === null && data[idx].lhp !== null){
+						$select_elem.append('<option value="'+data[idx].id+'">'+data[idx].ppjk+'</option>');
 					}
 				});
-
 				$select_elem.multiselect('rebuild');
 			},function(data){});
 		}
-
-		get_ppjk(setdate);
 //////////////////////////////////////////////
 
 		var grid_selector = "#grid-table";
@@ -242,16 +275,16 @@
 		*/
 
 		jQuery(grid_selector).jqGrid({
-			caption: "Input LSTP",
+			caption: "Input BSTDO",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
-      postData: {datatb:'dl',lstp_ck:setdate,_token:'{{ csrf_token() }}'},
+      postData: {datatb:'dl', bstdo:nobstdo,_token:'{{ csrf_token() }}'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
 			sortname:'ppjk',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','PC','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','Moring','ppjks_id'],
+			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','bapp','PC','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','Moring','ppjks_id'],
 			colModel:[
 				{name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false, align: 'center'},
 				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
@@ -263,6 +296,7 @@
 				{name:'bendera',index:'bendera', width:80, editable: false,hidden:true},
 				{name:'dermaga',index:'dermaga', width:100, editable: false},
 				{name:'ops',index: 'ops', width: 60,editable: false, align: 'center'},
+				{name:'bapp',index:'bapp',width:100, editable: false,hidden:true},
 				{name:'pc',index: 'pc', width: 40, editable: false, align: 'center'},
 				{name:'tunda',index:'tunda',width:100, editable: false},
 				{name:'on',index:'on',width:40, editable: false},
@@ -398,7 +432,7 @@
 					//alert(1);
 				},
 				onclickSubmit: function () {
-		      return { datatb:'dl', _token:'<?php echo csrf_token();?>'};
+		      return { datatb:'dl',_token:'<?php echo csrf_token();?>'};
 		    }
 			},
 			{
@@ -436,6 +470,7 @@
 					// var data = $(this).jqGrid('getRowData'); Get all data
 
 					$('#dompdf input[name=page]').val('bstdo-dompdf');
+					$('#dompdf input[name=bstdo]').val($('#NoBSTDO').html());
 					$('#dompdf input[name=start]').val(setdate);
 					$('#dompdf input[name=sidx]').val('ppjk');
 
@@ -444,142 +479,7 @@
 					$('#dompdf').submit();
 				}
 		})
-		// .jqGrid('navButtonAdd',pager_selector,{
-		// 		keys: true,
-		// 		caption:"DL",
-		// 		buttonicon:"ace-icon fa fa-file-pdf-o orange",
-		// 		position:"last",
-		// 		onClickButton:function(){
-		// 			// var data = $(this).jqGrid('getRowData'); Get all data
-		//
-		// 			$('#dompdf input[name=page]').val('dl-dompdf');
-		// 			$('#dompdf input[name=start]').val(setdate);
-		// 			// console.log(setdate);
-		//
-		// 			$('#dompdf').submit();
-		// 		}
-		// }).jqGrid('navButtonAdd',pager_selector,{
-		// 		keys: true,
-		// 		caption:"",
-		// 		buttonicon:"ace-icon fa fa-pencil blue",
-		// 		position:"first",
-		// 		onClickButton:function(){
-		// 			$('#form').trigger("reset");
-		// 			$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
-		//
-		// 			var gsr = $(this).jqGrid('getGridParam','selrow');
-		// 			if(gsr){
-		// 				var posdata= {'datatb':'loadlaporan','iddata':gsr};
-		// 				getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
-		// 					$('#ppjk').val(data.ppjk);
-		//
-		// 					$( "#agen" ).val(data.agen);
-		//
-		// 					$('#date').data("DateTimePicker").date(data.date);
-		//
-		// 					$('#pcdate').daterangepicker({
-		// 						'applyClass' : 'btn-sm btn-success',
-		// 						'cancelClass' : 'btn-sm btn-default',
-		// 						"opens": "center",
-		// 						timePicker: true,
-		// 						timePicker24Hour: true,
-		// 						startDate: data.pcon,
-		// 						endDate: data.pcoff,
-		// 						locale: {
-		// 								applyLabel: 'Apply',
-		// 								cancelLabel: 'Cancel',
-		// 								format: 'DD/MM/YY HH:mm'
-		// 						}
-		// 					})
-		// 					.prev().on(ace.click_event, function(){
-		// 							$(this).next().focus();
-		// 					});
-		//
-		// 					$('#tundadate').daterangepicker({
-		// 						'applyClass' : 'btn-sm btn-success',
-		// 						'cancelClass' : 'btn-sm btn-default',
-		// 						"opens": "center",
-		// 						timePicker: true,
-		// 						timePicker24Hour: true,
-		// 						startDate: data.tundaon,
-		// 						endDate: data.tundaoff,
-		// 						locale: {
-		// 								applyLabel: 'Apply',
-		// 								cancelLabel: 'Cancel',
-		// 								format: 'DD/MM/YY HH:mm'
-		// 						}
-		// 					})
-		// 					.prev().on(ace.click_event, function(){
-		// 							$(this).next().focus();
-		// 					});
-		//
-		// 					// console.log();
-		// 					$( "#kapal" ).val(data.kapal);
-		//
-		// 					$('#dermaga').val(data.dermaga).trigger("chosen:updated");
-		// 					$('#ops').val(data.ops).trigger("chosen:updated");
-		//
-		// 					$('#bapp').val(data.bapp);
-		// 					$('#pc').val(data.pc);
-		//
-		// 					if (data.tunda != null) {
-		// 						data.tunda.forEach(function(element) {
-		// 							$('option[value="'+element+'"]', $('#tunda')).prop('selected', true);
-		// 						});
-		// 						$('#tunda').multiselect('refresh');
-		// 					// console.log(data.tunda);
-		// 					}
-		// 					$('#dd').val(data.dd);
-		// 					$('#ket').val(data.ket);
-		// 					$('#kurs').val(data.kurs);
-		//
-		// 					postsave ='';
-		// 					postsave += 'oper=edit&id='+gsr+'&';
-		// 				},function(data){ });
-		//
-		// 				$('#modal').modal('show');
-		// 			} else {
-		// 				alert("pilih tabel")
-		// 			}
-		// 		}
-		// }).jqGrid('navButtonAdd',pager_selector,{
-		// 	keys: true,
-		// 	caption:"",
-		// 	buttonicon:"ace-icon fa fa-plus-circle purple",
-		// 	position:"first",
-		// 	onClickButton:function(){
-		// 		$('#form').trigger("reset");
-		// 		$('#date').data("DateTimePicker").date(new Date(setdate));
-		//
-		// 		$('#pcdate, #tundadate').daterangepicker({
-		// 			'applyClass' : 'btn-sm btn-success',
-		// 			'cancelClass' : 'btn-sm btn-default',
-		// 			"opens": "center",
-		// 			timePicker: true,
-		// 			timePicker24Hour: true,
-		// 			startDate: moment().startOf('minute'),
-		// 			endDate: moment().startOf('minute').add(1, 'minute'),
-		// 			locale: {
-		// 					applyLabel: 'Apply',
-		// 					cancelLabel: 'Cancel',
-		// 					format: 'DD/MM/YY HH:mm'
-		// 			}
-		// 		})
-		// 		.prev().on(ace.click_event, function(){
-		// 				$(this).next().focus();
-		// 		});
-		// 		// console.log(moment().startOf('minute'));
-		// 		$('#dermaga, #ops').val('').trigger("chosen:updated");
-		// 		$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
-		// 		postsave ='';
-		// 		postsave += 'oper=add&';
-		// 		$('#modal').modal('show');
-		// 	}
-		// })
 
-
-
-		//var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
 
 		$(document).one('ajaxloadstart.page', function(e) {
 			$.jgrid.gridDestroy(grid_selector);

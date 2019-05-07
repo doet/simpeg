@@ -125,7 +125,7 @@
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">No. Tlp / Hp </label>
 										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-4" type="text" id="tlp" name="tlp" disabled></div>
+											<div class="clearfix"><input class="input-sm col-sm-8" type="text" id="tlp" name="tlp" disabled></div>
 										</div>
 									</div>
 								</div>
@@ -730,7 +730,7 @@
 
 							$('#agen').val(data[0].agens_id).trigger('chosen:updated').trigger("change");
 							$('#kapal').val(data[0].kapals_id).trigger('chosen:updated').trigger("change");
-							$('#jetty').val(data[0].jettys_id).trigger('chosen:updated');
+							$('#jetty').val(data[0].jettys_idx).trigger('chosen:updated');
 
 							$('#etad')
 								.data('daterangepicker')

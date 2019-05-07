@@ -38,44 +38,45 @@ class PDFController extends Controller
     $category = $request->input('page', 'unknow');
     switch ($category) {
       case 'dl-dompdf': //Pengajuan Pembiyayaan
-
         $result = DB::table('tb_dls')
-          ->join('tb_ppjks', function ($join) {
+          ->leftJoin('tb_ppjks', function ($join) {
             $join->on('tb_ppjks.id','tb_dls.ppjks_id');
           })
-          ->leftJoin('tb_jettys', function ($join) {
-            $join->on('tb_jettys.id', '=', 'tb_ppjks.jettys_id');
+          ->leftJoin('tb_agens', function ($join) {
+            $join->on('tb_agens.id','tb_ppjks.agens_id');
           })
           ->leftJoin('tb_kapals', function ($join) {
-            $join->on('tb_kapals.id', 'tb_ppjks.kapals_id');
+            $join->on('tb_kapals.id','tb_ppjks.kapals_id');
           })
-          ->leftJoin('tb_agens', function ($join) {
-            $join->on('tb_agens.id', '=', 'tb_ppjks.agens_id');
+          ->leftJoin('tb_jettys', function ($join) {
+            $join->on('tb_jettys.id','tb_dls.jettys_id');
           })
-        // ->where(function ($query) use ($mulai,$akhir){
-        //   $mulai = strtotime($mulai);
-        //   $akhir = strtotime($akhir);
-        //   if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
-        //   $query->where('date', '>=', $mulai)
-        //     ->Where('date', '<', $akhir);
-        // })
+          ->where(function ($query) use ($mulai,$akhir,$request){
+              if (array_key_exists("bstdo",$request->input())){
+                $query->where('tb_ppjks.bstdo', strtotime($request->input('bstdo')));
+              } else if (array_key_exists("lstp_ck",$request->input())){
+                $query->where('tb_ppjks.lstp_ck', strtotime($request->input('lstp_ck')));
+              } else {
+                $mulai = strtotime($mulai);
+                $akhir = strtotime($akhir);
+                if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
+                $query->where('tb_dls.date', '>=', $mulai)
+                  ->Where('tb_dls.date', '<=', $akhir);
+              }
+          })
           ->select(
-            // 'tb_jettys.color as jettyColor',
-            'tb_dls.*',
-            // 'tb_ppjks.*',
-            'tb_ppjks.id as ppjks_id',
-            'tb_ppjks.ppjk',
-            'tb_jettys.code as jettyCode',
-            'tb_jettys.name as jettyName',
-
-            'tb_kapals.jenis as kapalsJenis',
+            'tb_agens.code as agenCode',
             'tb_kapals.name as kapalsName',
+            'tb_kapals.jenis as kapalsJenis',
             'tb_kapals.grt as kapalsGrt',
             'tb_kapals.loa as kapalsLoa',
             'tb_kapals.bendera as kapalsBendera',
-
-            'tb_agens.code as agenCode'
-            )
+            'tb_jettys.name as jettyName',
+            'tb_jettys.code as jettyCode',
+            // 'tb_jettys.color as jettyColor',
+            'tb_ppjks.*',
+            'tb_dls.*'
+          )
           ->orderBy($sidx, $sord)
           ->get();
           // $result = json_encode(json_decode($qu));
@@ -87,7 +88,7 @@ class PDFController extends Controller
           $page = 'backend.oprasional.pdf.'.$request->input('page');
           $nfile = $request->input('file');
           $orientation = 'landscape';
-
+          // dd($request->input());
           $view =  \View::make($page, compact('result','mulai'))->render();
       break;
       case 'lhp1-dompdf':
@@ -96,7 +97,7 @@ class PDFController extends Controller
             $join->on('tb_ppjks.id','tb_dls.ppjks_id');
           })
           ->leftJoin('tb_jettys', function ($join) {
-            $join->on('tb_jettys.id', '=', 'tb_ppjks.jettys_id');
+            $join->on('tb_jettys.id', '=', 'tb_dls.jettys_id');
           })
           ->leftJoin('tb_kapals', function ($join) {
             $join->on('tb_kapals.id', 'tb_ppjks.kapals_id');
@@ -107,7 +108,7 @@ class PDFController extends Controller
           ->where(function ($query) use ($mulai,$akhir){
             $mulai = strtotime($mulai);
             $akhir = strtotime($akhir);
-            if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
+            if($akhir==0)$akhir = $mulai+(600 * 60 * 24);
             $query
               ->where('bstdo', '>=', $mulai)
               ->Where('bstdo', '<', $akhir);
@@ -154,7 +155,7 @@ class PDFController extends Controller
             $join->on('tb_ppjks.id','tb_dls.ppjks_id');
           })
           ->leftJoin('tb_jettys', function ($join) {
-            $join->on('tb_jettys.id', '=', 'tb_ppjks.jettys_id');
+            $join->on('tb_jettys.id', '=', 'tb_dls.jettys_id');
           })
           ->leftJoin('tb_kapals', function ($join) {
             $join->on('tb_kapals.id', 'tb_ppjks.kapals_id');
@@ -162,13 +163,9 @@ class PDFController extends Controller
           ->leftJoin('tb_agens', function ($join) {
             $join->on('tb_agens.id', '=', 'tb_ppjks.agens_id');
           })
-          ->where(function ($query) use ($mulai,$akhir){
-            $mulai = strtotime($mulai);
-            $akhir = strtotime($akhir);
-            if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
-            $query
-              ->where('lstp_ck', '>=', $mulai)
-              ->Where('lstp_ck', '<', $akhir);
+          ->where(function ($query) use ($mulai,$akhir,$request){
+          //
+            $query->where('bstdo',$request->input('bstdo'));
             // $query->where('lhp_date', '!=', '');
           })
           ->select(
@@ -190,6 +187,8 @@ class PDFController extends Controller
           ->orderBy($sidx,$sord)
           ->orderBy('date', 'asc')
           ->get();
+
+          // dd($request->input());
         // $result = json_encode(json_decode($qu));
         // $result = json_decode($result,true);
         // if ($result['records']>1) $result = $result['rows']; else $result = array();

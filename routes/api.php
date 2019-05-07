@@ -57,7 +57,7 @@ Route::prefix('surat')->group(function(){
 
 Route::prefix('oprasional')->group(function(){
   Route::post('/jqgrid',           'Oprasional\oprasionalApiController@jqgrid');
-  Route::post('/autoc',            'Oprasional\oprasionalApiController@autoc');
+  Route::match(['get', 'post'],	'autoc','Oprasional\oprasionalApiController@autoc');
   Route::post('/json',             'Oprasional\oprasionalApiController@json');
   Route::post('/cud',              'Oprasional\oprasionalApiController@cud');
 });

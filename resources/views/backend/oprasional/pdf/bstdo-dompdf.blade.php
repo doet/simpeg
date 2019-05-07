@@ -220,6 +220,7 @@
                     echo '<td class="top right" align="center">'.$row->lstp.'</td>';
                     echo '<td class="top right">&nbsp;'.$row->ket.'</td>';
                     echo '</tr>';
+                    $bstdo = $row->bstdo;
                     $i++;
                   }
                   ?>
@@ -255,11 +256,11 @@
                 <td class="top left" rowspan="2"> Dibuat Oleh, <br> <br> <br> <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u><br>Spv. Oprasional PDP</td>
                 <td class="top right" rowspan="2"> Diterima Oleh,<br><br><br><u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(keuangan)  </td>
                 <td class="top right" align="center" width="100px"> Nomor BSTDO </td>
-                <td class="top right" align="center" width="150px"> none </td>
+                <td class="top right" align="center" width="150px"> <?php echo $bstdo?> </td>
               </tr>
               <tr>
                 <td class="top right" align="center" > Tanggal Serah Terima </td>
-                <td class="top right" align="center"> none </td>
+                <td class="top right" align="center"> <?php echo $mulai?> </td>
               </tr>
               <tr>
                 <td class="top"></td>

@@ -244,11 +244,11 @@ class OprasionalApiController extends Controller
         $i=0;
         $value_n='';
         foreach($query as $row) {
-          if ($row->value != $value_n){
+          if ($row->name != $value_n){
             // $responce[$i] = '('.$row->jenis.') '.$row->value;
-            $responce[$i] = $row->value;
+            $responce[$i] = $row->name;
             $i++;
-            $value_n=$row->value;
+            $value_n=$row->name;
           }
         }
         if(empty($responce))$responce[0]='Null';
@@ -430,7 +430,7 @@ class OprasionalApiController extends Controller
 
       case 'mkapal':
         $datanya=array(
-          'value'=>$request->input('value',''),
+          'name'=>$request->input('value',''),
           'jenis'=>$request->input('jenis',''),
           'grt'=>$request->input('grt',''),
           'loa'=>$request->input('loa',''),

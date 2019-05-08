@@ -77,17 +77,22 @@
 <?php
 	$newArray = array();
 	$i=0;
-	foreach ($query  as $row) {
+	foreach ($query as $row) {
+		// $newArray['andi'][$i]['id'] = 1;
+
     $newArray[$row->karyawan][$i]['id'] = $row->urut;
 		$newArray[$row->karyawan][$i]['id_u'] = $row->id_u;
     $newArray[$row->karyawan][$i]['no'] = $row->no;
+		$newArray[$row->karyawan][$i]['karyawan'] = $row->karyawan;
 		$newArray[$row->karyawan][$i]['pasien'] = $row->pasien;
 		$newArray[$row->karyawan][$i]['debit'] = $row->debit;
 		$newArray[$row->karyawan][$i]['tgldoc'] = $row->tgldoc;
 		$newArray[$row->karyawan][$i]['platform'] = $row->platform;
 		$newArray[$row->karyawan][$i]['rekbank'] = $row->rekbank;
 		$i++;
+		// print_r($row->urut);
 	}
+	// dd($newArray);
 	echo '<table>
 	  <tr>
 	    <th class="left top right">Nama Karyawan</th>
@@ -101,39 +106,46 @@
 	$total2=0;
 	$no = 0;
 	if (count($newArray) > 0) {
+		dd($newArray);
+		$i=0;
 		foreach($newArray as $key => $val) {
-			$i=0;
 			$total = 0;
-
+			//
 			echo '<tr  bgcolor="';
 				if($no%2==0) echo"#f9f9f9"/*warna genap*/;else echo"#DCDCDC";/*warna ganjil*/
 			echo '">';
-			echo '<td class="left top right" rowspan="'.count($val).'">'.$key.'</td>';
-
-			foreach($val as $key) {
-				$total = $key['debit'] + $total;
-			}
-			foreach($val as $key) {
-				if ($i != 0){
-					echo '<tr  bgcolor="';
-						if($no%2==0) echo"#f9f9f9"/*warna genap*/;else echo"#DCDCDC";/*warna ganjil*/
-					echo '">';
-				}
-				$str=explode('/', $key['no']);
-				echo '
-					<td class="top right">'.$str[1].'/'.$str[0].'</td>
-					<td class="top right">'.$key['pasien'].'</td>
-					<td class="top right number"><span style=" position:absolute;">Rp.</span>'.number_format($key['debit']).'</td>
-					';
-				if ($i == 0){
-					echo '<td class="top right number" rowspan="'.count($val).'"><span style=" position:absolute;">Rp.</span>'.number_format($total).'</td>';
-					echo '<td class="top right" rowspan="'.count($val).'">'.$key['rekbank'].'</td>';
-				}
+			echo '<td class="left top right">'.$newArray[$key][$i]['pasien'].'</td>';
+			echo '<td class="top right">'.$key.'</td>';
+			echo '<td class="top right">'.$i.'</td>';
+			echo '<td class="top right">'.$key.'</td>';
+			echo '<td class="top right">'.$key.'</td>';
+			echo '<td class="top right">'.$key.'</td>';
+			// echo '<td class="left top right" rowspan="'.count($val).'">'.$key.'</td>';
+			//
+			// foreach($val as $key) {
+			// 	$total = $key['debit'] + $total;
+			// }
+			// foreach($val as $key) {
+			// 	if ($i != 0){
+			// 		echo '<tr  bgcolor="';
+			// 			if($no%2==0) echo"#f9f9f9"/*warna genap*/;else echo"#DCDCDC";/*warna ganjil*/
+			// 		echo '">';
+			// 	}
+			// 	$str=explode('/', $key['no']);
+			// 	echo '
+			// 		<td class="top right">'.$str[1].'/'.$str[0].'</td>
+			// 		<td class="top right">'.$key['pasien'].'</td>
+			// 		<td class="top right number"><span style=" position:absolute;">Rp.</span>'.number_format($key['debit']).'</td>
+			// 		';
+			// 	if ($i == 0){
+			// 		echo '<td class="top right number" rowspan="'.count($val).'"><span style=" position:absolute;">Rp.</span>'.number_format($total).'</td>';
+			// 		echo '<td class="top right" rowspan="'.count($val).'">'.$key['rekbank'].'</td>';
+			// 	}
 				echo '</tr>';
 				$i++;
 
-			}
-			$total2 = $total + $total2; $no++;
+			// }
+			// $total2 = $total + $total2; $no++;
 		}
 	}
 	echo '<tr>
@@ -184,7 +196,7 @@ Terbilang :<br />
     <td align="center" valign="top">
 			<br />
       Manager SDM &amp; Hukum<br /><br /><br /><br /><br />
-			Herny Setiawanti
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		</td>
 	</tr>
 </table>
@@ -215,6 +227,7 @@ Terbilang :<br />
 		</tr>
 	';
 	$total2=$no = 0;
+
 	if (count($newArray) > 0) {
 		foreach($newArray as $key => $val) {
 			$i=0;

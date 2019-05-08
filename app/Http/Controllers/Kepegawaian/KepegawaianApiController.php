@@ -90,7 +90,7 @@ class KepegawaianApiController extends Controller
               'updated_at' =>date("Y-m-d H:i:s")
           );
           pegawai::insert($datatambah4);
-          
+
           DB::commit();
 
           $status = 'success';
@@ -274,11 +274,11 @@ class KepegawaianApiController extends Controller
                   ->first();
                   if (!$q['ket'])diagnos::insert(array('ket'=>trim($element),'updated_at' =>date("Y-m-d H:i:s")));
           }
-
+          // dd($no);
           if ($request->input('rj')){
               $cekdb = DB::table('tb_mrawatjalan')
                   ->where('id_u', $request->input('id_u'))
-                  ->where('platform', $no[1].'%')
+                  ->where('platform','like', $no[1].'%')
                   ->first();
 
               $platform = array(

@@ -121,7 +121,7 @@
                   <tr>
                     <td class="top right left" rowspan="2" colspan="17">LEMBAR HASIL PEKERJAAN</td>
                     <td class="top right" colspan="4">Tgl Efektif</td>
-                    <td class="top right"><?php echo $mulai;?></td>
+                    <td class="top right"><?php echo date("d/m/Y",$mulai);?></td>
                   </tr>
                   <tr>
                     <td class="top right" colspan="4">Halaman</td>
@@ -172,8 +172,8 @@
                   $jppjk=0;
                   $jbapp=array();
                   $ppjk = $datetime = '';
-
                   foreach ($result as $row ) {
+                    // dd($row->ppjk);
                     $date = explode(" ", date("d-m-Y H:i",$row->date));
                     if ($ppjk == $row->ppjk){
                       if ($datetime == $row->date){

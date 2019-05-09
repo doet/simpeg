@@ -587,44 +587,45 @@ class OprasionalApiController extends Controller
         break;
         case 'dl':   // Vaariabel Master
           $qu = DB::table('tb_dls')
-          ->leftJoin('tb_ppjks', function ($join) {
-            $join->on('tb_ppjks.id','tb_dls.ppjks_id');
-          })
-          ->leftJoin('tb_agens', function ($join) {
-            $join->on('tb_agens.id','tb_ppjks.agens_id');
-          })
-          ->leftJoin('tb_kapals', function ($join) {
-            $join->on('tb_kapals.id','tb_ppjks.kapals_id');
-          })
-          ->leftJoin('tb_jettys', function ($join) {
-            $join->on('tb_jettys.id','tb_dls.jettys_id');
-          })
-          ->where(function ($query) use ($mulai,$akhir,$request){
-              if (array_key_exists("lhp",$request->input())){
-                $query->where('tb_ppjks.lhp', strtotime($request->input('lhp')));
-              } else if (array_key_exists("bstdo",$request->input())){
-                $query->where('tb_ppjks.bstdo', $request->input('bstdo'));
-              } else {
-                $mulai = strtotime($mulai);
-                $akhir = strtotime($akhir);
-                if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
-                $query->where('tb_dls.date', '>=', $mulai)
-                  ->Where('tb_dls.date', '<=', $akhir);
-              }
-          })
-          ->select(
-            'tb_agens.code as agenCode',
-            'tb_kapals.name as kapalsName',
-            'tb_kapals.jenis as kapalsJenis',
-            'tb_kapals.grt as kapalsGrt',
-            'tb_kapals.loa as kapalsLoa',
-            'tb_kapals.bendera as kapalsBendera',
-            'tb_jettys.name as jettyName',
-            'tb_jettys.code as jettyCode',
-            // 'tb_jettys.color as jettyColor',
-            'tb_ppjks.*',
-            'tb_dls.*'
-          );
+            ->leftJoin('tb_ppjks', function ($join) {
+              $join->on('tb_ppjks.id','tb_dls.ppjks_id');
+            })
+            ->leftJoin('tb_agens', function ($join) {
+              $join->on('tb_agens.id','tb_ppjks.agens_id');
+            })
+            ->leftJoin('tb_kapals', function ($join) {
+              $join->on('tb_kapals.id','tb_ppjks.kapals_id');
+            })
+            ->leftJoin('tb_jettys', function ($join) {
+              $join->on('tb_jettys.id','tb_dls.jettys_id');
+            })
+            ->where(function ($query) use ($mulai,$akhir,$request){
+                if (array_key_exists("lhp",$request->input())){
+                  $query->where('tb_ppjks.lhp', strtotime($request->input('lhp')));
+                } else if (array_key_exists("bstdo",$request->input())){
+                  $query->where('tb_ppjks.bstdo', $request->input('bstdo'));
+                } else {
+                  $mulai = strtotime($mulai);
+                  $akhir = strtotime($akhir);
+                  if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
+                  $query->where('tb_dls.date', '>=', $mulai)
+                    ->Where('tb_dls.date', '<=', $akhir);
+                }
+            })
+            ->select(
+              'tb_agens.code as agenCode',
+              'tb_kapals.name as kapalsName',
+              'tb_kapals.jenis as kapalsJenis',
+              'tb_kapals.grt as kapalsGrt',
+              'tb_kapals.loa as kapalsLoa',
+              'tb_kapals.bendera as kapalsBendera',
+              'tb_jettys.name as jettyName',
+              'tb_jettys.code as jettyCode',
+              // 'tb_jettys.color as jettyColor',
+              'tb_ppjks.*',
+              'tb_dls.*'
+            );
+          $qu->orderBy('ppjk', 'desc');
         break;
         case 'lhp':   // Vaariabel Master
           $qu = DB::table('tb_dls')
@@ -727,6 +728,8 @@ class OprasionalApiController extends Controller
             if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
             if ($row->pcon == '') $pcon=$row->pcon; else $pcon=date("H:i",$row->pcon);
             if ($row->pcoff == '') $pcoff=$row->pcon; else $pcoff=date("H:i",$row->pcoff);
+
+            if ($row->ppjk == '' || $row->ppjk == null) $row->ppjk = ''; else $row->ppjk = substr($row->ppjk, -5);
 
             $responce['rows'][$i]['id'] = $row->id;
             $responce['rows'][$i]['cell'] = array(

@@ -248,10 +248,10 @@
       postData: {datatb:'dl',lhp:setdate,_token:'{{ csrf_token() }}'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
-			sortname:'ppjk',
+			sortname:'date',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','lstpx',"ppjks_id"],
+			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','ON','OFF','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','lstpx',"ppjks_id"],
 			colModel:[
 				{name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false, align: 'center'},
 				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
@@ -265,7 +265,9 @@
         {name:'ops',index: 'ops', width: 60,editable: false, align: 'center'},
         {name:'bapp',index:'bapp',width:50, editable: true, align: 'center'},
         {name:'pc',index: 'pc', width: 40, editable: false, align: 'center'},
-        {name:'tunda',index:'tunda',width:100, editable: false},
+				{name:'on',index:'on',width:40, editable: false,hidden:true},
+        {name:'off',index:'off',width:40, editable: false,hidden:true},
+				{name:'tunda',index:'tunda',width:100, editable: false},
         {name:'on',index:'on',width:40, editable: false},
         {name:'off',index:'off',width:40, editable: false},
         {name:'dd',index:'dd',width:40, editable: false},

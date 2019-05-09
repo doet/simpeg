@@ -107,16 +107,21 @@ class OprasionalApiController extends Controller
           $responce['ops']=$row->ops;
           $responce['pc']=$row->pc;
           $responce['tunda']=json_decode($row->tunda);
+
+          if ($row->tundaon == '')$row->tundaon = $row->date;
+          if ($row->tundaoff == '')$row->tundaoff = $row->date;
+          $responce['tundaon']=date("d/m/y H:i",$row->tundaon);
+          $responce['tundaoff']=date("d/m/y H:i",$row->tundaoff);
+
           if ($row->pcon == '')$row->pcon = $row->date;
           if ($row->pcoff == '')$row->pcoff = $row->date;
+          $responce['pcon']=date("d/m/y H:i",$row->pcon);
+          $responce['pcoff']=date("d/m/y H:i",$row->pcoff);
+
           $responce['dd']=$row->dd;
           $responce['ket']=$row->ket;
           $responce['kurs']=$row->kurs;
           // $responce['bapp']=$row->bapp;
-          // $responce['pcon']=date("d/m/y H:i",$row->pcon);
-          // $responce['pcoff']=date("d/m/y H:i",$row->pcoff);
-          // $responce['tundaon']=date("d/m/y H:i",$row->tundaon);
-          // $responce['tundaoff']=date("d/m/y H:i",$row->tundaoff);
         }
       break;
       case 'agen':
@@ -415,14 +420,27 @@ class OprasionalApiController extends Controller
         );
       break;
       case 'lstp':
-        $datanya=array(
-          'lstp'=>$request->input('lstp',''),
-          'moring'=>$request->input('moring',''),
+        $data_a=array(
+          'lstp'=>$request->input('lstp','')
         );
-        DB::table('tb_ppjks')->where('id', $request->input('id',''))->update($datanya);
+        DB::table('tb_ppjks')->where('id', $request->input('ppjks_id',''))->update($data_a);
+
+
+        $pcdate = str_replace('-', ',', $request->input('pcdate',''));
+        $pcdate = str_replace('/', '-', $pcdate);
+        $pcdate = explode(',',$pcdate);
+        $pcon = strtotime($pcdate[0]);
+        $pcoff = strtotime(ltrim($pcdate[1]," "));
+
+        $data_b=array(
+          'moring'=>$request->input('moring',''),
+          'pcon'   =>$pcon,
+          'pcoff'  =>$pcoff,
+        );
+        DB::table('tb_dls')->where('id', $request->input('dls_id',''))->update($data_b);
         //
         $responce = array(
-          'status' => $request->input(),
+          'status' => 'success',
           //"suscces",
           'msg' => 'ok',
         );
@@ -707,6 +725,8 @@ class OprasionalApiController extends Controller
             if ($row->kapalsJenis == '') $kapal =  $row->kapalsName; else $kapal = '('.$row->kapalsJenis.') '.$row->kapalsName;
             if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
             if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
+            if ($row->pcon == '') $pcon=$row->pcon; else $pcon=date("H:i",$row->pcon);
+            if ($row->pcoff == '') $pcoff=$row->pcon; else $pcoff=date("H:i",$row->pcoff);
 
             $responce['rows'][$i]['id'] = $row->id;
             $responce['rows'][$i]['cell'] = array(
@@ -722,6 +742,8 @@ class OprasionalApiController extends Controller
               $row->ops,
               $row->bapp,
               $row->pc,
+              $pcon,
+              $pcoff,
               $row->tunda,
               $tundaon,
               $tundaoff,

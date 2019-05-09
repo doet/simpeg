@@ -340,23 +340,6 @@
 				$(this).next().focus();
 		});
 
-		$('#date').datetimepicker({
-			format: 'DD-MM-YYYY HH:mm',//use this option to display seconds
-			date:moment(),
-			icons: {
-				time: 'fa fa-clock-o',
-				date: 'fa fa-calendar',
-				up: 'fa fa-chevron-up',
-				down: 'fa fa-chevron-down',
-				previous: 'fa fa-chevron-left',
-				next: 'fa fa-chevron-right',
-				today: 'fa fa-arrows ',
-				clear: 'fa fa-trash',
-				close: 'fa fa-times'
-			},
-		}).next().on(ace.click_event, function(){
-				$(this).prev().focus();
-		});
 		//
 		// $('#on, #off').datetimepicker({
 		// 		format: 'LT',
@@ -548,7 +531,7 @@
 			sortname:'ppjks_id',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:['id', 'PPJK','AGEN','Waktu','Kapal','GRT','LOA','Bendera','Dermaga','OPS','bapp','PC','Tunda','ON','OFF','DD','Ket','Kurs'],
+			colNames:['id', 'PPJK','AGEN','Waktu','Kapal','GRT','LOA','Bendera','Dermaga','OPS','bapp','PC','ON','OFF','Tunda','ON','OFF','DD','Ket','Kurs'],
 			colModel:[
 				{name:'id',index:'id', width:50, fixed:true, sortable:true, resize:false, align: 'center'},
 				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
@@ -562,9 +545,11 @@
         {name:'ops',index: 'ops', width: 60,editable: false, align: 'center'},
 				{name:'bapp',index:'bapp',width:50, editable: false, align: 'center',hidden:true},
         {name:'pc',index: 'pc', width: 40, editable: false, align: 'center'},
+				{name:'on',index:'on',width:40, editable: false,hidden:true},
+				{name:'off',index:'off',width:40, editable: false,hidden:true},
         {name:'tunda',index:'tunda',width:100, editable: false},
-        {name:'on',index:'on',width:40, editable: false},
-        {name:'off',index:'off',width:40, editable: false},
+				{name:'on',index:'on',width:40, editable: false},
+				{name:'off',index:'off',width:40, editable: false},
         {name:'dd',index:'dd',width:40, editable: false},
         {name:'ket',index:'ket',width:100, editable: false},
         {name:'kurs',index:'kurs',width:50, editable: false, align: 'center'}
@@ -781,6 +766,7 @@
 							.prev().on(ace.click_event, function(){
 								$(this).next().focus();
 							});
+							console.log(data.tundaoff);
 
 							$('#dd').val(data.dd);
 							$('#ket').val(data.ket);

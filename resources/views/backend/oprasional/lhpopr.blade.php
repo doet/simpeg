@@ -121,8 +121,8 @@
             //viewformat: 'yyyy-mm-dd'
         }
     }).on('save', function(e, params) {
-        $(grid_selector).jqGrid('setGridParam',{postData:{bstdo:params.newValue}}).trigger("reloadGrid");
-
+        $(grid_selector).jqGrid('setGridParam',{postData:{lhp:params.newValue}}).trigger("reloadGrid");
+				console.log(params.newValue);
         setdate = params.newValue;
 				get_ppjk(setdate);
     });
@@ -444,140 +444,6 @@
 					$('#dompdf').submit();
 				}
 		})
-		// .jqGrid('navButtonAdd',pager_selector,{
-		// 		keys: true,
-		// 		caption:"DL",
-		// 		buttonicon:"ace-icon fa fa-file-pdf-o orange",
-		// 		position:"last",
-		// 		onClickButton:function(){
-		// 			// var data = $(this).jqGrid('getRowData'); Get all data
-		//
-		// 			$('#dompdf input[name=page]').val('dl-dompdf');
-		// 			$('#dompdf input[name=start]').val(setdate);
-		// 			// console.log(setdate);
-		//
-		// 			$('#dompdf').submit();
-		// 		}
-		// }).jqGrid('navButtonAdd',pager_selector,{
-		// 		keys: true,
-		// 		caption:"",
-		// 		buttonicon:"ace-icon fa fa-pencil blue",
-		// 		position:"first",
-		// 		onClickButton:function(){
-		// 			$('#form').trigger("reset");
-		// 			$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
-		//
-		// 			var gsr = $(this).jqGrid('getGridParam','selrow');
-		// 			if(gsr){
-		// 				var posdata= {'datatb':'loadlaporan','iddata':gsr};
-		// 				getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
-		// 					$('#ppjk').val(data.ppjk);
-		//
-		// 					$( "#agen" ).val(data.agen);
-		//
-		// 					$('#date').data("DateTimePicker").date(data.date);
-		//
-		// 					$('#pcdate').daterangepicker({
-		// 						'applyClass' : 'btn-sm btn-success',
-		// 						'cancelClass' : 'btn-sm btn-default',
-		// 						"opens": "center",
-		// 						timePicker: true,
-		// 						timePicker24Hour: true,
-		// 						startDate: data.pcon,
-		// 						endDate: data.pcoff,
-		// 						locale: {
-		// 								applyLabel: 'Apply',
-		// 								cancelLabel: 'Cancel',
-		// 								format: 'DD/MM/YY HH:mm'
-		// 						}
-		// 					})
-		// 					.prev().on(ace.click_event, function(){
-		// 							$(this).next().focus();
-		// 					});
-		//
-		// 					$('#tundadate').daterangepicker({
-		// 						'applyClass' : 'btn-sm btn-success',
-		// 						'cancelClass' : 'btn-sm btn-default',
-		// 						"opens": "center",
-		// 						timePicker: true,
-		// 						timePicker24Hour: true,
-		// 						startDate: data.tundaon,
-		// 						endDate: data.tundaoff,
-		// 						locale: {
-		// 								applyLabel: 'Apply',
-		// 								cancelLabel: 'Cancel',
-		// 								format: 'DD/MM/YY HH:mm'
-		// 						}
-		// 					})
-		// 					.prev().on(ace.click_event, function(){
-		// 							$(this).next().focus();
-		// 					});
-		//
-		// 					// console.log();
-		// 					$( "#kapal" ).val(data.kapal);
-		//
-		// 					$('#dermaga').val(data.dermaga).trigger("chosen:updated");
-		// 					$('#ops').val(data.ops).trigger("chosen:updated");
-		//
-		// 					$('#bapp').val(data.bapp);
-		// 					$('#pc').val(data.pc);
-		//
-		// 					if (data.tunda != null) {
-		// 						data.tunda.forEach(function(element) {
-		// 							$('option[value="'+element+'"]', $('#tunda')).prop('selected', true);
-		// 						});
-		// 						$('#tunda').multiselect('refresh');
-		// 					// console.log(data.tunda);
-		// 					}
-		// 					$('#dd').val(data.dd);
-		// 					$('#ket').val(data.ket);
-		// 					$('#kurs').val(data.kurs);
-		//
-		// 					postsave ='';
-		// 					postsave += 'oper=edit&id='+gsr+'&';
-		// 				},function(data){ });
-		//
-		// 				$('#modal').modal('show');
-		// 			} else {
-		// 				alert("pilih tabel")
-		// 			}
-		// 		}
-		// }).jqGrid('navButtonAdd',pager_selector,{
-		// 	keys: true,
-		// 	caption:"",
-		// 	buttonicon:"ace-icon fa fa-plus-circle purple",
-		// 	position:"first",
-		// 	onClickButton:function(){
-		// 		$('#form').trigger("reset");
-		// 		$('#date').data("DateTimePicker").date(new Date(setdate));
-		//
-		// 		$('#pcdate, #tundadate').daterangepicker({
-		// 			'applyClass' : 'btn-sm btn-success',
-		// 			'cancelClass' : 'btn-sm btn-default',
-		// 			"opens": "center",
-		// 			timePicker: true,
-		// 			timePicker24Hour: true,
-		// 			startDate: moment().startOf('minute'),
-		// 			endDate: moment().startOf('minute').add(1, 'minute'),
-		// 			locale: {
-		// 					applyLabel: 'Apply',
-		// 					cancelLabel: 'Cancel',
-		// 					format: 'DD/MM/YY HH:mm'
-		// 			}
-		// 		})
-		// 		.prev().on(ace.click_event, function(){
-		// 				$(this).next().focus();
-		// 		});
-		// 		// console.log(moment().startOf('minute'));
-		// 		$('#dermaga, #ops').val('').trigger("chosen:updated");
-		// 		$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
-		// 		postsave ='';
-		// 		postsave += 'oper=add&';
-		// 		$('#modal').modal('show');
-		// 	}
-		// })
-
-
 
 		//var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
 

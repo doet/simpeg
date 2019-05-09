@@ -7,6 +7,7 @@
 
 	<link rel="stylesheet" href="{{ asset('/css/bootstrap-editable.min.css') }}" />
 	<link rel="stylesheet" href="{{ asset('/css/bootstrap-datepicker3.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('/css/daterangepicker.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/css/typeahead.js-bootstrap.css') }}" />
 
 	<link rel="stylesheet" href="{{ asset('/css/chosen.min.css') }}" />
@@ -39,6 +40,75 @@
 @endsection
 
 @section('content')
+<div id="modal" class="modal fade" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<!-- 01 Header -->
+				<form id="form">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h3 class="smaller lighter blue no-margin">Form Laporan </h3>
+					</div>
+					<!-- 01 end heder -->
+					<!-- 02 body -->
+					<div class="modal-body">
+						{{ csrf_field() }}
+						<!-- <input type="hidden" name="datatb" value="keluarga" />
+						<input type="hidden" id='oper-1' name="oper" value="add" />
+						<input type="hidden" id='id-1' name="id" value="id" /> -->
+						<div class="row">
+							<div class="col-xs-12 col-sm-6">
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PC On/Off</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="pcdate" name="pcdate"></div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">LSTP</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm" type="text" id="lstp" name="lstp"></div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Moring</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="moring" name="moring"></div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+							</div>
+						</div>
+
+					</div>
+					<!-- 02 end body -->
+
+					<!-- 03 footer -->
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-danger pull-right" id='save'>
+								<i class="ace-icon fa fa-floppy-o"></i>Save
+						</button>
+						<button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
+								<i class="ace-icon fa fa-times"></i>Close
+						</button>
+					</div>
+					<!-- 03 end footer Form -->
+				</form>
+			</div>
+		</div>
+</div><!-- /.modal-dialog -->
+
       <div class="row">
         <div class="col-xs-12">
           <!-- PAGE CONTENT BEGINS -->
@@ -98,6 +168,7 @@
 	<script src="{{ asset('/js/typeahead.js') }}"></script>
 	<script src="{{ asset('/js/typeaheadjs.js') }}"></script>
 	<script src="{{ asset('/js/bootstrap-datepicker.min.js') }}"></script>
+	<script src="{{ asset('/js/daterangepicker.min.js') }}"></script>
 
 	<script src="{{ asset('/js/chosen.jquery.min.js') }}"></script>
 	<script src="{{ asset('/js/bootstrap-multiselect.min.js') }}"></script>
@@ -130,13 +201,13 @@
 		});
 		var setdate = moment().format('D MMMM YYYY');
 
-		var nobstdo = '';
+		var nobstdo = 0;
 		var posdata= {'datatb':'ppjk', _token:'{{ csrf_token() }}'};
 		$.ajax({
 			type: "POST",
 		  url: "{{url('/api/oprasional/json')}}",
 			data: posdata,
-		  async: false,
+		  // async: false,
 		  success: function(data) {
 				var No = new Array();
 				$.each(data, function (idx, obj) {
@@ -144,11 +215,18 @@
 				});
 				No.sort();
 				$('#NoBSTDO')
-					// .editable('setValue',No[0])
+					.editable('setValue',No[0])
 					.val(No[0])
 					.html(No[0]);
-				nobstdo = $('#NoBSTDO').html();
+
 				get_ppjk(No[0]);
+				// console.log(No[0]);
+				// window.onload = function () {
+					setTimeout(function() {
+						$(grid_selector).jqGrid('setGridParam',{postData:{bstdo:No[0]}}).trigger("reloadGrid");
+						// alert('test');
+					}, 500);
+		    // }
 		  }
 		});
 
@@ -238,6 +316,16 @@
 				$select_elem.multiselect('rebuild');
 			},function(data){});
 		}
+
+		var postsave={};
+		postsave.url = "{{url('/api/oprasional/cud')}}";
+		postsave.grid = '#grid-table';
+		postsave.modal = '#modal';
+		$('#save').click(function(e) {
+			e.preventDefault();
+			postsave.post += $("#form").serialize()+'&datatb=lstp';
+			SaveGrid(postsave);
+		});
 //////////////////////////////////////////////
 
 		var grid_selector = "#grid-table";
@@ -257,7 +345,7 @@
 					$(grid_selector).jqGrid( 'setGridWidth', parent_column.width() );
 				}, 20);
 			}
-			})
+		})
 
 		//if your grid is inside another element, for example a tab pane, you should use its parent's width:
 		/**
@@ -284,7 +372,7 @@
 			sortname:'ppjk',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','bapp','PC','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','Moring','ppjks_id'],
+			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','bapp','PC','ON','OFF','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','Moring','ppjks_id'],
 			colModel:[
 				{name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false, align: 'center'},
 				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
@@ -298,9 +386,11 @@
 				{name:'ops',index: 'ops', width: 60,editable: false, align: 'center'},
 				{name:'bapp',index:'bapp',width:100, editable: false,hidden:true},
 				{name:'pc',index: 'pc', width: 40, editable: false, align: 'center'},
-				{name:'tunda',index:'tunda',width:100, editable: false},
 				{name:'on',index:'on',width:40, editable: false},
 				{name:'off',index:'off',width:40, editable: false},
+				{name:'tunda',index:'tunda',width:100, editable: false},
+				{name:'on',index:'on',width:40, editable: false,hidden:true},
+				{name:'off',index:'off',width:40, editable: false,hidden:true},
 				{name:'dd',index:'dd',width:40, editable: false},
 				{name:'ket',index:'ket',width:100, editable: false},
 				{name:'kurs',index:'kurs',width:50, editable: false, align: 'center'},
@@ -373,7 +463,7 @@
 		//navButtons
 		jQuery(grid_selector).jqGrid('navGrid',pager_selector,
 			{ 	//navbar options
-				edit: true,
+				edit: false,
 				editicon : 'ace-icon fa fa-pencil blue',
 				add: false,
 				addicon : 'ace-icon fa fa-plus-circle purple',
@@ -400,7 +490,7 @@
 					var gsr = $(this).jqGrid('getGridParam','selrow');
 					var ppjks_id = $(this).jqGrid('getCell',gsr,'ppjks_id');
 
-		      return { datatb:'lstp', id:ppjks_id, _token:'<?php echo csrf_token();?>'};
+		      return { datatb:'lstp', ppjks_id:ppjks_id,dls_id:gsr,_token:'<?php echo csrf_token();?>'};
 		    }
 			},
 			{
@@ -462,6 +552,50 @@
 				}
 			}
 		).jqGrid('navButtonAdd',pager_selector,{
+				keys: true,
+				caption:"",
+				buttonicon:"ace-icon fa fa-pencil blue",
+				position:"first",
+				onClickButton:function(){
+					$('#form').trigger("reset");
+					//
+					var gsr = $(this).jqGrid('getGridParam','selrow');
+					if(gsr){
+						var ppjks_id = $(this).jqGrid('getCell',gsr,'ppjks_id');
+						var lstp = $(this).jqGrid('getCell',gsr,'lstp');
+						var moring = $(this).jqGrid('getCell',gsr,'moring');
+						$('#lstp').val(lstp);
+						$('#moring').val(moring);
+
+						var posdata= {'datatb':'dl','search':gsr};
+						getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
+							$('#pcdate').daterangepicker({
+								'applyClass' : 'btn-sm btn-success',
+								'cancelClass' : 'btn-sm btn-default',
+								"opens": "center",
+								timePicker: true,
+								timePicker24Hour: true,
+								startDate: data.pcon,
+								endDate: data.pcoff,
+								locale: {
+									applyLabel: 'Apply',
+									cancelLabel: 'Cancel',
+									format: 'DD/MM/YY HH:mm'
+								}
+							})
+							.prev().on(ace.click_event, function(){
+								$(this).next().focus();
+							});
+							console.log(data.pcon);
+						});
+						postsave.post = '';
+						postsave.post += 'oper=edit&dls_id='+gsr+'&ppjks_id='+ppjks_id+'&';
+						$('#modal').modal('show');
+					} else {
+						alert("pilih tabel")
+					}
+				}
+		}).jqGrid('navButtonAdd',pager_selector,{
 				keys: true,
 				caption:"bstdo",
 				buttonicon:"ace-icon fa fa-file-pdf-o orange",

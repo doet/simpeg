@@ -274,7 +274,6 @@ class KepegawaianApiController extends Controller
                   ->first();
                   if (!$q['ket'])diagnos::insert(array('ket'=>trim($element),'updated_at' =>date("Y-m-d H:i:s")));
           }
-          // dd($no);
           if ($request->input('rj')){
               $cekdb = DB::table('tb_mrawatjalan')
                   ->where('id_u', $request->input('id_u'))
@@ -287,11 +286,11 @@ class KepegawaianApiController extends Controller
                   'updated_at'=>date("Y-m-d H:i:s")
               );
               if ($cekdb){
-                  DB::table('tb_mrawatjalan')
-                      ->where('id', $request->input('id_u'))
-                      ->update($platform);
+                $update = DB::table('tb_mrawatjalan')
+                  ->where('id', $cekdb->id)
+                  ->update($platform);
               } else {
-                  DB::table('tb_mrawatjalan')->insert($platform);
+                DB::table('tb_mrawatjalan')->insert($platform);
               }
           }
 

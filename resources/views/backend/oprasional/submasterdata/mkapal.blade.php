@@ -63,7 +63,7 @@
           //   //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
           // }
         },
-				{name:'value',index:'value', width:150, editable: true},
+				{name:'name',index:'name', width:150, editable: true},
 				{name:'bendera',index:'bendera', width:100, editable: true},
 				{name:'jenis',index:'jenis', width:80, editable: true},
 				{name:'grt',index:'grt', width:60, editable: true},

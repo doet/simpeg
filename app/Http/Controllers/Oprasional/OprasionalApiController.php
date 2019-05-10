@@ -448,7 +448,7 @@ class OprasionalApiController extends Controller
 
       case 'mkapal':
         $datanya=array(
-          'name'=>$request->input('value',''),
+          'name'=>$request->input('name',''),
           'jenis'=>$request->input('jenis',''),
           'grt'=>$request->input('grt',''),
           'loa'=>$request->input('loa',''),

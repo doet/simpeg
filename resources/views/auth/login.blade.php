@@ -33,6 +33,15 @@
 		<script src="{{asset('js/html5shiv.min.js')}}"></script>
 		<script src="{{asset('js/respond.min.js')}}"></script>
 		<![endif]-->
+		<!-- <style>
+			html {
+		    background: url(public/images/bg.jpeg) no-repeat center center fixed;
+		    -webkit-background-size: cover;
+		    -moz-background-size: cover;
+		    -o-background-size: cover;
+		    background-size: cover;
+			}
+		</style> -->
 	</head>
 
 	<body class="login-layout light-login">
@@ -42,12 +51,13 @@
 									<div class="col-sm-10 col-sm-offset-1">
 											<div class="login-container">
 												<div class="center">
-														<h1>
+														<!-- <h1>
 																<i class="ace-icon fa fa-leaf green"></i>
 																<span class="red">Ace</span>
 																<span class="grey" id="id-text2">Application</span>
-														</h1>
-														<h4 class="blue" id="id-company-text">&copy; Company Name</h4>
+														</h1> -->
+														<img src="{{ url('/public/images/pcm.png') }}" style="margin-top: 25px;"/>
+														<h4 class="blue" id="id-company-text">PT. Pelabuhan Cilegon Mandiri</h4>
 												</div>
 
 													<div class="space-6"></div>
@@ -58,7 +68,7 @@
 																<div class="widget-main">
 																	<h4 class="header blue lighter bigger">
 																		<i class="ace-icon fa fa-coffee green"></i>
-																		Please Enter Your Information
+																		Masukan Informasi Anda
 																	</h4>
 																					<div class="space-6"></div>
 

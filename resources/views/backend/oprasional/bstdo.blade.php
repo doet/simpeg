@@ -60,9 +60,19 @@
 							<div class="col-xs-12 col-sm-6">
 								<div class="row">
 									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tunda On/Off</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="tundadate" name="tundadate" readonly></div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+								<div class="row">
+									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PC On/Off</label>
 										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="pcdate" name="pcdate"></div>
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="pcdate" name="pcdate" readonly></div>
 										</div>
 									</div>
 								</div>
@@ -73,16 +83,6 @@
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">LSTP</label>
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix"><input class="input-sm" type="text" id="lstp" name="lstp"></div>
-										</div>
-									</div>
-								</div>
-								<div class="space-2"></div>
-
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Moring</label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="moring" name="moring"></div>
 										</div>
 									</div>
 								</div>
@@ -139,7 +139,7 @@
 										<div class="profile-info-name"> LIST PPJK </div>
 
 										<div class="profile-info-value">
-											<select id="ppjk" class="multiselect" multiple="">
+											<select id="ppjk" class="multiselect" multiple="" disabled>
 												<option value=""></option>
 											</select>
 										</div>
@@ -214,19 +214,20 @@
 					No.push(data[idx].bstdo);
 				});
 				No.sort();
-				$('#NoBSTDO')
+				if (No[0]!==null){
+					$('#NoBSTDO')
 					.editable('setValue',No[0])
 					.val(No[0])
 					.html(No[0]);
 
-				get_ppjk(No[0]);
-				// console.log(No[0]);
-				// window.onload = function () {
+					get_ppjk(No[0]);
+					// console.log(No[0]);
+					// window.onload = function () {
 					setTimeout(function() {
 						$(grid_selector).jqGrid('setGridParam',{postData:{bstdo:No[0]}}).trigger("reloadGrid");
 						// alert('test');
 					}, 500);
-		    // }
+				}
 		  }
 		});
 
@@ -300,21 +301,26 @@
 		});
 
 		function get_ppjk(setbstdo){
+			console.log(setbstdo);
 			var posdata= {'datatb':'ppjk', _token:'{{ csrf_token() }}'};
 			var $select_elem = $("#ppjk");
-			// $select_elem.empty();
-			$select_elem.html('');
-			getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
-				var No = new Array();
-				$.each(data, function (idx, obj) {
-					if (data[idx].bstdo == setbstdo){
-						$select_elem.append('<option value="'+data[idx].id+'" selected>'+data[idx].ppjk+'</option>');
-					} else if (data[idx].bstdo === null && data[idx].lhp !== null){
-						$select_elem.append('<option value="'+data[idx].id+'">'+data[idx].ppjk+'</option>');
-					}
-				});
-				$select_elem.multiselect('rebuild');
-			},function(data){});
+			if (setbstdo===''){
+				$select_elem.multiselect('disable');
+			} else {
+				// $select_elem.empty();
+				$select_elem.html('');
+				getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
+					var No = new Array();
+					$.each(data, function (idx, obj) {
+						if (data[idx].bstdo == setbstdo){
+							$select_elem.append('<option value="'+data[idx].id+'" selected>'+data[idx].ppjk+'</option>');
+						} else if (data[idx].bstdo === null && data[idx].lhp !== null){
+							$select_elem.append('<option value="'+data[idx].id+'">'+data[idx].ppjk+'</option>');
+						}
+					});
+					$select_elem.multiselect('rebuild');
+				},function(data){});
+			}
 		}
 
 		var postsave={};
@@ -569,6 +575,24 @@
 
 						var posdata= {'datatb':'dl','search':gsr};
 						getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
+							$('#tundadate').daterangepicker({
+								'applyClass' : 'btn-sm btn-success',
+								'cancelClass' : 'btn-sm btn-default',
+								"opens": "center",
+								timePicker: true,
+								timePicker24Hour: true,
+								startDate: data.tundaon,
+								endDate: data.tundaoff,
+								locale: {
+									applyLabel: 'Apply',
+									cancelLabel: 'Cancel',
+									format: 'DD/MM/YY HH:mm'
+								}
+							})
+							.prev().on(ace.click_event, function(){
+								$(this).next().focus();
+							});
+
 							$('#pcdate').daterangepicker({
 								'applyClass' : 'btn-sm btn-success',
 								'cancelClass' : 'btn-sm btn-default',

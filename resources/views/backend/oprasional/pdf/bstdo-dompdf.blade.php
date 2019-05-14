@@ -182,7 +182,7 @@
                     if (!in_array($row->bapp,$jbapp) && $row->bapp!='')$jbapp[]=$row->bapp;
 
                     if (strpos($row->jettyCode,'S.')===0) $classJetty = 'kuning'; else $classJetty = '';
-                    if ($row->kurs == '$') $kurs = 'ungu'; else $kurs = '';
+                    // if ($row->kurs == '$') $kurs = 'ungu'; else $kurs = '';
 
                     $tunda = json_decode($row->tunda);
                     if (in_array('GB', $tunda))$gb = 'GB';else $gb = '';

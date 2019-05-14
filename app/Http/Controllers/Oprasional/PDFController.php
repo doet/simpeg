@@ -88,7 +88,7 @@ class PDFController extends Controller
           $page = 'backend.oprasional.pdf.'.$request->input('page');
           $nfile = $request->input('file');
           $orientation = 'landscape';
-          // dd($request->input());
+          // dd($result);
           $view =  \View::make($page, compact('result','mulai'))->render();
       break;
       case 'lhp1-dompdf':

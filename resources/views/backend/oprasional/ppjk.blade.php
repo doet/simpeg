@@ -213,6 +213,23 @@
 									</div>
 								</div>
 								<div class="space-2"></div>
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Rute</label>
+										<div class="col-xs-12 col-sm-6">
+											<div class="clearfix">
+												<select id="rute" name="rute" class="chosen-select" data-placeholder="Rute ..." >
+													<option ></option>
+													<option value="Rp">Domestik</option>
+													<option value="$">Internasional</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Etmal</label>
@@ -552,16 +569,16 @@
 			colNames:['id','Date Issue','PPJK','AGEN','Kapal','Jetty','ETA','ETD','Asal','Tujuan','Etmal','Cargo','Muatan'],
 			colModel:[
 				{name:'id',index:'id', width:50, fixed:true, sortable:true, resize:false, align: 'center'},
-				{name:'date_issue',index:'date_issue', width:55, sorttype:"int", editable: false},
-				{name:'PPJK',index:'PPJK', width:55, sorttype:"int", editable: false},
-				{name:'AGEN',index:'AGEN',width:45, editable:false, align: 'center'},
+				{name:'date_issue',index:'date_issue', width:65, sorttype:"int", editable: false},
+				{name:'PPJK',index:'PPJK', width:40, sorttype:"int", editable: false},
+				{name:'AGEN',index:'AGEN',width:40, editable:false, align: 'center'},
 				{name:'Kapal',index:'Kapal', width:80,editable: false},
 				{name:'Jetty',index:'Jetty', width:80, editable: false},
 				{name:'ETA',index:'ETA', width:100, editable: false, align: 'center'},
 				{name:'ETD',index:'ETD', width:100, sortable:false, align: 'center'},
 				{name:'Asal',index:'Asal', width:70, editable: false},
         {name:'Tujuan',index:'Tujuan', width:70, editable: false},
-        {name:'Etmal',index: 'Etmal', width: 80,editable: false, align: 'center'},
+        {name:'Etmal',index: 'Etmal', width: 50,editable: false, align: 'center'},
         {name:'Cargo',index:'Cargo',width:50, editable: false, align: 'center'},
 				{name:'Muatan',index:'Muatan',width:50, editable: false, align: 'center'}
 			],
@@ -730,7 +747,8 @@
 
 							$('#agen').val(data[0].agens_id).trigger('chosen:updated').trigger("change");
 							$('#kapal').val(data[0].kapals_id).trigger('chosen:updated').trigger("change");
-							$('#jetty').val(data[0].jettys_idx).trigger('chosen:updated');
+							$('#jetty').val(data[0].jettys_idx).trigger('chosen:updated').trigger("change");
+							$('#rute').val(data[0].rute).trigger('chosen:updated').trigger("change");
 
 							$('#etad')
 								.data('daterangepicker')

@@ -120,7 +120,7 @@ class OprasionalApiController extends Controller
 
           $responce['dd']=$row->dd;
           $responce['ket']=$row->ket;
-          $responce['kurs']=$row->kurs;
+          // $responce['kurs']=$row->kurs;
           // $responce['bapp']=$row->bapp;
         }
       break;
@@ -303,6 +303,7 @@ class OprasionalApiController extends Controller
             'tujuan'    => $request->input('tujuan',''),
             'cargo'     => $request->input('cargo',''),
             'muat'      => $request->input('muat',''),
+            'rute'      => $request->input('rute',''),
           );
           if ($oper=='add')DB::table('tb_ppjks')->insert($datanya);
           if ($oper=='edit')DB::table('tb_ppjks')->where('id', $id)->update($datanya);
@@ -346,23 +347,16 @@ class OprasionalApiController extends Controller
             $tunda = json_encode($tunda);
           }
 
-          $tundadate = str_replace('-', ',', $request->input('tundadate',''));
-          $tundadate = str_replace('/', '-', $tundadate);
-          $tundadate = explode(',',$tundadate);
-          $tundaon = strtotime($tundadate[0]);
-          $tundaoff = strtotime(ltrim($tundadate[1]," "));
-
           $datanya=array(
             'jettys_id' =>$request->input('jetty',''),
             'date'      =>$date,
             'ops'       =>$request->input('ops',''),
             'pc'        =>$request->input('pc',''),
             'tunda'     =>$tunda,
-            'tundaon'   =>$tundaon,
-            'tundaoff'  =>$tundaoff,
+            'tundaon'   =>AppHelpers::RangeDate($request->input('tundadate'))['startDate'],
+            'tundaoff'  =>AppHelpers::RangeDate($request->input('tundadate'))['endDate'],
             'dd'        =>$request->input('dd',''),
-            'ket'       =>$request->input('ket',''),
-            'kurs'      =>$request->input('kurs','')
+            'ket'       =>$request->input('ket','')
           );
         }
 
@@ -426,16 +420,12 @@ class OprasionalApiController extends Controller
         DB::table('tb_ppjks')->where('id', $request->input('ppjks_id',''))->update($data_a);
 
 
-        $pcdate = str_replace('-', ',', $request->input('pcdate',''));
-        $pcdate = str_replace('/', '-', $pcdate);
-        $pcdate = explode(',',$pcdate);
-        $pcon = strtotime($pcdate[0]);
-        $pcoff = strtotime(ltrim($pcdate[1]," "));
-
         $data_b=array(
-          'moring'=>$request->input('moring',''),
-          'pcon'   =>$pcon,
-          'pcoff'  =>$pcoff,
+          // 'moring'=>$request->input('moring',''),
+          'tundaon'   =>AppHelpers::RangeDate($request->input('tundadate'))['startDate'],
+          'tundaoff'  =>AppHelpers::RangeDate($request->input('tundadate'))['endDate'],
+          'pcon'   =>AppHelpers::RangeDate($request->input('pcdate'))['startDate'],
+          'pcoff'  =>AppHelpers::RangeDate($request->input('pcdate'))['endDate'],
         );
         DB::table('tb_dls')->where('id', $request->input('dls_id',''))->update($data_b);
         //
@@ -600,17 +590,17 @@ class OprasionalApiController extends Controller
               $join->on('tb_jettys.id','tb_dls.jettys_id');
             })
             ->where(function ($query) use ($mulai,$akhir,$request){
-                if (array_key_exists("lhp",$request->input())){
-                  $query->where('tb_ppjks.lhp', strtotime($request->input('lhp')));
-                } else if (array_key_exists("bstdo",$request->input())){
-                  $query->where('tb_ppjks.bstdo', $request->input('bstdo'));
-                } else {
-                  $mulai = strtotime($mulai);
-                  $akhir = strtotime($akhir);
-                  if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
-                  $query->where('tb_dls.date', '>=', $mulai)
-                    ->Where('tb_dls.date', '<=', $akhir);
-                }
+              if (array_key_exists("lhp",$request->input())){
+                $query->where('tb_ppjks.lhp', strtotime($request->input('lhp')));
+              } else if (array_key_exists("bstdo",$request->input())){
+                $query->where('tb_ppjks.bstdo', $request->input('bstdo'));
+              } else {
+                $mulai = strtotime($mulai);
+                $akhir = strtotime($akhir);
+                if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
+                $query->where('tb_dls.date', '>=', $mulai)
+                  ->Where('tb_dls.date', '<=', $akhir);
+              }
             })
             ->select(
               'tb_agens.code as agenCode',
@@ -704,6 +694,8 @@ class OprasionalApiController extends Controller
       foreach($query as $row) {
         switch ($datatb) {
           case 'ppjk':   // Variabel Master
+            if ($row->ppjk == '' || $row->ppjk == null) $row->ppjk = ''; else $row->ppjk = substr($row->ppjk, -5);
+
             $responce['rows'][$i]['id'] = $row->id;
             $responce['rows'][$i]['cell'] = array(
               $row->id,
@@ -752,7 +744,7 @@ class OprasionalApiController extends Controller
               $tundaoff,
               $row->dd,
               $row->ket,
-              $row->kurs,
+              '',
               $row->lstp,
               $row->moring,
               $row->ppjks_id,
@@ -786,7 +778,7 @@ class OprasionalApiController extends Controller
               $tundaoff,
               $row->dd,
               $row->ket,
-              $row->kurs,
+              '',
               $row->lstp,
               $row->moring
             );

@@ -187,7 +187,7 @@
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">On/Off</label>
 										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="tundadate" name="tundadate"></div>
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="tundadate" name="tundadate" readonly></div>
 										</div>
 									</div>
 								</div>
@@ -213,7 +213,7 @@
 								</div>
 								<div class="space-2"></div>
 
-								<div class="row">
+								<!-- <div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kurs</label>
 										<div class="col-xs-12 col-sm-9">
@@ -221,7 +221,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="space-2"></div>
+								<div class="space-2"></div> -->
 
 							</div>
 						</div>
@@ -770,7 +770,6 @@
 
 							$('#dd').val(data.dd);
 							$('#ket').val(data.ket);
-							$('#kurs').val(data.kurs);
 							// $('#bapp').val(data.bapp);
 							// //
 							// $('#pcdate').daterangepicker({
@@ -818,15 +817,18 @@
 					"opens": "center",
 					timePicker: true,
 					timePicker24Hour: true,
+					// 	startDate: moment().startOf('minute'),
+					// 	endDate: moment().startOf('minute').add(1, 'hour')
 					locale: {
-						applyLabel: 'Apply',
-						cancelLabel: 'Cancel',
-						format: 'DD/MM/YY HH:mm'
+							applyLabel: 'Apply',
+							cancelLabel: 'Cancel',
+							format: 'DD/MM/YY HH:mm'
 					}
 				})
 				.prev().on(ace.click_event, function(){
-					$(this).next().focus();
+						$(this).next().focus();
 				});
+
 
 				postsave.post = '';
 				postsave.post += 'oper=add&';

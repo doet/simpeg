@@ -160,7 +160,8 @@
                     }
 
                     if (strpos($row->jettyCode,'S.')===0) $classJetty = 'kuning'; else $classJetty = '';
-                    if ($row->kurs == '$') $kurs = 'ungu'; else $kurs = '';
+                    // $row->rute='$';
+                    if ($row->rute == '$') $rute = 'ungu'; else $rute = '';
 
                     if($row->tunda == '')$row->tunda="['']";
                     $tunda = json_decode($row->tunda);
@@ -199,7 +200,7 @@
                     echo '<td class="top right" align="center">'.$tundaoff.'</td>';
                     echo '<td class="top right" align="center">'.$row->dd.'</td>';
                     echo '<td class="top right">&nbsp;'.$row->ket.'</td>';
-                    echo '<td class="top right '.$kurs.'" align="center">'.$row->kurs.'</td>';
+                    echo '<td class="top right '.$rute.'" align="center">'.$row->rute.'</td>';
                     echo '</tr>';
                     $i++;
                   }

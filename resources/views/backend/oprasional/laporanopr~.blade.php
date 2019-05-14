@@ -43,8 +43,6 @@
 @endsection
 
 @section('content')
-{{ date_default_timezone_set('Asia/Jakarta')}}
-
 <div id="modal" class="modal fade" tabindex="-1">
 	<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -63,8 +61,21 @@
 						<input type="hidden" id='id-1' name="id" value="id" /> -->
 						<div class="row">
 							<div class="col-xs-12 col-sm-6">
-
 								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PPJK</label>
+										<div class="col-xs-12 col-sm-5">
+											<div class="clearfix">
+												<select id="ppjk" name="ppjk" class="chosen-select" data-placeholder="PPJK ..." >
+													<option></option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+								<!-- <div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PPJK</label>
 										<div class="col-xs-12 col-sm-9">
@@ -72,7 +83,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="space-2"></div>
+								<div class="space-2"></div> -->
 
 								<div class="row">
 									<div class="form-group">
@@ -90,7 +101,7 @@
 
 								<div class="row">
 									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tgl Aksi </label>
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Waktu </label>
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix">
 												<input class="input-sm col-xs-12 col-sm-8" type="text" id="date" name="date" >
@@ -119,7 +130,7 @@
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Dermaga</label>
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix">
-												<select id="jetty" name="jetty" class="chosen-select" data-placeholder="Dermaga ..." disabled>
+												<select id="jetty" name="jetty" class="chosen-select" data-placeholder="Dermaga ...">
 													<option></option>
 												</select>
 											</div>
@@ -176,7 +187,7 @@
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">On/Off</label>
 										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="tundadate" name="tundadate"></div>
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="tundadate" name="tundadate" readonly></div>
 										</div>
 									</div>
 								</div>
@@ -220,7 +231,7 @@
 
 					<!-- 03 footer -->
 					<div class="modal-footer">
-						<button class="btn btn-sm btn-danger pull-right" id='save'>
+						<button class="btn btn-sm btn-danger pull-right" id='save' disabled>
 								<i class="ace-icon fa fa-floppy-o"></i>Save
 						</button>
 						<button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
@@ -241,7 +252,7 @@
           <!-- PAGE CONTENT BEGINS -->
 
 					<div align="center">Kegiatan Operator<br />
-							<span class="editable" id="psdate"></span>
+						<span class="editable" id="psdate"></span>
 					</div>
 					</br>
 
@@ -250,6 +261,8 @@
 						<input name="page" value="" hidden/>
 						<input name="file" value="" hidden/>
 						<input name="start" value="" hidden/>
+						<input name="sidx" value="" hidden/>
+						<input name="sord" value="" hidden/>
 					</form>
 
 					<table id="grid-table"></table>
@@ -280,12 +293,13 @@
 <script type="text/javascript">
 	jQuery(function($) {
 
-		$('#psdate').html(moment().format("DD MMMM YYYY"));
 		//editables on first profile page
     $.fn.editable.defaults.mode = 'inline';
     $.fn.editableform.loading = "<div class='editableform-loading'><i class='ace-icon fa fa-spinner fa-spin fa-2x light-blue'></i></div>";
     $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="ace-icon fa fa-check"></i></button>'+
                                 '<button type="button" class="btn editable-cancel"><i class="ace-icon fa fa-times"></i></button>';
+
+		$('#psdate').html(moment().format('D MMMM YYYY'));
 		$('#psdate').editable({
         type: 'adate',
         date: {
@@ -303,6 +317,9 @@
         // $('input[name="start"]').val(params.newValue);
         setdate = params.newValue;
     });
+
+		var setdate = moment().format('D MMMM YYYY');
+		var start = $('#psdate').html();
 
 		$('#date').datetimepicker({
 			format: 'DD-MM-YYYY HH:mm',//use this option to display seconds
@@ -323,23 +340,6 @@
 				$(this).next().focus();
 		});
 
-		$('#date').datetimepicker({
-			format: 'DD-MM-YYYY HH:mm',//use this option to display seconds
-			date:moment(),
-			icons: {
-				time: 'fa fa-clock-o',
-				date: 'fa fa-calendar',
-				up: 'fa fa-chevron-up',
-				down: 'fa fa-chevron-down',
-				previous: 'fa fa-chevron-left',
-				next: 'fa fa-chevron-right',
-				today: 'fa fa-arrows ',
-				clear: 'fa fa-trash',
-				close: 'fa fa-times'
-			},
-		}).next().on(ace.click_event, function(){
-				$(this).prev().focus();
-		});
 		//
 		// $('#on, #off').datetimepicker({
 		// 		format: 'LT',
@@ -387,6 +387,27 @@
 		//show datepicker when clicking on the icon
 		.next().on(ace.click_event, function(){
 				$(this).prev().focus();
+		});
+
+		var posdata = {'datatb':'ppjk', _token:'{{ csrf_token() }}'};
+		posdata.src="{{url('/api/oprasional/json')}}";
+		posdata.elm="ppjk";
+		src_chosen_full(posdata,function(data){
+			$.each(data, function (idx, obj) {
+				$('#ppjk').append('<option value="'+obj['id']+'">'+obj['ppjk']+'</option>');
+			});
+		},function(data){
+			console.log();
+			if (data === undefined || data.length == 0) {
+				// $("#alamat").val('');
+				// $("#npwp").val('');
+				// $("#tlp").val('');
+			} else {
+				$('#agen').val(data[0].agens_id).trigger("chosen:updated");
+				$('#kapal').val(data[0].kapals_id).trigger("chosen:updated");
+				$('#jetty').val(data[0].jettys_id).trigger("chosen:updated");
+				$("#save").prop('disabled', false);
+			}
 		});
 
 		var posdata = {'datatb':'agen', _token:'{{ csrf_token() }}'};
@@ -456,32 +477,13 @@
 		 }
 		});
 
-		// var postsave;
-		// $('#save').click(function(e) {
-		// 	e.preventDefault();
-		// 	postsave += $("#form").serialize()+'&tunda='+$('#tunda').val()+'&datatb=dl';
-		// 	console.log(postsave);
-		// 	getparameter("{{url('/api/oprasional/cud')}}",postsave,	function(data){
-		// 			var newHTML = '<i class="ace-icon fa fa-floppy-o"></i>Save';
-		// 			$('#save').html(newHTML);
-		//
-		// 			$('#form').trigger("reset");
-		//
-		// 			$('#grid-table').trigger("reloadGrid", [{current:true}]);
-		// 			$('#modal').modal('hide');
-		// // 			// console.log(data);
-		// 	},function(data){
-		// 			var newHTML = '<i class="ace-icon fa fa-spinner fa-spin "></i>Loading...';
-		// 			$('#save').html(newHTML);
-		// 	});
-		// });
 		var postsave={};
 		postsave.url = "{{url('/api/oprasional/cud')}}";
 		postsave.grid = '#grid-table';
 		postsave.modal = '#modal';
 		$('#save').click(function(e) {
 			e.preventDefault();
-			postsave.post += $("#form").serialize()+'&datatb=dl';
+			postsave.post += $("#form").serialize()+'&datatb=dl'+'&tunda='+$('#tunda').val();
 			SaveGrid(postsave);
 		});
 
@@ -520,16 +522,16 @@
 		*/
 
 		jQuery(grid_selector).jqGrid({
-			caption: "Input PPJK",
+			caption: "LIST DL",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
-      postData: {datatb:'dl',start:moment().format("DD MMMM YYYY"),_token:'{{ csrf_token() }}'},
+      postData: {datatb:'dl',start:start,_token:'{{ csrf_token() }}'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
-			sortname:'date',
+			sortname:'ppjks_id',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:['id', 'PPJK','AGEN','ETA','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','Tunda','ON','OFF','DD','Ket','Kurs'],
+			colNames:['id', 'PPJK','AGEN','Waktu','Kapal','GRT','LOA','Bendera','Dermaga','OPS','bapp','PC','ON','OFF','Tunda','ON','OFF','DD','Ket',' '],
 			colModel:[
 				{name:'id',index:'id', width:50, fixed:true, sortable:true, resize:false, align: 'center'},
 				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
@@ -541,11 +543,13 @@
 				{name:'bendera',index:'bendera', width:80, editable: false},
         {name:'dermaga',index:'dermaga', width:100, editable: false},
         {name:'ops',index: 'ops', width: 60,editable: false, align: 'center'},
-        {name:'bapp',index:'bapp',width:50, editable: false, align: 'center'},
+				{name:'bapp',index:'bapp',width:50, editable: false, align: 'center',hidden:true},
         {name:'pc',index: 'pc', width: 40, editable: false, align: 'center'},
+				{name:'on',index:'on',width:40, editable: false,hidden:true},
+				{name:'off',index:'off',width:40, editable: false,hidden:true},
         {name:'tunda',index:'tunda',width:100, editable: false},
-        {name:'on',index:'on',width:40, editable: false},
-        {name:'off',index:'off',width:40, editable: false},
+				{name:'on',index:'on',width:40, editable: false},
+				{name:'off',index:'off',width:40, editable: false},
         {name:'dd',index:'dd',width:40, editable: false},
         {name:'ket',index:'ket',width:100, editable: false},
         {name:'kurs',index:'kurs',width:50, editable: false, align: 'center'}
@@ -703,10 +707,14 @@
 				buttonicon:"ace-icon fa fa-file-pdf-o orange",
 				position:"last",
 				onClickButton:function(){
-					// var data = $(this).jqGrid('getRowData'); Get all data
+					// console.log($(this).getGridParam("postData").sidx);
+					// // var data = $(this).jqGrid('getRowData'); Get all data
 					$('#dompdf input[name=page]').val('dl-dompdf');
 					$('#dompdf input[name=start]').val(setdate);
-					// console.log(setdate);
+					$('#dompdf input[name=sidx]').val($(this).getGridParam("postData").sidx);
+					$('#dompdf input[name=sord]').val($(this).getGridParam("postData").sord);
+					//
+					// // console.log(setdate);
 					$('#dompdf').submit();
 				}
 		}).jqGrid('navButtonAdd',pager_selector,{
@@ -719,10 +727,13 @@
 					var gsr = $(this).jqGrid('getGridParam','selrow');
 					if(gsr){
 						$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
+						$('#ppjk').prop('disabled', true).trigger("chosen:updated");
+						$("#save").prop('disabled', false);
 
-						var posdata= {'datatb':'dl','iddata':gsr};
+						var posdata= {'datatb':'dl','search':gsr};
 						getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
-							$('#ppjk').val(data.ppjk);
+
+							$('#ppjk').val(data.ppjk).trigger("chosen:updated");
 							$('#agen').val(data.agen).trigger("chosen:updated");
 							$('#date').data("DateTimePicker").date(data.date);
 							$('#kapal').val(data.kapal).trigger("chosen:updated");
@@ -755,6 +766,7 @@
 							.prev().on(ace.click_event, function(){
 								$(this).next().focus();
 							});
+							console.log(data.tundaoff);
 
 							$('#dd').val(data.dd);
 							$('#ket').val(data.ket);
@@ -795,9 +807,29 @@
 			position:"first",
 			onClickButton:function(){
 				$('#form').trigger("reset");
-
-				$('#agen, #kapal, #dermaga, #ops').val('').trigger("chosen:updated");
+				$('#ppjk').prop('disabled', false).trigger("chosen:updated");
+				$('#ppjk, #agen, #kapal, #jetty, #ops').val('').trigger("chosen:updated");
 				$('#date').data("DateTimePicker").date(moment());
+
+				$('#tunda').multiselect('deselectAll', false).multiselect('refresh');
+				$('#tundadate').daterangepicker({
+					'applyClass' : 'btn-sm btn-success',
+					'cancelClass' : 'btn-sm btn-default',
+					"opens": "center",
+					timePicker: true,
+					timePicker24Hour: true,
+					// 	startDate: moment().startOf('minute'),
+					// 	endDate: moment().startOf('minute').add(1, 'hour')
+					locale: {
+							applyLabel: 'Apply',
+							cancelLabel: 'Cancel',
+							format: 'DD/MM/YY HH:mm'
+					}
+				})
+				.prev().on(ace.click_event, function(){
+						$(this).next().focus();
+				});
+
 
 				postsave.post = '';
 				postsave.post += 'oper=add&';

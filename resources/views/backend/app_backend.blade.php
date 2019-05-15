@@ -333,7 +333,7 @@ left: 30%;" /></div>
 								<img class="nav-user-photo" src="{{asset('images/avatars/user.jpg')}}" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									Jason
+									{{Auth::user()->name}}
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>

@@ -53,10 +53,9 @@
 
                 Welcome to
                 <strong class="green">
-                    Ace
-                    <small>(v1.4)</small>
+                    CiPS
+                    <small>(Integreted Port System)</small>
                 </strong>,
-<a href="https://github.com/bopoda/ace">github</a> (with minified ace js/css files).
             </div>
 
             <div class="row">

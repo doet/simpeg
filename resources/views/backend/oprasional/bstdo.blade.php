@@ -399,9 +399,9 @@
 				{name:'off',index:'off',width:40, editable: false,hidden:true},
 				{name:'dd',index:'dd',width:40, editable: false},
 				{name:'ket',index:'ket',width:100, editable: false},
-				{name:'kurs',index:'kurs',width:50, editable: false, align: 'center'},
+				{name:'kurs',index:'kurs',width:50, editable: false, align: 'center',hidden:true},
 				{name:'lstp',index:'lstp',width:50, editable: true, align: 'center'},
-				{name:'moring',index:'moring',width:180, editable: true, align: 'center'},
+				{name:'moring',index:'moring',width:180, editable: true, align: 'center',hidden:true},
 				{name:'ppjks_id',index:'ppjks_id',width:180, editable: false, hidden:true, align: 'center'}
 			],
 

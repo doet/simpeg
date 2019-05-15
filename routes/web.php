@@ -72,12 +72,15 @@ Route::prefix('oprasional')->group(function(){
   Route::get('/mdermaga',     'Oprasional\OprasionalController@mdermaga');
   Route::get('/mmooring',     'Oprasional\OprasionalController@mmooring');
 
-
   Route::match(['get', 'post'],   'FileUpload',					'Oprasional\FilesCrudController@save');
   Route::match(['get', 'post'],   'FilesJson',					'Oprasional\FilesCrudController@json');
   Route::match(['get', 'post'],   'FilesSave',		  		'Oprasional\FilesCrudController@save');
   Route::match(['get', 'post'],   'PDFAdmin', 		    	'Oprasional\PdfController@PDFMarker');
   Route::match(['get', 'post'],   'Chart',	     	  		'Oprasional\FilesCrudController@chart');
+
+  Route::get('/listinvoice',  'Oprasional\Invoice\InvoiceController@listinvoice');
+
+  Route::match(['get', 'post'],   'PDFInvoice', 		    	'Oprasional\Invoice\PdfController@PDFMarker');
 });
 
 Route::prefix('surat')->group(function(){

@@ -437,10 +437,11 @@ class OprasionalApiController extends Controller
       break;
 
       case 'mkapal':
+
         $datanya=array(
           'name'=>$request->input('name',''),
           'jenis'=>$request->input('jenis',''),
-          'grt'=>$request->input('grt',''),
+          'grt'=>str_replace(',','',$request->input('grt','')),
           'loa'=>$request->input('loa',''),
           'bendera'=>$request->input('bendera',''),
         );

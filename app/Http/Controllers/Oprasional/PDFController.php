@@ -206,7 +206,7 @@ class PDFController extends Controller
     $pdf = \App::make('dompdf.wrapper');
     $pdf->loadHTML($view)
         //->setOrientation($orientation)
-        ->setPaper('a4',$orientation);
+        ->setPaper('A4',$orientation);
 
     return $pdf->stream($nfile);
 

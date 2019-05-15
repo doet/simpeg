@@ -375,7 +375,7 @@
       postData: {datatb:'dl', bstdo:nobstdo,_token:'{{ csrf_token() }}'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
-			sortname:'ppjk',
+			sortname:'date',
 			sortorder: 'desc',
 			height: 'auto',
 			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','bapp','PC','ON','OFF','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','Moring','ppjks_id'],

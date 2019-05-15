@@ -125,7 +125,7 @@
                     <td class="top right button" colspan="2">Waktu</td>
                     <td class="top right" rowspan="2" width='25px'>DD</td>
                     <td class="top right" rowspan="2">Ket</td>
-                    <td class="top right" rowspan="2" width='20px'>Kurs</td>
+                    <td class="top right" rowspan="2" width='20px'>Rute</td>
                   </tr>
                   <tr>
                     <td class="right" width='55px'>tgl</td>

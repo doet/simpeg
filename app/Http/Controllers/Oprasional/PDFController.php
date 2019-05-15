@@ -177,8 +177,9 @@ class PDFController extends Controller
             'tb_ppjks.*',
             'tb_dls.*'
           )
-          ->orderBy($sidx,$sord)
+          ->orderBy('ppjk', 'asc')
           ->orderBy('date', 'asc')
+          ->orderBy('tb_dls.id', 'asc')
           ->get();
 
           // dd($request->input());

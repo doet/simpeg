@@ -615,8 +615,9 @@ class OprasionalApiController extends Controller
               'tb_ppjks.*',
               'tb_dls.*'
             );
-          $qu->orderBy('ppjk', 'desc');
-          $qu->orderBy('tb_dls.id', 'desc');
+          $qu->orderBy('ppjk', 'asc');
+          $qu->orderBy('date', 'asc');
+          $qu->orderBy('tb_dls.id', 'asc');
         break;
         case 'lhp':   // Vaariabel Master
           $qu = DB::table('tb_dls')

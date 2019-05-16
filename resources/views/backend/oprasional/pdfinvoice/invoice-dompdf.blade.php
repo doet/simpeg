@@ -1,4 +1,4 @@
-<html>
+html>
     <head>
         <style>
             /** Define the margins of your page **/
@@ -107,34 +107,60 @@
         <!-- Wrap the content of your PDF inside a main tag -->
         <main>
             <div style="page-break-after: avoid;">
-              <table >
-                <thead>
+              <table width='80px'>
                   <tr>
                     <!-- rowspan="2" colspan="2" -->
-                    <td class="left top right" width='35px'>LSTP<br>No</td>
-                    <td class="top right">Lokasi / <i>Location</i></td>
-                    <td class="top right" width='70px'>Uraian /<br> <i>Description</i></td>
-                    <td class="top right" width='90px'>Mulai / <i>Start</i><br> <i>(hr/bln/th jam:mnt)</i><br> <i>(dd/mm/yy hr:mnt)</i></td>
-                    <td class="top right" width='90px'>Selesai / <i>Finish</i><br> <i>(hr/bln/th jam:mnt)</i><br> <i>(dd/mm/yy hr:mnt)</i></td>
-                    <td class="top right">Jumlah Waktu (Jam) / <i>Duration</i> (hour)</td>
+                    <td class="left top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Nomor Faktur Pajak</td>
+                    <td class="top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Nomor Invoice</td>
+                    <td class="top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Tanggal / Date</td>
+                  </tr>
+                  <tr>
+                    <!-- rowspan="2" colspan="2" -->
+                    <td class="left top  button right" colspan="2">&nbsp;010.003.19.81722987</td>
+                    <td class="top right button" colspan="2">&nbsp;0613-00/AF19.LC</i></td>
+                    <td class="top right button" colspan="2">&nbsp;14 Mei 2019</i></td>
+                  </tr>
+                </table>
+              <table >
+                  <tr>
+                    <!-- rowspan="2" colspan="2" -->
+                    <td class="left top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Kepada / To :</td>
+                    <td class="top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Berdasarkan / <i>Base on :</i></td>
+                    <td class="top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Untuk / <i>/For Ship :</i></td>
+                  </tr>
+                  <tr>
+                    <td class="left top right">&nbsp;Perusahaan / <i>Company</i></td>
+                    <td class="top right">&nbsp;PT. KRAKATAU BANDAR SAMUDERA</i></td>
+                    <td class="top right">&nbsp;PPJ No.</td>
+                    <td class="top right">&nbsp;PPJ-2019/12026</td>
+                    <td class="top right">&nbsp;Nama kapal / <i>Vessel name</i></td>
+                    <td class="top right">&nbsp;MT. EAGLE ASIA 07</td>
+                  </tr>
+                  <tr>
+                    <td class="left top right" rowspan="2">&nbsp;Alamat / <i>Address</i></td>
+                    <td class="top right" rowspan="2">&nbsp;Jl. May. Jend. S. Parman KM, 13 Cigading, Cilegon</td>
+                    <td class="top right">&nbsp;Ref.No</td>
+                    <td class="top right">&nbsp;BIN04-000294</td>
+                    <td class="top right">&nbsp;GRT(Ton)</td>
+                    <td class="top right">&nbsp;5.019</td>
+                  </tr>
+                  <tr>
+                    <td class="top right">&nbsp;BASTDO No.</td>
+                    <td class="top right">&nbsp;025</td>
+                    <td class="top right">&nbsp;Jalur</td>
+                    <td class="top right">&nbsp;International</td>
+                  </tr>
+                  <tr>
+                    <td class="left top right">&nbsp;Telepon / <i>Telephone</i></td>
+                    <td class="top right"></td>
+                    <td class="top right">&nbsp;Area</td>
+                    <td class="top right">&nbsp;Cilegon</td>
+                    <td class="top right"></td>
+                    <td class="top right"></td>
                   </tr>
                   <tr>
                     <td class="top" colspan="6" ></td>
                   </tr>
-                </thead>
-                <tbody class="zebra">
-                  <tr>
-                    <td class="left top right" align="center">1193</td>
-                    <td class="top right" align="center">Laut/Sea</td>
-                    <td class="top right" align="center">BMT</td>
-                    <td class="top right" align="center">Tunda/Towing</td>
-                    <td class="top right" align="center">22/04/19  15:40</td>
-                    <td class="top right" align="center">22/04/19  15:40</td>
-                  </tr>
-                  <tr>
-                    <td class="top" colspan="6" ></td>
-                  </tr>
-                </tbody>
               </table>
               <table >
                 <thead>

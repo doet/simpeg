@@ -372,7 +372,7 @@
 			caption: "Input BSTDO",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
-      postData: {datatb:'dl', bstdo:nobstdo,_token:'{{ csrf_token() }}'},
+      postData: {datatb:'dl', bstdo:nobstdo,_token:'{{ csrf_token() }}',f:'bstdo'},
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
 			sortname:'date',

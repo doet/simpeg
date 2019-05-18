@@ -211,9 +211,10 @@
 		  success: function(data) {
 				var No = new Array();
 				$.each(data, function (idx, obj) {
-					No.push(data[idx].bstdo);
+					if (data[idx].bstdo!==null)	No.push(data[idx].bstdo);
 				});
-				No.sort();
+				No.reverse();
+				console.log(No)
 				if (No[0]!==null){
 					$('#NoBSTDO')
 					.editable('setValue',No[0])

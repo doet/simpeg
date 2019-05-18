@@ -110,25 +110,25 @@
               <table width="350px">
                 <thead>
                   <tr>
-                    <td class="top right left" rowspan="2" colspan="17">FORMULIR</td>
+                    <td class="top right left" rowspan="2" colspan="18">FORMULIR</td>
                     <td class="top right" colspan="4">Doc No </td>
-                    <td class="top right">F.PDP/01.004</td>
+                    <td class="top right" colspan="2">F.PDP/01.004</td>
                   </tr>
                   <tr>
                     <td class="top right" colspan="4">Rev</td>
-                    <td class="top right">0.0</td>
+                    <td class="top right" colspan="2">0.0</td>
                   </tr>
                   <tr>
-                    <td class="top right left" rowspan="2" colspan="17">LEMBAR HASIL PEKERJAAN</td>
+                    <td class="top right left" rowspan="2" colspan="18">LEMBAR HASIL PEKERJAAN</td>
                     <td class="top right" colspan="4">Tgl Efektif</td>
-                    <td class="top right"><?php echo date("d/m/Y",$mulai);?></td>
+                    <td class="top right" colspan="2"><?php echo date("d/m/Y",$mulai);?></td>
                   </tr>
                   <tr>
                     <td class="top right" colspan="4">Halaman</td>
-                    <td class="top right">1 dari 1</td>
+                    <td class="top right" colspan="2">1 dari 1</td>
                   </tr>
                   <tr>
-                    <td class="top" colspan="22" ></td>
+                    <td class="top" colspan="24" ></td>
                   </tr>
                   <tr>
                     <td class="top right left" rowspan="2" width='20px'>No</td>
@@ -143,6 +143,7 @@
                     <td class="top right" rowspan="2" width='40px'>OPS </br> Kapal</td>
                     <td class="top right" rowspan="2" width='30px'>BAPP</td>
                     <td class="top right" rowspan="2" width='25px'>PC</td>
+                    <td class="top right button" colspan="2">Pilot</td>
                     <td class="top right button" colspan="5">Kapal Tunda</td>
                     <td class="top right button" colspan="2">Waktu</td>
                     <td class="top right" rowspan="2" width='25px'>DD</td>
@@ -151,6 +152,9 @@
                   <tr>
                     <td class="right" width='55px'>tgl</td>
                     <td class="right" width='30px'>jam</td>
+
+                    <td class="right" width='30px'>ON</td>
+                    <td class="right" width='30px'>OFF</td>
 
                     <td class="right" width='20px'>GB</td>
                     <td class="right" width='20px'>GC</td>
@@ -162,7 +166,7 @@
                     <td class="right" width='30px'>OFF</td>
                   </tr>
                   <tr>
-                    <td class="top" colspan="22" ></td>
+                    <td class="top" colspan="24" ></td>
                   </tr>
                 </thead>
                 <tbody class="zebra">
@@ -203,8 +207,12 @@
 
                     // if ($row->kapalsLoa == '')$row->kapalsLoa =0;
                     if ($row->kapalsJenis == '') $kapal =  $row->kapalsName; else $kapal = '('.$row->kapalsJenis.') '.$row->kapalsName;
+
                     if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
                     if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
+
+                    if ($row->pcon == '') $pcon=$row->pcon; else $pcon=date("H:i",$row->pcon);
+                    if ($row->pcoff == '') $pcoff=$row->pcoff; else $pcoff=date("H:i",$row->pcoff);
 
                     echo '<tr>';
                     echo '<td class="top right left" align="center">&nbsp;'.$i.'</td>';
@@ -219,13 +227,16 @@
                     echo '<td class="top right '.$classJetty.'">&nbsp;'.'('. $row->jettyCode .')'.$row->jettyName.'</td>';
                     echo '<td class="top right">&nbsp;'.$row->ops.'</td>';
                     echo '<td class="top right" align="center">'.$row->bapp.'</td>';
+
                     echo '<td class="top right" align="center">'.$row->pc.'</td>';
+                    echo '<td class="top right" align="center">'.$pcon.'</td>';
+                    echo '<td class="top right" align="center">'.$pcoff.'</td>';
 
                     echo '<td class="top right" align="center">'.$gb.'</td>';
                     echo '<td class="top right" align="center">'.$gc.'</td>';
                     echo '<td class="top right" align="center">'.$gs.'</td>';
-                    echo '<td class="top right" align="center"'.$mv.'</td>';
-                    echo '<td class="top right" align="center"'.$mg.'</td>';
+                    echo '<td class="top right" align="center">'.$mv.'</td>';
+                    echo '<td class="top right" align="center">'.$mg.'</td>';
 
                     echo '<td class="top right" align="center">'.$tundaon.'</td>';
                     echo '<td class="top right" align="center">'.$tundaoff.'</td>';
@@ -250,6 +261,8 @@
                   <td class="top"></td>
                   <td class="top"></td>
 
+                  <td class="top"></td>
+                  <td class="top"></td>
                   <td class="top"></td>
                   <td class="top"></td>
                   <td class="top"></td>

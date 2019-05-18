@@ -271,7 +271,7 @@
 
 								<div class="row">
 									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Muat</label>
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Bongkar/Muat</label>
 										<div class="col-xs-12 col-sm-9">
 											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="muat" name="muat"></div>
 										</div>
@@ -568,14 +568,14 @@
 			height: 'auto',
 			colNames:['id','Date Issue','PPJK','AGEN','Kapal','Jetty','ETA','ETD','Asal','Tujuan','Etmal','Cargo','Muatan'],
 			colModel:[
-				{name:'id',index:'id', width:50, fixed:true, sortable:true, resize:false, align: 'center'},
-				{name:'date_issue',index:'date_issue', width:65, sorttype:"int", editable: false},
-				{name:'PPJK',index:'PPJK', width:40, sorttype:"int", editable: false},
-				{name:'AGEN',index:'AGEN',width:40, editable:false, align: 'center'},
-				{name:'Kapal',index:'Kapal', width:80,editable: false},
-				{name:'Jetty',index:'Jetty', width:80, editable: false},
-				{name:'ETA',index:'ETA', width:100, editable: false, align: 'center'},
-				{name:'ETD',index:'ETD', width:100, sortable:false, align: 'center'},
+				{name:'id',index:'id', width:40, fixed:true, sortable:true, resize:false, align: 'center'},
+				{name:'date_issue',index:'date_issue', width:50, sorttype:"int", editable: false},
+				{name:'PPJK',index:'PPJK', width:60, sorttype:"int", editable: false},
+				{name:'AGEN',index:'AGEN',width:30, editable:false, align: 'center'},
+				{name:'Kapal',index:'Kapal', width:90,editable: false},
+				{name:'Jetty',index:'Jetty', width:90, editable: false},
+				{name:'ETA',index:'ETA', width:80, editable: false, align: 'center'},
+				{name:'ETD',index:'ETD', width:80, sortable:false, align: 'center'},
 				{name:'Asal',index:'Asal', width:70, editable: false},
         {name:'Tujuan',index:'Tujuan', width:70, editable: false},
         {name:'Etmal',index: 'Etmal', width: 50,editable: false, align: 'center'},

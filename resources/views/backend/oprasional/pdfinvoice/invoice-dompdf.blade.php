@@ -1,8 +1,8 @@
-html>
+<html>
     <head>
         <style>
             /** Define the margins of your page **/
-            @page { margin: 100px 30px 80px 30px }
+            @page { margin: 150px 30px 80px 30px }
             header { position: fixed; top: -60px; left:0px; right: 10px;  }
 
             /* main { position: fixed; top: 50px; left: 0px; bottom: -10px; right: 0px;  } */
@@ -92,77 +92,119 @@ html>
     </head>
     <body style="font-family:'Arial', Helvetica, sans-serif ; font-size:12px;">
         <!-- Define header and footer blocks before your content -->
-        <header>
+        <!-- <header>
           <img src="{{public_path().'\\pic\\logo.png'}}" width="125px"><div style="position:absolute; top:10; left:100"><b>PT. PELABUHAN CILEGON MANDIRI<br />
         Divisi Pemanduan dan Penundaan</b></div>
-            <!-- <center>sssssssssssss<br />
-          <font size="-1"><?php echo $mulai;?></font></center> -->
-        </header>
+        </header> -->
 
         <footer>
 
-          <p class="page">Halaman </p>
+          <!-- <p class="page">Halaman </p> -->
         </footer>
 
         <!-- Wrap the content of your PDF inside a main tag -->
+
         <main>
             <div style="page-break-after: avoid;">
-              <table width='80px'>
+              <div style="position:absolute; top:-90; left:30; width:300">
+                <img src="{{public_path().'\\images\\pemda.png'}}" width="100px">
+              </div>
+              <div style="position:absolute; top:-88; left:110">
+                <b>BADAN USAHA MILIK DAERAH<br />
+                  PEMERINTAH KOTA CILEGON<br />
+                  PT. PELABUHAN CILEGON MANDIRI<br />
+                  Jl. Yos Sudarso No. 20 Kec. Pulo Merak, Cilegon - Banten 42438  Tel. 0254-574000  Fax. 574894
+                </b>
+              </div>
+              <div style="position:absolute; top:-90; left:600;">
+                <table>
                   <tr>
-                    <!-- rowspan="2" colspan="2" -->
-                    <td class="left top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Nomor Faktur Pajak</td>
-                    <td class="top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Nomor Invoice</td>
-                    <td class="top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Tanggal / Date</td>
-                  </tr>
-                  <tr>
-                    <!-- rowspan="2" colspan="2" -->
-                    <td class="left top  button right" colspan="2">&nbsp;010.003.19.81722987</td>
-                    <td class="top right button" colspan="2">&nbsp;0613-00/AF19.LC</i></td>
-                    <td class="top right button" colspan="2">&nbsp;14 Mei 2019</i></td>
+                    <td class="left top right button" align="center"><b>NON CIGADING</b></td>
+                    <td width='50px'>&nbsp;</td>
+                    <td>
+                      Distribusi/Distribution<br>
+                      (1) Pengguna Jasa<br>
+                      (2) Keuangan PT PCM<br>
+                      (3) Komersil PT PCM<br>
+                      (4) Subdin Hubla<br>
+                    </td>
                   </tr>
                 </table>
+                <table>
+                  <tr>
+                    <td class="left top right" align="center" style="background-color: #DCDCDC;" height='18px'>&nbsp;Nomor Faktur Pajak</td>
+                    <td class="top right" align="center" style="background-color: #DCDCDC;">&nbsp;Nomor Invoice</td>
+                    <td class="top right" align="center" style="background-color: #DCDCDC;">&nbsp;Tanggal / <i>Date</i></td>
+                  </tr>
+                  <tr>
+                    <td class="left top right button" align="center" height='18px'>&nbsp;<?php echo $result->pajak?></td>
+                    <td class="top right button" align="center">&nbsp;<?php echo $result->noinv?></td>
+                    <td class="top right button" align="center">&nbsp;14 Mei 2019</i></td>
+                  </tr>
+                </table>
+              </div>
+              <!-- <table>
+                <tr>
+                  <td rowspan="2">&nbsp;</td>
+                  <td class="left top right button" align="center" style="background-color: #DCDCDC;"><b>NON CIGADING</b></td>
+                  <td>&nbsp;</td>
+                  <td>s
+                  </td>
+                </tr>
+                <tr>
+
+                  <td class="left top right button" align="center" style="background-color: #DCDCDC;"><b>NON CIGADING</b></td>
+                  <td>&nbsp;</td>
+                  <td>s</td>
+                </tr>
+              </tabel> -->
+
+
+              <b><i>NOTA TAGIHAN / INVOICE</i></b>
               <table >
                   <tr>
                     <!-- rowspan="2" colspan="2" -->
-                    <td class="left top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Kepada / To :</td>
+                    <td class="left top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Kepada / <i>To :</i></td>
                     <td class="top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Berdasarkan / <i>Base on :</i></td>
-                    <td class="top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Untuk / <i>/For Ship :</i></td>
+                    <td class="top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Untuk / <i>For Ship :</i></td>
                   </tr>
                   <tr>
-                    <td class="left top right">&nbsp;Perusahaan / <i>Company</i></td>
-                    <td class="top right">&nbsp;PT. KRAKATAU BANDAR SAMUDERA</i></td>
-                    <td class="top right">&nbsp;PPJ No.</td>
-                    <td class="top right">&nbsp;PPJ-2019/12026</td>
-                    <td class="top right">&nbsp;Nama kapal / <i>Vessel name</i></td>
-                    <td class="top right">&nbsp;MT. EAGLE ASIA 07</td>
+                    <td class="left top right" width="150px">&nbsp;Perusahaan / <i>Company</i></td>
+                    <td class="top right" width="300px">&nbsp;<?php echo $result->agenName?></i></td>
+                    <td class="top right" width="150px">&nbsp;PPJ No.</td>
+                    <td class="top right" width="300px">&nbsp;<?php echo $result->ppjk?></td>
+                    <td class="top right" width="150px">&nbsp;Nama kapal / <i>Vessel name</i></td>
+                    <td class="top right">&nbsp;<?php echo $result->kapalsJenis.'. '.$result->kapalsName?></td>
                   </tr>
                   <tr>
                     <td class="left top right" rowspan="2">&nbsp;Alamat / <i>Address</i></td>
-                    <td class="top right" rowspan="2">&nbsp;Jl. May. Jend. S. Parman KM, 13 Cigading, Cilegon</td>
+                    <td class="top right" rowspan="2">&nbsp;<?php echo $result->agenAlamat?></td>
                     <td class="top right">&nbsp;Ref.No</td>
                     <td class="top right">&nbsp;BIN04-000294</td>
                     <td class="top right">&nbsp;GRT(Ton)</td>
-                    <td class="top right">&nbsp;5.019</td>
+                    <td class="top right">&nbsp;<?php echo $result->kapalsGrt?></td>
                   </tr>
                   <tr>
                     <td class="top right">&nbsp;BASTDO No.</td>
-                    <td class="top right">&nbsp;025</td>
+                    <td class="top right">&nbsp;<?php echo $result->bstdo?></td>
                     <td class="top right">&nbsp;Jalur</td>
-                    <td class="top right">&nbsp;International</td>
+                    <td class="top right">&nbsp;<?php if($result->rute == '$') echo 'International'; else if($result->rute == 'Rp') echo 'Domestic'?></td>
                   </tr>
                   <tr>
-                    <td class="left top right">&nbsp;Telepon / <i>Telephone</i></td>
-                    <td class="top right"></td>
-                    <td class="top right">&nbsp;Area</td>
-                    <td class="top right">&nbsp;Cilegon</td>
-                    <td class="top right"></td>
-                    <td class="top right"></td>
-                  </tr>
-                  <tr>
-                    <td class="top" colspan="6" ></td>
+                    <td class="left top right button">&nbsp;Telepon / <i>Telephone</i></td>
+                    <td class="top right button">&nbsp;<?php echo $result->agenTlp?></td>
+                    <td class="top right button">&nbsp;Area</td>
+                    <td class="top right button">&nbsp;Cilegon</td>
+                    <td class="top right button"></td>
+                    <td class="top right button"></td>
                   </tr>
               </table>
-              <table >
+
+              <?php
+                $totalTarif = 0;
+              ?>
+              Silahkan dibayarkan tagihan berikut / <i>Please pay invoice as follow :</i>
+              <table>
                 <thead>
                   <tr>
                     <!-- rowspan="2" colspan="2" -->
@@ -199,122 +241,133 @@ html>
                   </tr>
                 </thead>
                 <tbody class="zebra">
-                  <tr>
-                    <td class="left top right" align="center">1193</td>
-                    <td class="top right" align="center">Laut/Sea</td>
-                    <td class="top right" align="center">BMT</td>
-                    <td class="top right" align="center">Tunda/Towing</td>
-                    <td class="top right" align="center">22/04/19  15:40</td>
-                    <td class="top right" align="center">22/04/19  15:40</td>
-                    <td class="top right" align="right">0,83 &nbsp;</td>
-                    <td class="top right" align="right">1 &nbsp;</td>
-                    <td class="top right" align="right">2 &nbsp;</td>
-                    <td class="top right" align="right">3 &nbsp;</td>
-                    <td class="top right" align="right">Rp. 5.000.000 &nbsp;</td>
-                    <td class="top right" align="right">Rp. 16.000.000 &nbsp;</td>
-                    <td class="top right" align="right">Rp. 71 &nbsp;</td>
-                    <td class="top right" align="right">5.019 &nbsp;</td>
-                    <td class="top right" align="right">Rp. 1.075.000 &nbsp;</td>
-                    <td class="top right" align="right">Rp. 17.000.000 &nbsp;</td>
-                  </tr>
-                  <tr>
-                    <td class="top" colspan="16" ></td>
-                  </tr>
-                  <!-- </tr>
-                  <?php
-                  // $i=1;
-                  // $jppjk=0;
-                  // $jbapp=array();
-                  // $ppjk = $datetime = '';
-                  //
-                  // foreach ($result as $row ) {
-                  //   $date = explode(" ", date("d-m-Y H:i",$row->date));
-                  //   if ($ppjk == $row->ppjk){
-                  //     if ($datetime == $row->date){
-                  //       $date[1] = 'SHIFT';
-                  //       $classShift = 'blue';
-                  //     } else {
-                  //       $classShift = '';
-                  //       $datetime = $row->date;
-                  //     }
-                  //   }else{
-                  //     $ppjk = $row->ppjk;
-                  //     $classShift = '';
-                  //     $jppjk++;
-                  //     $datetime = $row->date;
-                  //   }
-                  //   // if ($row->bapp != '') $jbapp = ;
-                  //   if (!in_array($row->bapp,$jbapp) && $row->bapp!='')$jbapp[]=$row->bapp;
-                  //
-                  //   if (strpos($row->jettyCode,'S.')===0) $classJetty = 'kuning'; else $classJetty = '';
-                  //   // if ($row->kurs == '$') $kurs = 'ungu'; else $kurs = '';
-                  //
-                  //   $tunda = json_decode($row->tunda);
-                  //   if (in_array('GB', $tunda))$gb = 'GB';else $gb = '';
-                  //   if (in_array('GC', $tunda))$gc = 'GC';else $gc = '';
-                  //   if (in_array('GS', $tunda))$gs = 'GS';else $gs = '';
-                  //   if (in_array('MV', $tunda))$mv = 'MV';else $mv = '';
-                  //   if (in_array('MG', $tunda))$mg = 'MG';else $mg = '';
-                  //
-                  //   // if ($row->kapalsLoa == '')$row->kapalsLoa =0;
-                  //   if ($row->kapalsJenis == '') $kapal =  $row->kapalsName; else $kapal = '('.$row->kapalsJenis.') '.$row->kapalsName;
-                  //   if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
-                  //   if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
-                  //
-                  //   echo '<tr>';
-                  //   echo '<td class="top right left" align="center">&nbsp;'.$i.'</td>';
-                  //   echo '<td class="top right" align="center">'.$ppjk.'</td>';
-                  //   echo '<td class="top right" align="center">'.$row->agenCode.'</td>';
-                  //   echo '<td class="top right" align="center">'.$date[0].'</td>';
-                  //   echo '<td class="top right '.$classShift.'" align="center">'.$date[1].'</td>';
-                  //   echo '<td class="top right">&nbsp;'.$kapal.'</td>';
-                  //   echo '<td class="top right" align="right">'.$row->kapalsGrt.'&nbsp;</td>';
-                  //   echo '<td class="top right" align="right">'.$row->kapalsLoa.'&nbsp;</td>';
-                  //   echo '<td class="top right">&nbsp;'.$row->kapalsBendera.'</td>';
-                  //   echo '<td class="top right '.$classJetty.'">&nbsp;'.'('. $row->jettyCode .')'.$row->jettyName.'</td>';
-                  //   echo '<td class="top right">&nbsp;'.$row->ops.'</td>';
-                  //   echo '<td class="top right" align="center">'.$row->bapp.'</td>';
-                  //   echo '<td class="top right" align="center">'.$row->pc.'</td>';
-                  //
-                  //   echo '<td class="top right" align="center">'.$gb.'</td>';
-                  //   echo '<td class="top right" align="center">'.$gc.'</td>';
-                  //   echo '<td class="top right" align="center">'.$gs.'</td>';
-                  //   echo '<td class="top right" align="center"'.$mv.'</td>';
-                  //   echo '<td class="top right" align="center"'.$mg.'</td>';
-                  //
-                  //   echo '<td class="top right" align="center">'.$row->lstp.'</td>';
-                  //   echo '<td class="top right">&nbsp;'.$row->ket.'</td>';
-                  //   echo '</tr>';
-                  //   $bstdo = $row->bstdo;
-                  //   $i++;
-                  // }
-                  ?>
-                  <tr>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
+                <?php
+                foreach ($query as $row ) {
+                  $selisihWaktu = number_format(($row->tundaoff-$row->tundaon)/3600,2);
+                  $exWaktu = explode(".",$selisihWaktu);
+                  if ($exWaktu[1]<=50)$selisihWaktu2=$exWaktu[0]+0.5; else $selisihWaktu2=ceil($selisihWaktu);
+                  $selisihWaktu2=number_format($selisihWaktu2,2);
 
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  </tr> -->
+                  $mobilisasi=2;
+
+                  $jumlahWaktu=$mobilisasi+$selisihWaktu2;
+                  $kurs = 14286;
+
+                  $kapalsGrt = $result->kapalsGrt;
+                  if ($kapalsGrt<=3500)$tariffix = 152.25*$kurs;
+                  else if ($kapalsGrt<=8000)$tariffix = 386.25*$kurs;
+                  else if ($kapalsGrt<=14000)$tariffix = 587.1*$kurs;
+                  else if ($kapalsGrt<=18000)$tariffix = 770*$kurs;
+                  else if ($kapalsGrt<=40000)$tariffix = 1220*$kurs;
+                  else if ($kapalsGrt<=75000)$tariffix = 1300*$kurs;
+                  else if ($kapalsGrt>75000)$tariffix = 1700*$kurs;
+
+                  $jumlahTariffix=$tariffix*$jumlahWaktu;
+
+                  if ($kapalsGrt<=14000)$tarifvar=0.005*$kurs;
+                  else if ($kapalsGrt<=40000)$tarifvar=0.004*$kurs;
+                  else if ($kapalsGrt>40000)$tarifvar=0.002*$kurs;
+
+                  $jumlahTarifvar=$tarifvar*$kapalsGrt*$jumlahWaktu;
+
+                  $jumlahTarif=$jumlahTarifvar+$jumlahTariffix;
+                ?>
+                  <tr>
+                    <td class="left top right" align="center"><?php echo $result->lstp?></td>
+                    <td class="top right" align="center"><?php echo $row->id?></td>
+                    <td class="top right" align="center"><?php echo $row->id?></td>
+                    <td class="top right" align="center"><?php echo $row->id?></td>
+                    <td class="top right" align="center"><?php echo date('d/m/y h:i',$row->tundaon)?></td>
+                    <td class="top right" align="center"><?php echo date('d/m/y h:i',$row->tundaoff)?></td>
+                    <td class="top right" align="right"><?php echo number_format($selisihWaktu,2)?>&nbsp;</td>
+                    <td class="top right" align="right"><?php echo number_format($selisihWaktu2,2)?>&nbsp;</td>
+                    <td class="top right" align="right"><?php echo number_format($mobilisasi,2)?> &nbsp;</td>
+                    <td class="top right" align="right"><?php echo number_format($jumlahWaktu,2)?>&nbsp;</td>
+                    <td class="top right" align="right"><?php echo number_format($tariffix)?>&nbsp;</td>
+                    <td class="top right" align="right"><?php echo number_format($jumlahTariffix)?>&nbsp;</td>
+                    <td class="top right" align="right"><?php echo ceil($tarifvar)?>&nbsp;</td>
+                    <td class="top right" align="right"><?php echo number_format($result->kapalsGrt)?>&nbsp;</td>
+                    <td class="top right" align="right"><?php echo number_format($jumlahTarifvar)?>&nbsp;</td>
+                    <td class="top right" align="right"><?php echo number_format($jumlahTarif)?>&nbsp;</td>
+                  </tr>
+                <?php
+                  $totalTarif = $jumlahTarif+$totalTarif;
+                  }
+
+                  $bht99=$totalTarif*(99/100);
+                  $bht5=$bht99*(5/100);
+                  $bhtPNBP=$bht99-$bht5;
+                  $ppn=$bhtPNBP*(10/100);
+                  $totalinv=$bhtPNBP+$ppn;
+                ?>
+                </tbody>
+                <tr>
+                  <td class="top" colspan="6" rowspan="4">
+
+
+
+                  </td>
+                  <td class="top" colspan="9" align="right">Total Tunda</td>
+                  <td class="left top right" align="right"><?php echo number_format($totalTarif)?>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td colspan="9" align="right">Bagi Hasil Tunda setelah PNBP</td>
+                  <td class="left top right" align="right"><?php echo number_format($bhtPNBP)?>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td colspan="9" align="right">PPn / Total after VAT</td>
+                  <td class="left top right" align="right"><?php echo number_format($ppn)?>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td colspan="9" align="right">Total Tagihan Bagi Hasil / Total Invoice</td>
+                  <td class="left top right button" align="right"><?php echo number_format($totalinv)?>&nbsp;</td>
+                </tr>
+              </table>
+            </div>
+
+            <div style="position:absolute; top:260; left:30; width:300; font-family:'Arial', Helvetica, sans-serif ; font-size:11px;">
+              Kurs Jual Bank Indonesia 1 USD / 30-Apr-19	= Rp. 14.286
+              <table>
+                <thead>
+                  <tr>
+                    <td class="left top right" style="background-color: #DCDCDC;" colspan="2" height='17'>Dibayarkan ke / <i>Payable</i></td>
+                    <td class="top right" style="background-color: #DCDCDC;">Tanggal jatuh tempo / <i>Due</i></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="left top right button">&nbsp;Bank BNI (IDR)</td>
+                    <td class="top right button">&nbsp;231.05.45</td>
+                    <td class="top right button" rowspan="3" align="center">&nbsp;14 Mei 2019</i></td>
+                  </tr>
+                  <tr>
+                    <td class="left top right button">&nbsp;Bank Mandiri (IDR)</td>
+                    <td class="top right button">&nbsp;116.000.458.7292</td>
+                  </tr>
+                  <tr>
+                    <td class="left top right button">&nbsp;Bank Jabar (IDR)</td>
+                    <td class="top right button">&nbsp;28.00.01.006542.7</td>
+                  </tr>
+                  <tr>
+                    <td class="left top right button">&nbsp;Atas nama / <i>Favour</i></td>
+                    <td class="top right button" colspan="2">&nbsp;PT. Pelabuhan Cilegon Mandiri</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
+            <div style="position:absolute; top:350; left:30; width:350; font-family:'Arial', Helvetica, sans-serif ; font-size:11px;" align='center'>
+              PT. PELABUHAN CILEGON MANDIRI<br>Pelaksana Pelayanan Jasa<br><br><br><br><br><br><br>
+              H. ARIEF RIVA'I, SH, MH,M.SI<br>Direktur Utama
+            </div>
+<div style="position:absolute; top:350; left:530; width:350;font-family:'Arial', Helvetica, sans-serif ; font-size:10px;" class="left top right button">
+            <ol>
+              Keterangan :
+            <li>Pembayaran dianggap sah  apabila bukti  transfer pembayaran telah disah-kan oleh Bank  dan bukti transfer tersebut diserahkan ke PT. Pelabuhan Cilegon Mandiri / Payment  valid when the transfer document has been legalized by the bank and submit to PT. Pelabuhan Cilegon Mandiri .</li>
+            <li>Mohon pembayaran agar dilunasi sebelum jatuh tempo. The payment shall be paid before due date.</li>
+            <li>Keluhan mengenai invoice bila ada agar di ajukan 3(tiga) hari sebelum jatuh tempo. If there is any complain about the invoice, please inform us 3(three) days before due date.</li>
+            </ol>
+</div>
+
 
 
             <!-- <p style="page-break-after: never;">

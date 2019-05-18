@@ -229,8 +229,6 @@ class AppHelpers {
         return Terbilang($x / 1000000) . " juta" . Terbilang($x % 1000000);
     }
 
-
-    // selisih jam masuk dan keluar -> absen
     public static function selisihhbt($start, $end, $period = "day")
     {
         $day = 0;
@@ -301,6 +299,7 @@ class AppHelpers {
 
         return $hjam.':'.$sisamenit3 ;
     }
+    
     //total penambahan waktu
     public static function TotalWaktu($w1,$w2){
         $time1_unix = strtotime(date('Y-m-d').' '.$w1.':00');

@@ -214,8 +214,8 @@
                     echo '<td class="top right" align="center">'.$gb.'</td>';
                     echo '<td class="top right" align="center">'.$gc.'</td>';
                     echo '<td class="top right" align="center">'.$gs.'</td>';
-                    echo '<td class="top right" align="center"'.$mv.'</td>';
-                    echo '<td class="top right" align="center"'.$mg.'</td>';
+                    echo '<td class="top right" align="center">'.$mv.'</td>';
+                    echo '<td class="top right" align="center">'.$mg.'</td>';
 
                     echo '<td class="top right" align="center">'.$row->lstp.'</td>';
                     echo '<td class="top right">&nbsp;'.$row->ket.'</td>';

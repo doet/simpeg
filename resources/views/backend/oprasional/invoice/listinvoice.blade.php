@@ -122,21 +122,15 @@
 						<input name="sidx" value="" hidden/>
 					</form>
 
-					<div align="center">BSTDO<br />
+					<div align="center">Daftar Invoice<br />
 						<span class="editable" id="psdate"></span>
 					</div>
 					<div class="row">
 						<div class="col-xs-12 col-sm-5">
 							<div class="profile-user-info profile-user-info-striped ">
-									<div class="profile-info-row">
-										<div class="profile-info-name"> No BSTDO </div>
 
-										<div class="profile-info-value">
-											<span id="NoBSTDO" data-pk="1" data-placement="right" data-title="No BSTDO"></span>
-										</div>
-									</div>
 									<div class="profile-info-row">
-										<div class="profile-info-name"> LIST PPJK </div>
+										<div class="profile-info-name"> Display </div>
 
 										<div class="profile-info-value">
 											<select id="ppjk" class="multiselect" multiple="" disabled>
@@ -201,35 +195,35 @@
 		});
 		var setdate = moment().format('D MMMM YYYY');
 
-		var nobstdo = 0;
-		var posdata= {'datatb':'ppjk', _token:'{{ csrf_token() }}'};
-		$.ajax({
-			type: "POST",
-		  url: "{{url('/api/oprasional/json')}}",
-			data: posdata,
-		  // async: false,
-		  success: function(data) {
-				var No = new Array();
-				$.each(data, function (idx, obj) {
-					No.push(data[idx].bstdo);
-				});
-				No.sort();
-				if (No[0]!==null){
-					$('#NoBSTDO')
-					.editable('setValue',No[0])
-					.val(No[0])
-					.html(No[0]);
-
-					get_ppjk(No[0]);
-					// console.log(No[0]);
-					// window.onload = function () {
-					setTimeout(function() {
-						$(grid_selector).jqGrid('setGridParam',{postData:{bstdo:No[0]}}).trigger("reloadGrid");
-						// alert('test');
-					}, 500);
-				}
-		  }
-		});
+		// var nobstdo = 0;
+		// var posdata= {'datatb':'ppjk', _token:'{{ csrf_token() }}'};
+		// $.ajax({
+		// 	type: "POST",
+		//   url: "{{url('/api/oprasional/json')}}",
+		// 	data: posdata,
+		//   // async: false,
+		//   success: function(data) {
+		// 		var No = new Array();
+		// 		$.each(data, function (idx, obj) {
+		// 			No.push(data[idx].bstdo);
+		// 		});
+		// 		No.sort();
+		// 		if (No[0]!==null){
+		// 			$('#NoBSTDO')
+		// 			.editable('setValue',No[0])
+		// 			.val(No[0])
+		// 			.html(No[0]);
+		//
+		// 			get_ppjk(No[0]);
+		// 			// console.log(No[0]);
+		// 			// window.onload = function () {
+		// 			setTimeout(function() {
+		// 				$(grid_selector).jqGrid('setGridParam',{postData:{bstdo:No[0]}}).trigger("reloadGrid");
+		// 				// alert('test');
+		// 			}, 500);
+		// 		}
+		//   }
+		// });
 
 		$('#NoBSTDO').editable({
 			type:'typeaheadjs',
@@ -300,28 +294,28 @@
 	    }
 		});
 
-		function get_ppjk(setbstdo){
-			console.log(setbstdo);
-			var posdata= {'datatb':'ppjk', _token:'{{ csrf_token() }}'};
-			var $select_elem = $("#ppjk");
-			if (setbstdo===''){
-				$select_elem.multiselect('disable');
-			} else {
-				// $select_elem.empty();
-				$select_elem.html('');
-				getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
-					var No = new Array();
-					$.each(data, function (idx, obj) {
-						if (data[idx].bstdo == setbstdo){
-							$select_elem.append('<option value="'+data[idx].id+'" selected>'+data[idx].ppjk+'</option>');
-						} else if (data[idx].bstdo === null && data[idx].lhp !== null){
-							$select_elem.append('<option value="'+data[idx].id+'">'+data[idx].ppjk+'</option>');
-						}
-					});
-					$select_elem.multiselect('rebuild');
-				},function(data){});
-			}
-		}
+		// function get_ppjk(setbstdo){
+		// 	console.log(setbstdo);
+		// 	var posdata= {'datatb':'ppjk', _token:'{{ csrf_token() }}'};
+		// 	var $select_elem = $("#ppjk");
+		// 	if (setbstdo===''){
+		// 		$select_elem.multiselect('disable');
+		// 	} else {
+		// 		// $select_elem.empty();
+		// 		$select_elem.html('');
+		// 		getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
+		// 			var No = new Array();
+		// 			$.each(data, function (idx, obj) {
+		// 				if (data[idx].bstdo == setbstdo){
+		// 					$select_elem.append('<option value="'+data[idx].id+'" selected>'+data[idx].ppjk+'</option>');
+		// 				} else if (data[idx].bstdo === null && data[idx].lhp !== null){
+		// 					$select_elem.append('<option value="'+data[idx].id+'">'+data[idx].ppjk+'</option>');
+		// 				}
+		// 			});
+		// 			$select_elem.multiselect('rebuild');
+		// 		},function(data){});
+		// 	}
+		// }
 
 		var postsave={};
 		postsave.url = "{{url('/api/oprasional/cud')}}";
@@ -369,40 +363,26 @@
 		*/
 
 		jQuery(grid_selector).jqGrid({
-			caption: "Input BSTDO",
+			caption: "Daftar Invoice",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
-      postData: {datatb:'dl', bstdo:nobstdo,_token:'{{ csrf_token() }}'},
-			url:"{{url('/api/oprasional/jqgrid')}}",
-			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
-			sortname:'date',
+      postData: {datatb:'invoice', _token:'{{ csrf_token() }}'},
+			url:"{{url('/api/oprasional/invoice/jqgrid')}}",
+			editurl: "{{url('/api/oprasional/invoice/cud')}}",//nothing is saved
+			sortname:'bstdo',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','bapp','PC','ON','OFF','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','Moring','ppjks_id'],
+			colNames:[' ', 'BSTDO','PPJK','Agen','Kapal','Jalur','Faktur Pajak','Nomor Invoice','Status'],
 			colModel:[
 				{name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false, align: 'center'},
-				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
-				{name:'agen',index:'agen',width:45, editable:false, align: 'center'},
-				{name:'date',index:'date', width:120,editable: false},
-				{name:'kapal',index:'kapal', width:150, editable: false},
-				{name:'grt',index:'grt', width:50, editable: false, align: 'right',hidden:true},
-				{name:'loa',index:'loa', width:50, sortable:false, align: 'right',hidden:true},
-				{name:'bendera',index:'bendera', width:80, editable: false,hidden:true},
-				{name:'dermaga',index:'dermaga', width:100, editable: false},
-				{name:'ops',index: 'ops', width: 60,editable: false, align: 'center'},
-				{name:'bapp',index:'bapp',width:100, editable: false,hidden:true},
-				{name:'pc',index: 'pc', width: 40, editable: false, align: 'center'},
-				{name:'on',index:'on',width:40, editable: false},
-				{name:'off',index:'off',width:40, editable: false},
-				{name:'tunda',index:'tunda',width:100, editable: false},
-				{name:'on',index:'on',width:40, editable: false,hidden:true},
-				{name:'off',index:'off',width:40, editable: false,hidden:true},
-				{name:'dd',index:'dd',width:40, editable: false},
-				{name:'ket',index:'ket',width:100, editable: false},
-				{name:'kurs',index:'kurs',width:50, editable: false, align: 'center',hidden:true},
-				{name:'lstp',index:'lstp',width:50, editable: true, align: 'center'},
-				{name:'moring',index:'moring',width:180, editable: true, align: 'center',hidden:true},
-				{name:'ppjks_id',index:'ppjks_id',width:180, editable: false, hidden:true, align: 'center'}
+				{name:'bstdo',index:'bstdo', width:40,editable: false},
+				{name:'ppjk',index:'ppjk', width:60, sorttype:"int", editable: false},
+				{name:'agen',index:'agen',width:40, editable:false, align: 'center'},
+				{name:'kapal',index:'kapal', width:60, editable: false},
+				{name:'rute',index:'rute', width:60, editable: false},
+				{name:'pajak',index:'pajak', width:60, editable: false},
+				{name:'noinv',index:'noinv', width:60, editable: false},
+				{name:'status',index:'status', width:60, editable: false, formatter:status}
 			],
 
 			viewrecords : true,
@@ -448,6 +428,16 @@
 		//jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
 		//jQuery(grid_selector).filterToolbar({});
 
+		function status( cellvalue, options, cell ) {
+			// setTimeout(function(){
+			// 	$(cell) .find('input[type=checkbox]')
+			// 		.addClass('ace ace-switch ace-switch-5')
+			// 		.after('<span class="lbl"></span>');
+			// }, 0);
+			console.log(cellvalue);
+			var url="{{ url('oprasional/PDFInvoice') }}?page=invoice-dompdf&id="+cellvalue;
+			return '<div><a class="fa fa-file-pdf-o orange" method="POST" href='+url+' target="_blank"></a> - <a class="fa fa-credit-card orange"></a></div>';
+		}
 
 		//switch element when editing inline
 		function aceSwitch( cellvalue, options, cell ) {
@@ -493,10 +483,11 @@
 					style_edit_form(form);
 				},
 				onclickSubmit: function () {
-					var gsr = $(this).jqGrid('getGridParam','selrow');
-					var ppjks_id = $(this).jqGrid('getCell',gsr,'ppjks_id');
-
-		      return { datatb:'lstp', ppjks_id:ppjks_id,dls_id:gsr,_token:'<?php echo csrf_token();?>'};
+					// var gsr = $(this).jqGrid('getGridParam','selrow');
+					// var ppjks_id = $(this).jqGrid('getCell',gsr,'ppjks_id');
+					//
+		      // return { datatb:'lstp', ppjks_id:ppjks_id,dls_id:gsr,_token:'<?php echo csrf_token();?>'};
+					alert(1);
 		    }
 			},
 			{
@@ -557,87 +548,88 @@
 					form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
 				}
 			}
-		).jqGrid('navButtonAdd',pager_selector,{
-				keys: true,
-				caption:"",
-				buttonicon:"ace-icon fa fa-pencil blue",
-				position:"first",
-				onClickButton:function(){
-					$('#form').trigger("reset");
-					//
-					var gsr = $(this).jqGrid('getGridParam','selrow');
-					if(gsr){
-						var ppjks_id = $(this).jqGrid('getCell',gsr,'ppjks_id');
-						var lstp = $(this).jqGrid('getCell',gsr,'lstp');
-						var moring = $(this).jqGrid('getCell',gsr,'moring');
-						$('#lstp').val(lstp);
-						$('#moring').val(moring);
-
-						var posdata= {'datatb':'dl','search':gsr};
-						getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
-							$('#tundadate').daterangepicker({
-								'applyClass' : 'btn-sm btn-success',
-								'cancelClass' : 'btn-sm btn-default',
-								"opens": "center",
-								timePicker: true,
-								timePicker24Hour: true,
-								startDate: data.tundaon,
-								endDate: data.tundaoff,
-								locale: {
-									applyLabel: 'Apply',
-									cancelLabel: 'Cancel',
-									format: 'DD/MM/YY HH:mm'
-								}
-							})
-							.prev().on(ace.click_event, function(){
-								$(this).next().focus();
-							});
-
-							$('#pcdate').daterangepicker({
-								'applyClass' : 'btn-sm btn-success',
-								'cancelClass' : 'btn-sm btn-default',
-								"opens": "center",
-								timePicker: true,
-								timePicker24Hour: true,
-								startDate: data.pcon,
-								endDate: data.pcoff,
-								locale: {
-									applyLabel: 'Apply',
-									cancelLabel: 'Cancel',
-									format: 'DD/MM/YY HH:mm'
-								}
-							})
-							.prev().on(ace.click_event, function(){
-								$(this).next().focus();
-							});
-							console.log(data.pcon);
-						});
-						postsave.post = '';
-						postsave.post += 'oper=edit&dls_id='+gsr+'&ppjks_id='+ppjks_id+'&';
-						$('#modal').modal('show');
-					} else {
-						alert("pilih tabel")
-					}
-				}
-		}).jqGrid('navButtonAdd',pager_selector,{
-				keys: true,
-				caption:"bstdo",
-				buttonicon:"ace-icon fa fa-file-pdf-o orange",
-				position:"last",
-				onClickButton:function(){
-					// var data = $(this).jqGrid('getRowData'); Get all data
-
-					$('#dompdf input[name=page]').val('invoice-dompdf');
-					$('#dompdf input[name=bstdo]').val($('#NoBSTDO').html());
-					$('#dompdf input[name=start]').val(setdate);
-					$('#dompdf input[name=sidx]').val('ppjk');
-
-					// console.log(setdate);
-
-					$('#dompdf').submit();
-				}
-		})
-
+		)
+		// .jqGrid('navButtonAdd',pager_selector,{
+		// 		keys: true,
+		// 		caption:"",
+		// 		buttonicon:"ace-icon fa fa-pencil blue",
+		// 		position:"first",
+		// 		onClickButton:function(){
+		// 			$('#form').trigger("reset");
+		// 			//
+		// 			var gsr = $(this).jqGrid('getGridParam','selrow');
+		// 			if(gsr){
+		// 				var ppjks_id = $(this).jqGrid('getCell',gsr,'ppjks_id');
+		// 				var lstp = $(this).jqGrid('getCell',gsr,'lstp');
+		// 				var moring = $(this).jqGrid('getCell',gsr,'moring');
+		// 				$('#lstp').val(lstp);
+		// 				$('#moring').val(moring);
+		//
+		// 				var posdata= {'datatb':'dl','search':gsr};
+		// 				getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
+		// 					$('#tundadate').daterangepicker({
+		// 						'applyClass' : 'btn-sm btn-success',
+		// 						'cancelClass' : 'btn-sm btn-default',
+		// 						"opens": "center",
+		// 						timePicker: true,
+		// 						timePicker24Hour: true,
+		// 						startDate: data.tundaon,
+		// 						endDate: data.tundaoff,
+		// 						locale: {
+		// 							applyLabel: 'Apply',
+		// 							cancelLabel: 'Cancel',
+		// 							format: 'DD/MM/YY HH:mm'
+		// 						}
+		// 					})
+		// 					.prev().on(ace.click_event, function(){
+		// 						$(this).next().focus();
+		// 					});
+		//
+		// 					$('#pcdate').daterangepicker({
+		// 						'applyClass' : 'btn-sm btn-success',
+		// 						'cancelClass' : 'btn-sm btn-default',
+		// 						"opens": "center",
+		// 						timePicker: true,
+		// 						timePicker24Hour: true,
+		// 						startDate: data.pcon,
+		// 						endDate: data.pcoff,
+		// 						locale: {
+		// 							applyLabel: 'Apply',
+		// 							cancelLabel: 'Cancel',
+		// 							format: 'DD/MM/YY HH:mm'
+		// 						}
+		// 					})
+		// 					.prev().on(ace.click_event, function(){
+		// 						$(this).next().focus();
+		// 					});
+		// 					console.log(data.pcon);
+		// 				});
+		// 				postsave.post = '';
+		// 				postsave.post += 'oper=edit&dls_id='+gsr+'&ppjks_id='+ppjks_id+'&';
+		// 				$('#modal').modal('show');
+		// 			} else {
+		// 				alert("pilih tabel")
+		// 			}
+		// 		}
+		// })
+		// .jqGrid('navButtonAdd',pager_selector,{
+		// 		keys: true,
+		// 		caption:"Invoice",
+		// 		buttonicon:"ace-icon fa fa-file-pdf-o orange",
+		// 		position:"last",
+		// 		onClickButton:function(){
+		// 			// var data = $(this).jqGrid('getRowData'); Get all data
+		//
+		// 			$('#dompdf input[name=page]').val('invoice-dompdf');
+		// 			$('#dompdf input[name=bstdo]').val($('#NoBSTDO').html());
+		// 			$('#dompdf input[name=start]').val(setdate);
+		// 			$('#dompdf input[name=sidx]').val('ppjk');
+		//
+		// 			// console.log(setdate);
+		//
+		// 			$('#dompdf').submit();
+		// 		}
+		// })
 
 		$(document).one('ajaxloadstart.page', function(e) {
 			$.jgrid.gridDestroy(grid_selector);

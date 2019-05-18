@@ -58,7 +58,7 @@
 						<input type="hidden" id='id-1' name="id" value="id" /> -->
 						<div class="row">
 							<div class="col-xs-12 col-sm-6">
-								<div class="row">
+								<!-- <div class="row">
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tunda On/Off</label>
 										<div class="col-xs-12 col-sm-9">
@@ -76,7 +76,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="space-2"></div>
+								<div class="space-2"></div> -->
 
 								<div class="row">
 									<div class="form-group">

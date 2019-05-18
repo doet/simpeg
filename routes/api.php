@@ -56,10 +56,17 @@ Route::prefix('surat')->group(function(){
 });
 
 Route::prefix('oprasional')->group(function(){
-  Route::post('/jqgrid',           'Oprasional\oprasionalApiController@jqgrid');
-  Route::match(['get', 'post'],	'autoc','Oprasional\oprasionalApiController@autoc');
-  Route::post('/json',             'Oprasional\oprasionalApiController@json');
-  Route::post('/cud',              'Oprasional\oprasionalApiController@cud');
+  Route::post('/jqgrid',          'Oprasional\oprasionalApiController@jqgrid');
+  Route::post('/json',            'Oprasional\oprasionalApiController@json');
+  Route::post('/cud',             'Oprasional\oprasionalApiController@cud');
+  Route::match(['get', 'post'],	  'autoc','Oprasional\oprasionalApiController@autoc');
+
+  Route::prefix('invoice')->group(function(){
+    Route::post('/jqgrid',          'Oprasional\Invoice\InvoiceApiController@jqgrid');
+    Route::post('/json',            'Oprasional\Invoice\InvoiceApiController@json');
+    Route::post('/cud',             'Oprasional\Invoice\InvoiceApiController@cud');
+    Route::match(['get', 'post'],	  'autoc','Oprasional\Invoice\InvoiceApiController@autoc');
+  });
 });
 
 Route::prefix('Inventaris')->group(function(){

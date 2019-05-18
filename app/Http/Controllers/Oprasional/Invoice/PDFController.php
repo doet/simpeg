@@ -34,49 +34,52 @@ class PDFController extends Controller
     // $akhir = '05 March 2019';
     $sord = $request->input('sord', 'asc');
     $sidx = $request->input('sidx', 'id');
-    // dd($request->input());
+
     $category = $request->input('page', 'unknow');
     switch ($category) {
       case 'invoice-dompdf':
-        $result = DB::table('tb_dls')
-          ->join('tb_ppjks', function ($join) {
-            $join->on('tb_ppjks.id','tb_dls.ppjks_id');
-          })
-          ->leftJoin('tb_jettys', function ($join) {
-            $join->on('tb_jettys.id', '=', 'tb_dls.jettys_id');
+        $result = DB::table('tb_ppjks')
+          ->leftJoin('tb_agens', function ($join) {
+            $join->on('tb_agens.id','tb_ppjks.agens_id');
           })
           ->leftJoin('tb_kapals', function ($join) {
-            $join->on('tb_kapals.id', 'tb_ppjks.kapals_id');
+            $join->on('tb_kapals.id','tb_ppjks.kapals_id');
           })
-          ->leftJoin('tb_agens', function ($join) {
-            $join->on('tb_agens.id', '=', 'tb_ppjks.agens_id');
-          })
+          // ->RightJoin('tb_ppjks', function ($join) {
+          //   $join->on('tb_ppjks.id','tb_dls.ppjks_id');
+          // })
+          // ->leftJoin('tb_jettys', function ($join) {
+          //   $join->on('tb_jettys.id','tb_dls.jettys_id');
+          // })
           ->where(function ($query) use ($mulai,$akhir,$request){
-          //
-            $query->where('bstdo',$request->input('bstdo'));
-            // $query->where('lhp_date', '!=', '');
+            $query->where('tb_ppjks.bstdo','!=','');
+            $query->where('tb_ppjks.id',$request->input('id',''));
           })
           ->select(
-            'tb_jettys.code as jettyCode',
-            'tb_kapals.jenis as kapalsJenis',
-            'tb_agens.code as agenCode',
+            'tb_agens.name as agenName',
+            'tb_agens.alamat as agenAlamat',
+            'tb_agens.tlp as agenTlp',
             'tb_kapals.name as kapalsName',
+            'tb_kapals.jenis as kapalsJenis',
             'tb_kapals.grt as kapalsGrt',
-            'tb_kapals.loa as kapalsLoa',
-            'tb_kapals.bendera as kapalsBendera',
-            'tb_jettys.name as jettyName',
-            // 'tb_jettys.color as jettyColor',
-            // 'tb_kapals.*',
-            // 'tb_agens.*',
-            // 'tb_jettys.*',
-            'tb_ppjks.*',
-            'tb_dls.*'
+            // 'tb_kapals.loa as kapalsLoa',
+            // 'tb_kapals.bendera as kapalsBendera',
+            // 'tb_jettys.name as jettyName',
+            // 'tb_jettys.code as jettyCode',
+            // // 'tb_jettys.color as jettyColor',
+            'tb_ppjks.*'
+            // 'tb_dls.*'
           )
-          ->orderBy('ppjk', 'asc')
-          ->orderBy('date', 'asc')
-          ->orderBy('tb_dls.id', 'asc')
+          ->first();
+        $query = DB::table('tb_dls')
+          // ->leftJoin('tb_ppjks', function ($join) {
+          //   $join->on('tb_ppjks.id','tb_dls.ppjks_id');
+          // })
+          ->where(function ($query) use ($result){
+            $query->where('tb_dls.ppjks_id',$result->id);
+          })
           ->get();
-
+          // dd($result);
           // dd($request->input());
         // $result = json_encode(json_decode($qu));
         // $result = json_decode($result,true);
@@ -91,7 +94,7 @@ class PDFController extends Controller
         $nfile = $request->input('file');
         $orientation = 'landscape';
 
-        $view =  \View::make($page, compact('result','mulai'))->render();
+        $view =  \View::make($page, compact('result','query','mulai'))->render();
         // return view($page, compact('result','mulai'));
       break;
     }

@@ -531,7 +531,7 @@
 			sortname:'date',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:['id', 'PPJK','AGEN','Waktu','Kapal','GRT','LOA','Bendera','Dermaga','OPS','bapp','PC','ON','OFF','Tunda','ON','OFF','DD','Ket',' '],
+			colNames:['id', 'PPJK','AGEN','Waktu','Kapal','GRT','LOA','Bendera','Dermaga','OPS','bapp','PC','ON','OFF','Tunda','ON','OFF','DD','Ket','Rute'],
 			colModel:[
 				{name:'tb_dls.id',index:'tb_dls.id', width:50, fixed:true, sortable:true, resize:false, align: 'center'},
 				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
@@ -552,7 +552,7 @@
 				{name:'off',index:'off',width:40, sortable:false, editable: false},
         {name:'dd',index:'dd',width:40, editable: false},
         {name:'ket',index:'ket',width:100, editable: false},
-        {name:'kurs',index:'kurs',width:50, editable: false, align: 'center'}
+        {name:'rute',index:'rute',width:50, editable: false, align: 'center'}
 			],
 
 			viewrecords : true,

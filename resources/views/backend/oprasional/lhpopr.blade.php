@@ -43,6 +43,75 @@
 @endsection
 
 @section('content')
+<div id="modal" class="modal fade" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<!-- 01 Header -->
+				<form id="form">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h3 class="smaller lighter blue no-margin">Form Laporan </h3>
+					</div>
+					<!-- 01 end heder -->
+					<!-- 02 body -->
+					<div class="modal-body">
+						{{ csrf_field() }}
+						<!-- <input type="hidden" name="datatb" value="keluarga" />
+						<input type="hidden" id='oper-1' name="oper" value="add" />
+						<input type="hidden" id='id-1' name="id" value="id" /> -->
+						<div class="row">
+							<div class="col-xs-12 col-sm-6">
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tunda On/Off</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="tundadate" name="tundadate" readonly></div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PC On/Off</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="pcdate" name="pcdate" readonly></div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">BAPP</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm" type="text" id="bapp" name="bapp"></div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+							</div>
+						</div>
+
+					</div>
+					<!-- 02 end body -->
+
+					<!-- 03 footer -->
+					<div class="modal-footer">
+						<button class="btn btn-sm btn-danger pull-right" id='save'>
+								<i class="ace-icon fa fa-floppy-o"></i>Save
+						</button>
+						<button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
+								<i class="ace-icon fa fa-times"></i>Close
+						</button>
+					</div>
+					<!-- 03 end footer Form -->
+				</form>
+			</div>
+		</div>
+</div><!-- /.modal-dialog -->
+
       <div class="row">
         <div class="col-xs-12">
           <!-- PAGE CONTENT BEGINS -->
@@ -205,6 +274,16 @@
 		}
 
 		get_ppjk(setdate);
+
+		var postsave={};
+		postsave.url = "{{url('/api/oprasional/cud')}}";
+		postsave.grid = '#grid-table';
+		postsave.modal = '#modal';
+		$('#save').click(function(e) {
+			e.preventDefault();
+			postsave.post += $("#form").serialize()+'&datatb=lhp2';
+			SaveGrid(postsave);
+		});
 //////////////////////////////////////////////
 
 		var grid_selector = "#grid-table";
@@ -251,7 +330,7 @@
 			sortname:'date',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','ON','OFF','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','lstpx',"ppjks_id"],
+			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','BAPP','PC','ON','OFF','Tunda','ON','OFF','DD','Ket','Rute','LSTP','lstpx',"ppjks_id"],
 			colModel:[
 				{name:'tb_dls.id',index:'tb_dls.id', width:50, fixed:true, sortable:true, resize:false, align: 'center'},
 				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
@@ -263,10 +342,10 @@
 				{name:'bendera',index:'bendera', width:80, editable: false},
         {name:'jettyName',index:'jettyName', width:100, editable: false},
         {name:'ops',index: 'ops', width: 60,editable: false, align: 'center'},
-				{name:'bapp',index:'bapp',width:50, editable: false, align: 'center',hidden:true},
+				{name:'bapp',index:'bapp',width:50, editable: true, align: 'center'},
         {name:'pc',index: 'pc', width: 40, editable: false, align: 'center'},
-				{name:'on',index:'on',width:40, editable: false,hidden:true},
-				{name:'off',index:'off',width:40, editable: false,hidden:true},
+				{name:'on',index:'on',width:40, editable: false},
+				{name:'off',index:'off',width:40, editable: false},
         {name:'tunda',index:'tunda',width:100, sortable:false, editable: false},
 				{name:'on',index:'on',width:40, sortable:false, editable: false},
 				{name:'off',index:'off',width:40, sortable:false, editable: false},
@@ -342,7 +421,7 @@
 		//navButtons
 		jQuery(grid_selector).jqGrid('navGrid',pager_selector,
 			{ 	//navbar options
-				edit: true,
+				edit: false,
 				editicon : 'ace-icon fa fa-pencil blue',
 				add: false,
 				addicon : 'ace-icon fa fa-plus-circle purple',
@@ -430,6 +509,67 @@
 				}
 			}
 		).jqGrid('navButtonAdd',pager_selector,{
+				keys: true,
+				caption:"",
+				buttonicon:"ace-icon fa fa-pencil blue",
+				position:"first",
+				onClickButton:function(){
+					$('#form').trigger("reset");
+					//
+					var gsr = $(this).jqGrid('getGridParam','selrow');
+					if(gsr){
+						var ppjks_id = $(this).jqGrid('getCell',gsr,'ppjks_id');
+						var bapp = $(this).jqGrid('getCell',gsr,'lstp');
+						var moring = $(this).jqGrid('getCell',gsr,'moring');
+						$('#bapp').val(bapp);
+
+						var posdata= {'datatb':'dl','search':gsr};
+						getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
+							$('#tundadate').daterangepicker({
+								'applyClass' : 'btn-sm btn-success',
+								'cancelClass' : 'btn-sm btn-default',
+								"opens": "center",
+								timePicker: true,
+								timePicker24Hour: true,
+								startDate: data.tundaon,
+								endDate: data.tundaoff,
+								locale: {
+									applyLabel: 'Apply',
+									cancelLabel: 'Cancel',
+									format: 'DD/MM/YY HH:mm'
+								}
+							})
+							.prev().on(ace.click_event, function(){
+								$(this).next().focus();
+							});
+
+							$('#pcdate').daterangepicker({
+								'applyClass' : 'btn-sm btn-success',
+								'cancelClass' : 'btn-sm btn-default',
+								"opens": "center",
+								timePicker: true,
+								timePicker24Hour: true,
+								startDate: data.pcon,
+								endDate: data.pcoff,
+								locale: {
+									applyLabel: 'Apply',
+									cancelLabel: 'Cancel',
+									format: 'DD/MM/YY HH:mm'
+								}
+							})
+							.prev().on(ace.click_event, function(){
+								$(this).next().focus();
+							});
+							console.log(data.pcon);
+						});
+						postsave.post = '';
+						postsave.post += 'oper=edit&dls_id='+gsr+'&ppjks_id='+ppjks_id+'&';
+						$('#modal').modal('show');
+					} else {
+						alert("pilih tabel")
+					}
+				}
+		}).jqGrid('navButtonAdd',pager_selector,{
 				keys: true,
 				caption:"LHP",
 				buttonicon:"ace-icon fa fa-file-pdf-o orange",

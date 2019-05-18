@@ -162,7 +162,6 @@
                     if (strpos($row->jettyCode,'S.')===0) $classJetty = 'kuning'; else $classJetty = '';
                     // $row->rute='$';
                     if ($row->rute == '$') $rute = 'ungu'; else $rute = '';
-
                     if($row->tunda == '')$row->tunda="['']";
                     $tunda = json_decode($row->tunda);
                     if (in_array('GB', $tunda))$gb = 'GB';else $gb = '';
@@ -170,6 +169,7 @@
                     if (in_array('GS', $tunda))$gs = 'GS';else $gs = '';
                     if (in_array('MV', $tunda))$mv = 'MV';else $mv = '';
                     if (in_array('MG', $tunda))$mg = 'MG';else $mg = '';
+                    // dd($mv);
 
                     if ($row->kapalsJenis == '') $kapal =  $row->kapalsName; else $kapal = '('.$row->kapalsJenis.') '.$row->kapalsName;
                     if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
@@ -193,8 +193,8 @@
                     echo '<td class="top right" align="center">'.$gb.'</td>';
                     echo '<td class="top right" align="center">'.$gc.'</td>';
                     echo '<td class="top right" align="center">'.$gs.'</td>';
-                    echo '<td class="top right" align="center"'.$mv.'</td>';
-                    echo '<td class="top right" align="center"'.$mg.'</td>';
+                    echo '<td class="top right" align="center">'.$mv.'</td>';
+                    echo '<td class="top right" align="center">'.$mg.'</td>';
 
                     echo '<td class="top right" align="center">'.$tundaon.'</td>';
                     echo '<td class="top right" align="center">'.$tundaoff.'</td>';

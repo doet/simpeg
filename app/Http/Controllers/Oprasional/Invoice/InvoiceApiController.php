@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Oprasional;
+namespace App\Http\Controllers\Oprasional\Invoice;
 date_default_timezone_set('Asia/Jakarta');
 
 use App\Http\Requests;
@@ -12,7 +12,7 @@ use App\Helpers\AppHelpers;
 use DB;
 use Auth;
 
-class OprasionalApiController extends Controller
+class InvoiceApiController extends Controller
 {
   // /**
   //  * Create a new controller instance.
@@ -431,22 +431,22 @@ class OprasionalApiController extends Controller
         );
       break;
       case 'lstp':
-        // dd($request->input());
+        dd($request->input());
         $data_a=array(
           'lstp'=>$request->input('lstp','')
         );
         DB::table('tb_ppjks')->where('id', $request->input('ppjks_id',''))->update($data_a);
 
-        //
-        // $data_b=array(
-        //   // 'moring'=>$request->input('moring',''),
-        //   'tundaon'   =>AppHelpers::RangeDate($request->input('tundadate'))['startDate'],
-        //   'tundaoff'  =>AppHelpers::RangeDate($request->input('tundadate'))['endDate'],
-        //   'pcon'   =>AppHelpers::RangeDate($request->input('pcdate'))['startDate'],
-        //   'pcoff'  =>AppHelpers::RangeDate($request->input('pcdate'))['endDate'],
-        //   'bapp'  =>$request->input('bapp',''),
-        // );
-        // DB::table('tb_dls')->where('id', $request->input('dls_id',''))->update($data_b);
+
+        $data_b=array(
+          // 'moring'=>$request->input('moring',''),
+          'tundaon'   =>AppHelpers::RangeDate($request->input('tundadate'))['startDate'],
+          'tundaoff'  =>AppHelpers::RangeDate($request->input('tundadate'))['endDate'],
+          'pcon'   =>AppHelpers::RangeDate($request->input('pcdate'))['startDate'],
+          'pcoff'  =>AppHelpers::RangeDate($request->input('pcdate'))['endDate'],
+          'bapp'  =>$request->input('bapp',''),
+        );
+        DB::table('tb_dls')->where('id', $request->input('dls_id',''))->update($data_b);
         //
         $responce = array(
           'status' => 'success',
@@ -568,131 +568,48 @@ class OprasionalApiController extends Controller
       $mulai = $request->input('start', '0');
       $akhir = $request->input('end', '0');
       switch ($datatb) {
-        case 'ppjk':   // Vaariabel Master
+        case 'invoice':   // Vaariabel Master
           $qu = DB::table('tb_ppjks')
-            ->leftJoin('tb_agens', function ($join) {
-              $join->on('tb_ppjks.agens_id', '=', 'tb_agens.id');
-            })
-            ->leftJoin('tb_kapals', function ($join) {
-              $join->on('tb_ppjks.kapals_id', '=', 'tb_kapals.id');
-            })
-            ->leftJoin('tb_jettys', function ($join) {
-              $join->on('tb_ppjks.jettys_idx', '=', 'tb_jettys.id');
-            })
-            ->where(function ($query) use ($mulai,$akhir){
-                $mulai = strtotime($mulai);
-                $akhir = strtotime($akhir);
-                if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
-                $query->where('date_issue', '>=', $mulai)
-                  ->Where('date_issue', '<', $akhir);
-            })
-            ->select(
-              'tb_agens.code as agenCode',
-              'tb_kapals.name as kapalsName',
-              'tb_jettys.code as jettyCode',
-              'tb_jettys.name as jettyName',
-            //   // 'tb_jettys.color as jettyColor',
-              'tb_ppjks.*'
-            );
-        break;
-        case 'dl':   // Vaariabel Master
-          $qu = DB::table('tb_dls')
-            ->leftJoin('tb_ppjks', function ($join) {
-              $join->on('tb_ppjks.id','tb_dls.ppjks_id');
-            })
             ->leftJoin('tb_agens', function ($join) {
               $join->on('tb_agens.id','tb_ppjks.agens_id');
             })
             ->leftJoin('tb_kapals', function ($join) {
               $join->on('tb_kapals.id','tb_ppjks.kapals_id');
             })
-            ->leftJoin('tb_jettys', function ($join) {
-              $join->on('tb_jettys.id','tb_dls.jettys_id');
-            })
+            // ->RightJoin('tb_ppjks', function ($join) {
+            //   $join->on('tb_ppjks.id','tb_dls.ppjks_id');
+            // })
+            // ->leftJoin('tb_jettys', function ($join) {
+            //   $join->on('tb_jettys.id','tb_dls.jettys_id');
+            // })
             ->where(function ($query) use ($mulai,$akhir,$request){
-              if (array_key_exists("lhp",$request->input())){
-                $query->where('tb_ppjks.lhp', strtotime($request->input('lhp')));
-              } else if (array_key_exists("bstdo",$request->input())){
-                $query->where('tb_ppjks.bstdo', $request->input('bstdo'));
-              } else {
-                $mulai = strtotime($mulai);
-                $akhir = strtotime($akhir);
-                if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
-                $query->where('tb_dls.date', '>=', $mulai)
-                  ->Where('tb_dls.date', '<', $akhir);
-              }
+              $query->where('tb_ppjks.bstdo','!=','');
+            //   if (array_key_exists("lhp",$request->input())){
+            //     $query->where('tb_ppjks.lhp', strtotime($request->input('lhp')));
+            //   } else if (array_key_exists("bstdo",$request->input())){
+            //     // $query->where('tb_ppjks.bstdo', $request->input('bstdo'));
+            //     $query->where('tb_ppjks.bstdo','!=','');
+            //   } else {
+            //     $mulai = strtotime($mulai);
+            //     $akhir = strtotime($akhir);
+            //     if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
+            //     $query->where('tb_dls.date', '>=', $mulai)
+            //       ->Where('tb_dls.date', '<', $akhir);
+            //   }
             })
             ->select(
               'tb_agens.code as agenCode',
               'tb_kapals.name as kapalsName',
               'tb_kapals.jenis as kapalsJenis',
-              'tb_kapals.grt as kapalsGrt',
-              'tb_kapals.loa as kapalsLoa',
-              'tb_kapals.bendera as kapalsBendera',
-              'tb_jettys.name as jettyName',
-              'tb_jettys.code as jettyCode',
-              // 'tb_jettys.color as jettyColor',
-              'tb_ppjks.*',
-              'tb_dls.*'
+              // 'tb_kapals.grt as kapalsGrt',
+              // 'tb_kapals.loa as kapalsLoa',
+              // 'tb_kapals.bendera as kapalsBendera',
+              // 'tb_jettys.name as jettyName',
+              // 'tb_jettys.code as jettyCode',
+              // // 'tb_jettys.color as jettyColor',
+              'tb_ppjks.*'
+              // 'tb_dls.*'
             );
-            if ($request->input('f')=='dl'){
-
-            }
-            if ($request->input('f')=='bstdo'){
-              $qu->orderBy('ppjk', 'asc');
-              $qu->orderBy('date', 'asc');
-              $qu->orderBy('tb_dls.id', 'asc');
-            }
-        break;
-        case 'lhp':   // Vaariabel Master
-          $qu = DB::table('tb_dls')
-            ->leftJoin('tb_agens', function ($join) {
-              $join->on('tb_dls.agens_id', '=', 'tb_agens.id');
-            })
-            ->leftJoin('tb_kapals', function ($join) {
-              $join->on('tb_dls.kapals_id', '=', 'tb_kapals.id');
-            })
-            ->leftJoin('tb_jettys', function ($join) {
-              $join->on('tb_dls.jetty_id', '=', 'tb_jettys.id');
-            })
-            ->where(function ($query) use ($mulai,$akhir){
-                $mulai = strtotime($mulai);
-                $akhir = strtotime($akhir);
-                // if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
-                // $query->where('date', '>=', $mulai)
-                //   ->Where('date', '<=', $akhir);
-
-                // $query->where('lhp_date', '!=', '');
-                $query->where('lhp_date', $mulai);
-
-            })
-            ->select(
-              'tb_agens.code as agenCode',
-              'tb_kapals.name as kapalsName',
-              'tb_kapals.jenis as kapalsJenis',
-              'tb_kapals.grt as kapalsGrt',
-              'tb_kapals.loa as kapalsLoa',
-              'tb_kapals.bendera as kapalsBendera',
-              'tb_jettys.name as jettyName',
-              'tb_jettys.code as jettyCode',
-              // 'tb_jettys.color as jettyColor',
-              'tb_dls.*'
-            );
-        break;
-        case 'mkapal':
-          $qu = DB::table('tb_kapals');
-        break;
-        case 'magen':
-          $qu = DB::table('tb_agens');
-        break;
-        case 'mpc':
-          $qu = DB::table('tb_pcs');
-        break;
-        case 'mdermaga':
-          $qu = DB::table('tb_jettys');
-        break;
-        case 'mmooring':
-          $qu = DB::table('tb_moorings');
         break;
       }
       $count = $qu->count();
@@ -720,158 +637,44 @@ class OprasionalApiController extends Controller
       // dd($query);
       foreach($query as $row) {
         switch ($datatb) {
-          case 'ppjk':   // Variabel Master
+          case 'invoice':   // Variabel Master
+            if ($row->kapalsJenis == '') $kapal =  $row->kapalsName; else $kapal = '('.$row->kapalsJenis.') '.$row->kapalsName;
+            // if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
+            // if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
+            // if ($row->pcon == '') $pcon=$row->pcon; else $pcon=date("H:i",$row->pcon);
+            // if ($row->pcoff == '') $pcoff=$row->pcon; else $pcoff=date("H:i",$row->pcoff);
+
             // if ($row->ppjk == '' || $row->ppjk == null) $row->ppjk = ''; else $row->ppjk = substr($row->ppjk, -5);
-
+            if ($row->rute != '' && $row->rute == '$')$row->rute = 'Internasional'; else if ($row->rute != '' && $row->rute == 'Rp')$row->rute = 'Domestic';
             $responce['rows'][$i]['id'] = $row->id;
             $responce['rows'][$i]['cell'] = array(
               $row->id,
-              date("d/m/Y",$row->date_issue),
+              $row->bstdo,
               $row->ppjk,
               $row->agenCode,
-              $row->kapalsName,
-              '('.$row->jettyCode.') '.$row->jettyName,
-              date("d/m/Y H:i",$row->eta),
-              date("d/m/Y H:i",$row->etd),
-              $row->asal,
-              $row->tujuan,
-              $row->etmal,
-              $row->cargo,
-              $row->muat,
-            );
-            $i++;
-          break;
-          case 'dl':   // Variabel Master
-            if ($row->kapalsJenis == '') $kapal =  $row->kapalsName; else $kapal = '('.$row->kapalsJenis.') '.$row->kapalsName;
-            if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
-            if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
-            if ($row->pcon == '') $pcon=$row->pcon; else $pcon=date("H:i",$row->pcon);
-            if ($row->pcoff == '') $pcoff=$row->pcon; else $pcoff=date("H:i",$row->pcoff);
-
-            if ($row->ppjk == '' || $row->ppjk == null) $row->ppjk = ''; else $row->ppjk = substr($row->ppjk, -5);
-
-            $responce['rows'][$i]['id'] = $row->id;
-            $responce['rows'][$i]['cell'] = array(
-              $row->id,
-              $row->ppjk,
-              $row->agenCode,
-              date("d/m/y H:i",$row->date),
               $kapal,
-              AppHelpers::formatNomer($row->kapalsGrt),
-              AppHelpers::formatNomer($row->kapalsLoa),
-              $row->kapalsBendera,
-              '('. $row->jettyCode .') '.$row->jettyName,
-              $row->ops,
-              $row->bapp,
-              $row->pc,
-              $pcon,
-              $pcoff,
-              $row->tunda,
-              $tundaon,
-              $tundaoff,
-              $row->dd,
-              $row->ket,
               $row->rute,
-              $row->lstp,
-              $row->moring,
-              $row->ppjks_id,
-            );
-            $i++;
-          break;
-          case 'lhp':   // Variabel Master
-            if ($row->kapalsJenis == '') $kapal =  $row->kapalsName; else $kapal = '('.$row->kapalsJenis.') '.$row->kapalsName;
-            if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
-            if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
-
-            if (is_numeric($row->kapalsGrt))$grt =  number_format($row->kapalsGrt); else $grt = $row->kapalsGrt;
-            if (is_numeric($row->kapalsLoa))$loa =  number_format($row->kapalsLoa); else $loa = $row->kapalsLoa;
-
-            $responce['rows'][$i]['id'] = $row->id;
-            $responce['rows'][$i]['cell'] = array(
-              $row->id,
-              $row->ppjk,
-              $row->agenCode,
-              date("d-m-Y H:i",$row->date),
-              $kapal,
-              $grt,
-              $loa,
-              $row->kapalsBendera,
-              '('. $row->jettyCode .')'.$row->jettyName,
-              $row->ops,
-              $row->bapp,
-              $row->pc,
-              $row->tunda,
-              $tundaon,
-              $tundaoff,
-              $row->dd,
-              $row->ket,
               '',
-              $row->lstp,
-              $row->moring
-            );
-            $i++;
-          break;
-          case 'mkapal':   // Variabel Master
-            $responce['rows'][$i]['id'] = $row->id;
-            $responce['rows'][$i]['cell'] = array(
-              // $i+1,
-              $row->id,
-              $row->name,
-              $row->bendera,
-              $row->jenis,
-              AppHelpers::formatNomer(''),
-              AppHelpers::formatNomer($row->grt),
-              AppHelpers::formatNomer($row->loa),
-            );
-            $i++;
-          break;
-          case 'magen':   // Variabel Master
-            $responce['rows'][$i]['id'] = $row->id;
-            $responce['rows'][$i]['cell'] = array(
-              // $i+1,
-              $row->id,
-              $row->code,
-              $row->name,
-              $row->alamat,
-              $row->user,
-              $row->tlp,
-              $row->npwp,
-              $row->ket,
-            );
-            $i++;
-          break;
-          case 'mpc':   // Variabel Master
-            $responce['rows'][$i]['id'] = $row->id;
-            $responce['rows'][$i]['cell'] = array(
-              // $i+1,
-              $row->id,
-              $row->code,
-              $row->name,
-            );
-            $i++;
-          break;
-          case 'mdermaga':   // Variabel Master
-            $responce['rows'][$i]['id'] = $row->id;
-            $responce['rows'][$i]['cell'] = array(
-              // $i+1,
-              $row->id,
-              $row->code,
-              $row->name,
-              $row->ket,
-            );
-            $i++;
-          break;
-          case 'mmooring':   // Variabel Master
-            $responce['rows'][$i]['id'] = $row->id;
-            $responce['rows'][$i]['cell'] = array(
-              // $i+1,
-              $row->id,
-              $row->code,
-              $row->name,
-              $row->alamat,
-              $row->user,
-              $row->tlp,
-              $row->npwp,
+              '',
+              $row->id
+              // date("d/m/y H:i",$row->date),
+              // AppHelpers::formatNomer($row->kapalsGrt),
+              // AppHelpers::formatNomer($row->kapalsLoa),
+              // $row->kapalsBendera,
+              // '('. $row->jettyCode .') '.$row->jettyName,
+              // $row->ops,
+              // $row->pc,
+              // $pcon,
+              // $pcoff,
+              // $row->tunda,
+              // $tundaon,
+              // $tundaoff,
+              // $row->dd,
+              // $row->ket,
+              // $row->rute,
+              // $row->lstp,
+              // $row->moring,
+              // $row->ppjks_id,
             );
             $i++;
           break;

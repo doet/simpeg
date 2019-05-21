@@ -389,7 +389,7 @@
 				$(this).prev().focus();
 		});
 
-		var posdata = {'datatb':'ppjk', _token:'{{ csrf_token() }}'};
+		var posdata = {'datatb':'ppjk','filter':'noinv', _token:'{{ csrf_token() }}'};
 		posdata.src="{{url('/api/oprasional/json')}}";
 		posdata.elm="ppjk";
 		src_chosen_full(posdata,function(data){

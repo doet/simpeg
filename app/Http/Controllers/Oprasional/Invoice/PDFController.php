@@ -45,11 +45,11 @@ class PDFController extends Controller
           ->leftJoin('tb_kapals', function ($join) {
             $join->on('tb_kapals.id','tb_ppjks.kapals_id');
           })
-          // ->RightJoin('tb_ppjks', function ($join) {
-          //   $join->on('tb_ppjks.id','tb_dls.ppjks_id');
-          // })
           // ->leftJoin('tb_jettys', function ($join) {
           //   $join->on('tb_jettys.id','tb_dls.jettys_id');
+          // })
+          // ->RightJoin('tb_ppjks', function ($join) {
+          //   $join->on('tb_ppjks.id','tb_dls.ppjks_id');
           // })
           ->where(function ($query) use ($mulai,$akhir,$request){
             $query->where('tb_ppjks.bstdo','!=','');
@@ -62,39 +62,35 @@ class PDFController extends Controller
             'tb_kapals.name as kapalsName',
             'tb_kapals.jenis as kapalsJenis',
             'tb_kapals.grt as kapalsGrt',
+            // 'tb_jettys.code as jettyCode',
+            // 'tb_jettys.color as jettyColor',
             // 'tb_kapals.loa as kapalsLoa',
             // 'tb_kapals.bendera as kapalsBendera',
             // 'tb_jettys.name as jettyName',
-            // 'tb_jettys.code as jettyCode',
-            // // 'tb_jettys.color as jettyColor',
             'tb_ppjks.*'
             // 'tb_dls.*'
           )
           ->first();
         $query = DB::table('tb_dls')
-          // ->leftJoin('tb_ppjks', function ($join) {
-          //   $join->on('tb_ppjks.id','tb_dls.ppjks_id');
-          // })
+          ->leftJoin('tb_jettys', function ($join) {
+            $join->on('tb_jettys.id','tb_dls.jettys_id');
+          })
           ->where(function ($query) use ($result){
             $query->where('tb_dls.ppjks_id',$result->id);
           })
           ->get();
-          // dd($result);
-          // dd($request->input());
-        // $result = json_encode(json_decode($qu));
-        // $result = json_decode($result,true);
-        // if ($result['records']>1) $result = $result['rows']; else $result = array();
-        // $result = $request->data;
-        // print_r ($query);
 
-        // $mulai = strtotime($mulai);
-        // dd($result);
+        $kurs = DB::table('tb_kurs')
+          ->where(function ($query) use ($result){
+            $query->where('date','<=',$result->tglinv);
+          })->orderBy('date', 'desc')
+          ->first();
 
         $page = 'backend.oprasional.pdfinvoice.'.$request->input('page');
         $nfile = $request->input('file');
         $orientation = 'landscape';
 
-        $view =  \View::make($page, compact('result','query','mulai'))->render();
+        $view =  \View::make($page, compact('result','query','kurs'))->render();
         // return view($page, compact('result','mulai'));
       break;
     }

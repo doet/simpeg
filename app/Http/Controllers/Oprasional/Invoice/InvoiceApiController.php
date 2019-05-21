@@ -66,131 +66,17 @@ class InvoiceApiController extends Controller
           $responce[]=$row;
         }
       break;
-      case 'dl':
-        $query = DB::table('tb_dls')
-          ->join('tb_ppjks', function ($join) {
-            $join->on('tb_ppjks.id','tb_dls.ppjks_id');
-          })
-          // ->join('tb_agens', function ($join) {
-          //   $join->on('tb_agens.id','tb_ppjks.agens_id');
-          // })
-
-          // ->join('tb_kapals', function ($join) {
-          //   $join->on('tb_dls.kapals_id', '=', 'tb_kapals.id');
-          // })
-          // ->join('tb_jettys', function ($join) {
-          //   $join->on('tb_dls.jetty_id', '=', 'tb_jettys.id');
-          // })
-          ->select(
-          //   'tb_agens.code as agenCode',
-          //   'tb_kapals.name as kapalsName',
-          //   'tb_kapals.jenis as kapalsJenis',
-          //   'tb_kapals.grt as kapalsGrt',
-          //   'tb_kapals.loa as kapalsLoa',
-          //   'tb_kapals.bendera as kapalsBendera',
-          //   'tb_jettys.name as jettyName',
-          //   // 'tb_jettys.color as jettyColor',
-          //   'tb_dls.*'
-          )
-          ->where(function ($query) use ($request){
-            if ($request->input('search')){
-              $query->where('tb_dls.id',$request->input('search'));
-            };
-          })
-          ->get();
-        foreach($query as $row) {
-          $responce['ppjk']=$row->ppjks_id;
-          $responce['agen']=$row->agens_id;
-          $responce['date']=date("d-m-Y H:i",$row->date);
-          $responce['kapal']=$row->kapals_id;
-          $responce['jetty']=$row->jettys_id;
-          $responce['ops']=$row->ops;
-          $responce['pc']=$row->pc;
-          $responce['tunda']=json_decode($row->tunda);
-
-          if ($row->tundaon == '')$row->tundaon = $row->date;
-          if ($row->tundaoff == '')$row->tundaoff = $row->date;
-          $responce['tundaon']=date("d/m/y H:i",$row->tundaon);
-          $responce['tundaoff']=date("d/m/y H:i",$row->tundaoff);
-
-          if ($row->pcon == '')$row->pcon = $row->date;
-          if ($row->pcoff == '')$row->pcoff = $row->date;
-          $responce['pcon']=date("d/m/y H:i",$row->pcon);
-          $responce['pcoff']=date("d/m/y H:i",$row->pcoff);
-
-          $responce['dd']=$row->dd;
-          $responce['ket']=$row->ket;
-          // $responce['kurs']=$row->kurs;
-          // $responce['bapp']=$row->bapp;
-        }
-      break;
-      case 'agen':
-        $query = DB::table('tb_agens')
+      case 'kurs':
+        $query = DB::table('tb_kurs')
         ->where(function ($query) use ($request){
-          if (array_key_exists("search",$request->input())){
-            if ($request->input('search')==''){
-              $query->where('id',null);
-            }else{
-              $query->where('id',$request->input('search'));
-            }
-          }
-        })
-        ->get();
-        foreach($query as $row) {
-          $responce[]=$row;
-        }
-      break;
-      case 'kapal':
-        $query = DB::table('tb_kapals')
-        ->where(function ($query) use ($request){
-          if (array_key_exists("search",$request->input())){
-            if ($request->input('search')==''){
-              $query->where('id',null);
-            }else{
-              $query->where('id',$request->input('search'));
-            }
-          }
-        })
-        ->get();
-        foreach($query as $row) {
-          $responce[]=$row;
-        }
-      break;
-      case 'dermaga':
-        $query = DB::table('tb_jettys')
-          ->where(function ($query) use ($request){
-            if (array_key_exists("search",$request->input())){
-              if ($request->input('search')==''){
-                $query->where('id',null);
-              }else{
-                $query->where('id',$request->input('search'));
-              }
-            }
-          })
-          ->get();
-          foreach($query as $row) {
-            $responce[]=$row;
-          }
-      break;
-      case 'ppjkx':
-        $lhp_date = $request->input('lhp_date', '');
-        $query = DB::table('tb_dls')
-          ->where(function ($query) use ($lhp_date){
-              $lhp_date = strtotime($lhp_date);
-              // $akhir = strtotime($akhir);
-              // if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
-              // $query->where('date', '>=', $mulai)
-              //   ->Where('date', '<=', $akhir);
-              $query->where('lhp_date','')
-                ->orWhere('lhp_date',$lhp_date)
-                ->orWhere('lhp_date',null);
-          })
-          ->get();
-        foreach($query as $row) {
-          $responce['items'][$row->ppjk]=$row->ppjk;
-          if ($row->lhp_date != '')$responce['selected'][$row->ppjk]='selected'; else $responce['selected'][$row->ppjk]='';
-        }
-        unset($responce['items'][null]);
+          if ($request->input('search')){
+            $query->where('date','<=',strtotime($request->input('search')));
+          };
+        })->orderBy('date', 'desc')
+        ->first();
+        $responce[]=array('a'=>strtotime($request->input('search')));
+        // $responce=$query;
+        array_push($responce,$query);
       break;
     }
     return  Response()->json($responce);
@@ -217,65 +103,7 @@ class InvoiceApiController extends Controller
             $value_n=$row->bstdo;
           }
         }
-
-
         if(empty($responce))$responce[0]='null';
-      break;
-      case 'agen':
-        $cari = $request->input('cari');
-        $query = DB::table('tb_agens')
-          // ->distinct('code')
-          ->where('code','like',$cari.'%')
-          ->orderBy('code', 'asc')
-          ->get();
-        $i=0;
-        $value_n='';
-        foreach($query as $row) {
-          if ($row->code != $value_n){
-            $responce[$i] = $row->code;
-            $i++;
-            $value_n=$row->code;
-          }
-        }
-        if(empty($responce))$responce[0]='Null';
-      break;
-      case 'kapal':
-        $cari = $request->input('cari');
-        $query = DB::table('tb_kapals')
-          // ->distinct('code')
-          ->where('name','like',$cari.'%')
-          ->orderBy('name', 'asc')
-          ->get();
-        $i=0;
-        $value_n='';
-        foreach($query as $row) {
-          if ($row->name != $value_n){
-            // $responce[$i] = '('.$row->jenis.') '.$row->value;
-            $responce[$i] = $row->name;
-            $i++;
-            $value_n=$row->name;
-          }
-        }
-        if(empty($responce))$responce[0]='Null';
-      break;
-      case 'dermaga':
-        $cari = $request->input('cari');
-        $query = DB::table('tb_jettys')
-          // ->distinct('code')
-          ->where('name','like',$cari.'%')
-          ->orderBy('name', 'asc')
-          ->get();
-        $i=0;
-        $value_n='';
-        foreach($query as $row) {
-          if ($row->name != $value_n){
-            // $responce[$i] = '('.$row->jenis.') '.$row->value;
-            $responce[$i] = $row->name;
-            $i++;
-            $value_n=$row->name;
-          }
-        }
-        if(empty($responce))$responce[0]='Null';
       break;
     }
     return  Response()->json($responce);
@@ -287,265 +115,29 @@ class InvoiceApiController extends Controller
     $id = $request->input('id');
 
     switch ($datatb) {
-      case 'ppjk':
-        DB::beginTransaction();
-        try{
-          $datanya=array(
-            'date_issue'=> strtotime($request->input('date_issue','')),
-            'ppjk'      => $request->input('ppjk',''),
-            'agens_id'  => $request->input('agen',''),
-            'kapals_id' => $request->input('kapal',''),
-            'jettys_idx' => $request->input('jetty',''),
-            'eta'       => AppHelpers::RangeDate($request->input('etad'))['startDate'],
-            'etd'       => AppHelpers::RangeDate($request->input('etad'))['endDate'],
-            'etmal'     => $request->input('etmal',''),
-            'asal'      => $request->input('asal',''),
-            'tujuan'    => $request->input('tujuan',''),
-            'cargo'     => $request->input('cargo',''),
-            'muat'      => $request->input('muat',''),
-            'rute'      => $request->input('rute',''),
-          );
-          if ($oper=='add')DB::table('tb_ppjks')->insert($datanya);
-          if ($oper=='edit')DB::table('tb_ppjks')->where('id', $id)->update($datanya);
-          if ($oper=='del')DB::table('tb_ppjks')->delete($id);
+      case 'inv':
+        if ($request->input('tglinv')!='')$tglinv=strtotime($request->input('tglinv'));else $tglinv='';
+        $datanya=array(
+          'noinv'=>$request->input('noinv'),
+          'pajak'=>$request->input('pajak'),
+          'refno'=>$request->input('refno'),
+          'tglinv'=>$tglinv
+        );
+        if ($oper=='edit')DB::table('tb_ppjks')->where('id', $id)->update($datanya);
 
-          $data_dl=array(
-            'ppjks_id'   => DB::getPdo()->lastInsertId(),
-            'jettys_id' => $request->input('jetty',''),
-            'date'       => AppHelpers::RangeDate($request->input('etad'))['startDate'],
-          );
-          if ($oper=='add')DB::table('tb_dls')->insert($data_dl);
-          if ($oper=='del')DB::table('tb_dls')->where('ppjks_id', $id)->delete();
-
-          DB::commit();
-
-          $responce = array(
-            'msg' => $request->input('lstp',''),
-            'status' => 'success',
-          );
-
-        } catch (\Exception $e) {
-          DB::rollback();
-          $responce = array(
-            'msg' => $e,
-            'status' => $e,
-          );
-        }
-      break;
-      case 'dl':
-        $date = $tunda = $tundaon = $tundaoff = '';
-        if ($oper!='del'){
-          $date = strtotime($request->input('date',''));
-
-          if($request->input('tunda') !== ''){
-            if($request->input('tunda') == 'null') $tunda =''; else $tunda = $request->input('tunda');
-            $t = explode(",",$tunda);
-            $tunda = array();
-            foreach($t as $row) {
-              array_push($tunda, $row);
-            }
-            $tunda = json_encode($tunda);
-          }
-
-          $datanya=array(
-            'jettys_id' =>$request->input('jetty',''),
-            'date'      =>$date,
-            'ops'       =>$request->input('ops',''),
-            'pc'        =>$request->input('pc',''),
-            'tunda'     =>$tunda,
-            'tundaon'   =>AppHelpers::RangeDate($request->input('tundadate'))['startDate'],
-            'tundaoff'  =>AppHelpers::RangeDate($request->input('tundadate'))['endDate'],
-            'dd'        =>$request->input('dd',''),
-            'ket'       =>$request->input('ket','')
-          );
+        $kurs = str_replace('.', '', $request->input('kurs'));
+        $datakurs=array(
+          'date'=>strtotime($request->input('dkurs')),
+          'nilai'=>$kurs,
+        );
+        if (DB::table('tb_kurs')->where('date', strtotime($request->input('dkurs')))->exists()){
+          DB::table('tb_kurs')->where('date', strtotime($request->input('dkurs')))->update($datakurs);
+        } else {
+          DB::table('tb_kurs')->where('date', strtotime($request->input('dkurs')))->insert($datakurs);
         }
 
-        if ($oper=='add'){
-          $datanya['ppjks_id']=$request->input('ppjk','');
-          DB::table('tb_dls')->insert($datanya);
-        }
-        if ($oper=='edit')DB::table('tb_dls')->where('id', $id)->update($datanya);
-        if ($oper=='del')DB::table('tb_dls')->delete($id);
-
         $responce = array(
-          'status' => 'success',
-          //"suscces",
-          'msg' => $request->input('tunda'),
-        );
-      break;
-      case 'dl-bapp':
-        if ($oper=='edit'){
-          $datanya['bapp']=$request->input('bapp','');
-        }
-        DB::table('tb_dls')->where('id', $id)->update($datanya);
-
-        $responce = array(
-          'status' => 'success',
-          //"suscces",
-          'msg' => $id,
-        );
-      break;
-
-      case 'lhp':
-        if ($request->input('checked','') == 'true')$lhp = strtotime($request->input('lhp','')); else $lhp = null;
-        $datanya=array(
-          'lhp'=>$lhp,
-        );
-        DB::table('tb_ppjks')->where('id', $request->input('id',''))->update($datanya);
-        //
-        $responce = array(
-          'status' => $request->input(),
-          //"suscces",
-          'msg' => 'ok',
-        );
-      break;
-      case 'lhp2':
-      $data_b=array(
-        // 'moring'=>$request->input('moring',''),
-        'tundaon'   =>AppHelpers::RangeDate($request->input('tundadate'))['startDate'],
-        'tundaoff'  =>AppHelpers::RangeDate($request->input('tundadate'))['endDate'],
-        'pcon'   =>AppHelpers::RangeDate($request->input('pcdate'))['startDate'],
-        'pcoff'  =>AppHelpers::RangeDate($request->input('pcdate'))['endDate'],
-        'bapp'  =>$request->input('bapp',''),
-      );
-      DB::table('tb_dls')->where('id', $request->input('dls_id',''))->update($data_b);
-      //
-      $responce = array(
-        'status' => 'success',
-        //"suscces",
-        'msg' => 'ok',
-      );
-      break;
-
-      case 'bstdo':
-        if ($request->input('checked','') == 'true')$bstdo = $request->input('bstdo',''); else $bstdo = null;
-        $datanya=array(
-          'bstdo'=>$bstdo,
-        );
-        DB::table('tb_ppjks')->where('id', $request->input('id',''))->update($datanya);
-        //
-        $responce = array(
-          'status' => $request->input(),
-          //"suscces",
-          'msg' => 'ok',
-        );
-      break;
-      case 'lstp':
-        dd($request->input());
-        $data_a=array(
-          'lstp'=>$request->input('lstp','')
-        );
-        DB::table('tb_ppjks')->where('id', $request->input('ppjks_id',''))->update($data_a);
-
-
-        $data_b=array(
-          // 'moring'=>$request->input('moring',''),
-          'tundaon'   =>AppHelpers::RangeDate($request->input('tundadate'))['startDate'],
-          'tundaoff'  =>AppHelpers::RangeDate($request->input('tundadate'))['endDate'],
-          'pcon'   =>AppHelpers::RangeDate($request->input('pcdate'))['startDate'],
-          'pcoff'  =>AppHelpers::RangeDate($request->input('pcdate'))['endDate'],
-          'bapp'  =>$request->input('bapp',''),
-        );
-        DB::table('tb_dls')->where('id', $request->input('dls_id',''))->update($data_b);
-        //
-        $responce = array(
-          'status' => 'success',
-          //"suscces",
-          'msg' => 'ok',
-        );
-      break;
-
-      case 'mkapal':
-
-        $datanya=array(
-          'name'=>$request->input('name',''),
-          'jenis'=>$request->input('jenis',''),
-          'grt'=>str_replace(',','',$request->input('grt','')),
-          'loa'=>$request->input('loa',''),
-          'bendera'=>$request->input('bendera',''),
-        );
-
-        if ($oper=='add')DB::table('tb_kapals')->insert($datanya);
-        if ($oper=='edit')DB::table('tb_kapals')->where('id', $id)->update($datanya);
-        if ($oper=='del')DB::table('tb_kapals')->delete($id);
-
-        $responce = array(
-          'status' => $datanya,
-          //"suscces",
-          'msg' => 'ok',
-        );
-      break;
-      case 'magen':
-        $datanya=array(
-          'code'=>$request->input('code',''),
-          'name'=>$request->input('name',''),
-          'alamat'=>$request->input('alamat',''),
-          'user'=>$request->input('user',''),
-          'tlp'=>$request->input('tlp',''),
-          'npwp'=>$request->input('npwp',''),
-          'ket'=>$request->input('ket',''),
-        );
-
-        if ($oper=='add')DB::table('tb_agens')->insert($datanya);
-        if ($oper=='edit')DB::table('tb_agens')->where('id', $id)->update($datanya);
-        if ($oper=='del')DB::table('tb_agens')->delete($id);
-
-        $responce = array(
-          'status' => $datanya,
-          //"suscces",
-          'msg' => 'ok',
-        );
-      break;
-      case 'mpc':
-        $datanya=array(
-          'code'=>$request->input('code',''),
-          'name'=>$request->input('name',''),
-        );
-
-        if ($oper=='add')DB::table('tb_pcs')->insert($datanya);
-        if ($oper=='edit')DB::table('tb_pcs')->where('id', $id)->update($datanya);
-        if ($oper=='del')DB::table('tb_pcs')->delete($id);
-
-        $responce = array(
-          'status' => $datanya,
-          //"suscces",
-          'msg' => 'ok',
-        );
-      break;
-      case 'mdermaga':
-        $datanya=array(
-          'code'=>$request->input('code',''),
-          'name'=>$request->input('name',''),
-          'ket'=>$request->input('ket',''),
-        );
-
-        if ($oper=='add')DB::table('tb_jettys')->insert($datanya);
-        if ($oper=='edit')DB::table('tb_jettys')->where('id', $id)->update($datanya);
-        if ($oper=='del')DB::table('tb_jettys')->delete($id);
-
-        $responce = array(
-          'status' => $datanya,
-          //"suscces",
-          'msg' => 'ok',
-        );
-      break;
-      case 'mmooring':
-        $datanya=array(
-          'code'=>$request->input('code',''),
-          'name'=>$request->input('name',''),
-          'alamat'=>$request->input('alamat',''),
-          'user'=>$request->input('user',''),
-          'tlp'=>$request->input('tlp',''),
-          'npwp'=>$request->input('npwp',''),
-        );
-
-        if ($oper=='add')DB::table('tb_moorings')->insert($datanya);
-        if ($oper=='edit')DB::table('tb_moorings')->where('id', $id)->update($datanya);
-        if ($oper=='del')DB::table('tb_moorings')->delete($id);
-
-        $responce = array(
-          'status' => $datanya,
-          //"suscces",
+          'status' => "success",
           'msg' => 'ok',
         );
       break;
@@ -645,6 +237,7 @@ class InvoiceApiController extends Controller
             // if ($row->pcoff == '') $pcoff=$row->pcon; else $pcoff=date("H:i",$row->pcoff);
 
             // if ($row->ppjk == '' || $row->ppjk == null) $row->ppjk = ''; else $row->ppjk = substr($row->ppjk, -5);
+            if ($row->tglinv == '') $tglinv='';else $tglinv=date('d M Y', $row->tglinv);
             if ($row->rute != '' && $row->rute == '$')$row->rute = 'Internasional'; else if ($row->rute != '' && $row->rute == 'Rp')$row->rute = 'Domestic';
             $responce['rows'][$i]['id'] = $row->id;
             $responce['rows'][$i]['cell'] = array(
@@ -654,8 +247,10 @@ class InvoiceApiController extends Controller
               $row->agenCode,
               $kapal,
               $row->rute,
-              '',
-              '',
+              $tglinv,
+              $row->pajak,
+              $row->noinv,
+              $row->refno,
               $row->id
               // date("d/m/y H:i",$row->date),
               // AppHelpers::formatNomer($row->kapalsGrt),

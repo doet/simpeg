@@ -60,9 +60,9 @@
 							<div class="col-xs-12 col-sm-6">
 								<div class="row">
 									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tunda On/Off</label>
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tgl Doc</label>
 										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="tundadate" name="tundadate" readonly></div>
+											<div class="clearfix"><input class="input-sm col-sm-4 tgl" type="text" id="tglinv" name="tglinv" readonly></div>
 										</div>
 									</div>
 								</div>
@@ -70,9 +70,24 @@
 
 								<div class="row">
 									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PC On/Off</label>
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kurs</label>
 										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="pcdate" name="pcdate" readonly></div>
+											<div class="clearfix">
+												<input class="input-sm col-sm-4 tgl" type="text" id="dkurs" name="dkurs" readonly>
+												<input class="input-sm col-sm-5" type="text" id="kurs" name="kurs">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
+							</div>
+							<div class="col-xs-12 col-sm-6">
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">No Faktur</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="pajak" name="pajak"></div>
 										</div>
 									</div>
 								</div>
@@ -80,14 +95,23 @@
 
 								<div class="row">
 									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">LSTP</label>
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">No Invoice</label>
 										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm" type="text" id="lstp" name="lstp"></div>
+											<div class="clearfix"><input class="input-sm" type="text" id="noinv" name="noinv"></div>
 										</div>
 									</div>
 								</div>
 								<div class="space-2"></div>
 
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Ref.No</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="refno" name="refno"></div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
 							</div>
 						</div>
 
@@ -112,7 +136,6 @@
       <div class="row">
         <div class="col-xs-12">
           <!-- PAGE CONTENT BEGINS -->
-
 					<form id="dompdf" role="form" method="POST" action="{{ url('oprasional/PDFInvoice') }}" target="_blank">
 						{!! csrf_field() !!}
 						<input name="page" value="" hidden/>
@@ -225,22 +248,26 @@
 		//   }
 		// });
 
-		$('#NoBSTDO').editable({
-			type:'typeaheadjs',
-			success: function(response, newValue) {
-        // if(response.status == 'error') return response.msg; //msg will be shown in editable form
-				get_ppjk(newValue);
-				$(grid_selector).jqGrid('setGridParam',{postData:{bstdo:newValue}}).trigger("reloadGrid");
-			},
-			typeahead: {
-				name: 'bsto',
-				remote: {
-			    wildcard: '%QUERY',
-			    url: "{{url('/api/oprasional/autoc')}}?datatb=bstdo&cari=%QUERY",
-			  }
-			}
-		});
+		// $('#NoBSTDO').editable({
+		// 	type:'typeaheadjs',
+		// 	success: function(response, newValue) {
+    //     // if(response.status == 'error') return response.msg; //msg will be shown in editable form
+		// 		get_ppjk(newValue);
+		// 		$(grid_selector).jqGrid('setGridParam',{postData:{bstdo:newValue}}).trigger("reloadGrid");
+		// 	},
+		// 	typeahead: {
+		// 		name: 'bsto',
+		// 		remote: {
+		// 	    wildcard: '%QUERY',
+		// 	    url: "{{url('/api/oprasional/autoc')}}?datatb=bstdo&cari=%QUERY",
+		// 	  }
+		// 	}
+		// });
 
+		$('.tgl').datepicker({
+			format:'dd-mm-yyyy',
+			autoclose:true,
+		});
 
 		if(!ace.vars['touch']) {
 			$('.chosen-select').chosen({
@@ -287,10 +314,10 @@
 				liGroup: '<li class="multiselect-item multiselect-group"><label></label></li>'
 			},
 			onChange: function(option, checked, select) {
-				postsave = {datatb:'bstdo',id:option.val(),checked:checked,bstdo:$('#NoBSTDO').html()};
-				getparameter("{{url('/api/oprasional/cud')}}",postsave,	function(data){
-					$(grid_selector).jqGrid('setGridParam',{postData:{bstdo:$('#NoBSTDO').html()}}).trigger("reloadGrid");
-				},function(data){});
+				// postsave = {datatb:'bstdo',id:option.val(),checked:checked,bstdo:$('#NoBSTDO').html()};
+				// getparameter("{{url('/api/oprasional/cud')}}",postsave,	function(data){
+				// 	$(grid_selector).jqGrid('setGridParam',{postData:{bstdo:$('#NoBSTDO').html()}}).trigger("reloadGrid");
+				// },function(data){});
 	    }
 		});
 
@@ -318,12 +345,12 @@
 		// }
 
 		var postsave={};
-		postsave.url = "{{url('/api/oprasional/cud')}}";
+		postsave.url = "{{url('/api/oprasional/invoice/cud')}}";
 		postsave.grid = '#grid-table';
 		postsave.modal = '#modal';
 		$('#save').click(function(e) {
 			e.preventDefault();
-			postsave.post += $("#form").serialize()+'&datatb=lstp';
+			postsave.post += $("#form").serialize()+'&datatb=inv';
 			SaveGrid(postsave);
 		});
 //////////////////////////////////////////////
@@ -372,7 +399,7 @@
 			sortname:'bstdo',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:[' ', 'BSTDO','PPJK','Agen','Kapal','Jalur','Faktur Pajak','Nomor Invoice','Status'],
+			colNames:[' ', 'BSTDO','PPJK','Agen','Kapal','Jalur','Tanggal Doc','Faktur Pajak','Nomor Invoice','Ref No','Status'],
 			colModel:[
 				{name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false, align: 'center'},
 				{name:'bstdo',index:'bstdo', width:40,editable: false},
@@ -380,8 +407,10 @@
 				{name:'agen',index:'agen',width:40, editable:false, align: 'center'},
 				{name:'kapal',index:'kapal', width:60, editable: false},
 				{name:'rute',index:'rute', width:60, editable: false},
+				{name:'tglinv',index:'tglinv', width:60, editable: false, align: 'center'},
 				{name:'pajak',index:'pajak', width:60, editable: false},
 				{name:'noinv',index:'noinv', width:60, editable: false},
+				{name:'refno',index:'refno', width:60, editable: false},
 				{name:'status',index:'status', width:60, editable: false, formatter:status}
 			],
 
@@ -434,7 +463,7 @@
 			// 		.addClass('ace ace-switch ace-switch-5')
 			// 		.after('<span class="lbl"></span>');
 			// }, 0);
-			console.log(cellvalue);
+			// console.log(cellvalue);
 			var url="{{ url('oprasional/PDFInvoice') }}?page=invoice-dompdf&id="+cellvalue;
 			return '<div><a class="fa fa-file-pdf-o orange" method="POST" href='+url+' target="_blank"></a> - <a class="fa fa-credit-card orange"></a></div>';
 		}
@@ -549,87 +578,106 @@
 				}
 			}
 		)
-		// .jqGrid('navButtonAdd',pager_selector,{
-		// 		keys: true,
-		// 		caption:"",
-		// 		buttonicon:"ace-icon fa fa-pencil blue",
-		// 		position:"first",
-		// 		onClickButton:function(){
-		// 			$('#form').trigger("reset");
-		// 			//
-		// 			var gsr = $(this).jqGrid('getGridParam','selrow');
-		// 			if(gsr){
-		// 				var ppjks_id = $(this).jqGrid('getCell',gsr,'ppjks_id');
-		// 				var lstp = $(this).jqGrid('getCell',gsr,'lstp');
-		// 				var moring = $(this).jqGrid('getCell',gsr,'moring');
-		// 				$('#lstp').val(lstp);
-		// 				$('#moring').val(moring);
-		//
-		// 				var posdata= {'datatb':'dl','search':gsr};
-		// 				getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
-		// 					$('#tundadate').daterangepicker({
-		// 						'applyClass' : 'btn-sm btn-success',
-		// 						'cancelClass' : 'btn-sm btn-default',
-		// 						"opens": "center",
-		// 						timePicker: true,
-		// 						timePicker24Hour: true,
-		// 						startDate: data.tundaon,
-		// 						endDate: data.tundaoff,
-		// 						locale: {
-		// 							applyLabel: 'Apply',
-		// 							cancelLabel: 'Cancel',
-		// 							format: 'DD/MM/YY HH:mm'
-		// 						}
-		// 					})
-		// 					.prev().on(ace.click_event, function(){
-		// 						$(this).next().focus();
-		// 					});
-		//
-		// 					$('#pcdate').daterangepicker({
-		// 						'applyClass' : 'btn-sm btn-success',
-		// 						'cancelClass' : 'btn-sm btn-default',
-		// 						"opens": "center",
-		// 						timePicker: true,
-		// 						timePicker24Hour: true,
-		// 						startDate: data.pcon,
-		// 						endDate: data.pcoff,
-		// 						locale: {
-		// 							applyLabel: 'Apply',
-		// 							cancelLabel: 'Cancel',
-		// 							format: 'DD/MM/YY HH:mm'
-		// 						}
-		// 					})
-		// 					.prev().on(ace.click_event, function(){
-		// 						$(this).next().focus();
-		// 					});
-		// 					console.log(data.pcon);
-		// 				});
-		// 				postsave.post = '';
-		// 				postsave.post += 'oper=edit&dls_id='+gsr+'&ppjks_id='+ppjks_id+'&';
-		// 				$('#modal').modal('show');
-		// 			} else {
-		// 				alert("pilih tabel")
-		// 			}
-		// 		}
-		// })
-		// .jqGrid('navButtonAdd',pager_selector,{
-		// 		keys: true,
-		// 		caption:"Invoice",
-		// 		buttonicon:"ace-icon fa fa-file-pdf-o orange",
-		// 		position:"last",
-		// 		onClickButton:function(){
-		// 			// var data = $(this).jqGrid('getRowData'); Get all data
-		//
-		// 			$('#dompdf input[name=page]').val('invoice-dompdf');
-		// 			$('#dompdf input[name=bstdo]').val($('#NoBSTDO').html());
-		// 			$('#dompdf input[name=start]').val(setdate);
-		// 			$('#dompdf input[name=sidx]').val('ppjk');
-		//
-		// 			// console.log(setdate);
-		//
-		// 			$('#dompdf').submit();
-		// 		}
-		// })
+		.jqGrid('navButtonAdd',pager_selector,{
+				keys: true,
+				caption:"",
+				buttonicon:"ace-icon fa fa-pencil blue",
+				position:"first",
+				onClickButton:function(){
+					$('#form').trigger("reset");
+
+					var gsr = $(this).jqGrid('getGridParam','selrow');
+					if(gsr){
+						tglinv = $(this).jqGrid('getCell',gsr,'tglinv');
+						pajak = $(this).jqGrid('getCell',gsr,'pajak');
+						noinv = $(this).jqGrid('getCell',gsr,'noinv');
+						refno = $(this).jqGrid('getCell',gsr,'refno');
+						// var moring = $(this).jqGrid('getCell',gsr,'moring');
+						// console.log($('#tglinv').val());
+						$('#tglinv').datepicker("setDate", tglinv ).on("change", function(e) {
+							if ($('#tglinv').val()!=='') kurs(this.value);
+						});
+
+						// $('#tglinv').datepicker({
+					  //   onSelect: function(formattedDate, date, inst) {
+					  //       // $(inst.el).trigger('change');
+						// 		console.log('awam');
+					  //   }
+						// });
+						$('#pajak').val(pajak);
+						$('#noinv').val(noinv);
+						$('#refno').val(refno);
+
+						if (tglinv!==''){
+							kurs($('#tglinv').val());
+						}
+
+						// $('#dkurs').datepicker("setDate", setdate ).on("change", function(e) {
+						// 	var posdata= {'datatb':'kurs','search':this.value};
+						// 	getparameter("{{url('/api/oprasional/invoice/json')}}",posdata,function(data){
+						// 		$('#kurs').val(Numbers(data.nilai));
+						// 	});
+						// });
+
+						//
+						// var posdata= {'datatb':'kurs','search':setdate};
+						// getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
+						// 	$('#tundadate').daterangepicker({
+						// 		'applyClass' : 'btn-sm btn-success',
+						// 		'cancelClass' : 'btn-sm btn-default',
+						// 		"opens": "center",
+						// 		timePicker: true,
+						// 		timePicker24Hour: true,
+						// 		startDate: data.tundaon,
+						// 		endDate: data.tundaoff,
+						// 		locale: {
+						// 			applyLabel: 'Apply',
+						// 			cancelLabel: 'Cancel',
+						// 			format: 'DD/MM/YY HH:mm'
+						// 		}
+						// 	})
+						// 	.prev().on(ace.click_event, function(){
+						// 		$(this).next().focus();
+						// 	});
+						//
+						// 	$('#pcdate').daterangepicker({
+						// 		'applyClass' : 'btn-sm btn-success',
+						// 		'cancelClass' : 'btn-sm btn-default',
+						// 		"opens": "center",
+						// 		timePicker: true,
+						// 		timePicker24Hour: true,
+						// 		startDate: data.pcon,
+						// 		endDate: data.pcoff,
+						// 		locale: {
+						// 			applyLabel: 'Apply',
+						// 			cancelLabel: 'Cancel',
+						// 			format: 'DD/MM/YY HH:mm'
+						// 		}
+						// 	})
+						// 	.prev().on(ace.click_event, function(){
+						// 		$(this).next().focus();
+						// 	});
+						// 	console.log(data.pcon);
+						// });
+						postsave.post = '';
+						postsave.post += 'oper=edit&id='+gsr+'&';
+						$('#modal').modal('show');
+					} else {
+						alert("pilih tabel")
+					}
+				}
+		});
+
+		function kurs(tglinv){
+			var posdata= {'datatb':'kurs','search':tglinv};
+			getparameter("{{url('/api/oprasional/invoice/json')}}",posdata,function(data){
+				var a = new Date(data[1].date*1000);
+				$('#dkurs').datepicker("setDate", a.getDate() +'-'+(a.getMonth()+1)+'-'+a.getFullYear());
+				$('#kurs').val(Numbers(data[1].nilai));
+				// console.log(a +'-'+data[1].date );
+				// console.log(data);
+			});
+		}
 
 		$(document).one('ajaxloadstart.page', function(e) {
 			$.jgrid.gridDestroy(grid_selector);

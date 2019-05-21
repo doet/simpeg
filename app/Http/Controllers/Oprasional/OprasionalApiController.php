@@ -49,6 +49,9 @@ class OprasionalApiController extends Controller
           if ($request->input('search')){
             $query->where('id',$request->input('search'));
           };
+          if ($request->input('filter')){
+            $query->where($request->input('filter'),null);
+          };
         })
         ->select(
         //   'tb_agens.code as agenCode',

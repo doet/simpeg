@@ -214,7 +214,7 @@
 					if (data[idx].bstdo!==null)	No.push(data[idx].bstdo);
 				});
 				No.reverse();
-				console.log(No)
+				// console.log(No)
 				if (No[0]!==null){
 					$('#NoBSTDO')
 					.editable('setValue',No[0])

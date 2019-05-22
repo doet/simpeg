@@ -312,6 +312,7 @@
 						<input name="page" value="" hidden/>
 						<input name="file" value="" hidden/>
 						<input name="start" value="" hidden/>
+						<input name="end" value="" hidden/>
 					</form>
 
 					<table id="grid-table"></table>
@@ -791,6 +792,24 @@
 				postsave.post += 'oper=add&';
 				$('#modal').modal('show');
 			}
+		}).jqGrid('navButtonAdd',pager_selector,{
+				keys: true,
+				caption:"",
+				buttonicon:"ace-icon fa fa-file-pdf-o orange",
+				position:"last",
+				onClickButton:function(){
+					// var data = $(this).jqGrid('getRowData'); Get all data
+
+					$('#dompdf input[name=page]').val('ppjk1-dompdf');
+					// $('#dompdf input[name=bstdo]').val($('#NoBSTDO').html());
+					$('#dompdf input[name=start]').val(start);
+					$('#dompdf input[name=end]').val(end);
+					$('#dompdf input[name=sidx]').val('ppjk');
+
+					// console.log(setdate);
+
+					$('#dompdf').submit();
+				}
 		})
 
 		//var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');

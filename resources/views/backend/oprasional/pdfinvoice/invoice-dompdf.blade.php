@@ -118,9 +118,12 @@
               </div>
               <?php
                 $totalTarif = 0;
-                $dari = 'Laut/<i>Sea</i>';
+                // $dari = 'Laut/<i>Sea</i>';
 
-                $code=$name=array();
+                $code=$name=$isi=array();
+                $i=0;
+                $isi[$i]['dari'] = 'Laut/<i>Sea</i>';
+                $isi[$i]['ke'] = '';
                 foreach ($query as $row ) {
                   if (substr($row->code,1)=='S'){
                     if(!in_array('Serang',$code))array_push($code,'Serang');
@@ -128,14 +131,24 @@
                     if(!in_array('Cilegon',$code))array_push($code,'Cilegon');
                   }
                   if(!in_array($row->name,$name))array_push($name,$row->name);
+
+                  if ($i != 0) $isi[$i]['dari'] = $isi[$i-1]['ke'];
+                  $isi[$i]['ke'] = $row->name;
+                  
+                  if ($isi[$i]['dari']!=$isi[$i]['ke'])$i++;
+                  // if (count($query) != $i) $isi[$i]['dari'] = $row->name;
                 }
+
                 if(in_array('Cigading',$name)){
                   if ($result->rute == '$') $headstatus='Cigading 1'; else $headstatus='Cigading 2';
                 } else {
                   if ($result->rute == '$') $headstatus='Non Cigading 1'; else $headstatus='Non Cigading 2';
                 }
 
+
+                // dd($isi)
               ?>
+
               <div style="position:absolute; top:-90; left:600;">
                 <table>
                   <tr>
@@ -259,70 +272,87 @@
                 </thead>
                 <tbody class="zebra">
               <?php
-                $i=0;
-                foreach ($query as $row ) {
-                  $selisihWaktu = number_format(($row->tundaoff-$row->tundaon)/3600,2);
-                  $exWaktu = explode(".",$selisihWaktu);
-                  if ($exWaktu[1]<=50)$selisihWaktu2=$exWaktu[0]+0.5; else $selisihWaktu2=ceil($selisihWaktu);
-                  $selisihWaktu2=number_format($selisihWaktu2,2);
+                // $i=0;
+                // foreach ($query as $row ) {
+                //   $selisihWaktu = number_format(($row->tundaoff-$row->tundaon)/3600,2);
+                //   $exWaktu = explode(".",$selisihWaktu);
+                //   if ($exWaktu[1]<=50)$selisihWaktu2=$exWaktu[0]+0.5; else $selisihWaktu2=ceil($selisihWaktu);
+                //   $selisihWaktu2=number_format($selisihWaktu2,2);
+                //
+                //   if (count($code)==1 && $code[0]=='Cilegon')$mobilisasi=2; else $mobilisasi=2.5;
+                //
+                //   $jumlahWaktu=$mobilisasi+$selisihWaktu2;
+                //
+                //   $kapalsGrt = $result->kapalsGrt;
+                //   if ($kapalsGrt<=3500)$tariffix = 152.25*$kurs->nilai;
+                //   else if ($kapalsGrt<=8000)$tariffix = 386.25*$kurs->nilai;
+                //   else if ($kapalsGrt<=14000)$tariffix = 587.1*$kurs->nilai;
+                //   else if ($kapalsGrt<=18000)$tariffix = 770*$kurs->nilai;
+                //   else if ($kapalsGrt<=40000)$tariffix = 1220*$kurs->nilai;
+                //   else if ($kapalsGrt<=75000)$tariffix = 1300*$kurs->nilai;
+                //   else if ($kapalsGrt>75000)$tariffix = 1700*$kurs->nilai;
+                //
+                //   $jumlahTariffix=$tariffix*$jumlahWaktu;
+                //
+                //   if ($kapalsGrt<=14000)$tarifvar=0.005*$kurs->nilai;
+                //   else if ($kapalsGrt<=40000)$tarifvar=0.004*$kurs->nilai;
+                //   else if ($kapalsGrt>40000)$tarifvar=0.002*$kurs->nilai;
+                //
+                //   $jumlahTarifvar=$tarifvar*$kapalsGrt*$jumlahWaktu;
+                //
+                //   $jumlahTarif=$jumlahTarifvar+$jumlahTariffix;
+                //   if ((count($query)-1)==$i)$ke='Laut/<i>Sea</i>'; else $ke=$row->name;
+                //
+                //   echo '<tr>';
+                //   echo '<td class="left top right" align="center"> '.$result->lstp.' </td>';
+                //   echo '<td class="top right" align="center"> '.$dari.' </td>';
+                //   echo '<td class="top right" align="center"> '.$ke.' </td>';
+                //   echo '<td class="top right" align="center"> Tunda/<i>Towing</i> </td>';
+                //   echo '<td class="top right" align="center">'.date('d/m/y H:i',$row->tundaon).' </td>';
+                //   echo '<td class="top right" align="center">'.date('d/m/y H:i',$row->tundaoff).' </td>';
+                //   echo '<td class="top right" align="right">'.number_format($selisihWaktu,2).'&nbsp;</td>';
+                //   echo '<td class="top right" align="right">'.number_format($selisihWaktu2,2).'&nbsp;</td>';
+                //   echo '<td class="top right" align="right">'.number_format($mobilisasi,2).'&nbsp;</td>';
+                //   echo '<td class="top right" align="right">'.number_format($jumlahWaktu,2).'&nbsp;</td>';
+                //   echo '<td class="top right" align="right">Rp. '.number_format($tariffix).'&nbsp;</td>';
+                //   echo '<td class="top right" align="right">Rp. '.number_format($jumlahTariffix).'&nbsp;</td>';
+                //   echo '<td class="top right" align="right">Rp. '.ceil($tarifvar).'&nbsp;</td>';
+                //   echo '<td class="top right" align="right">'.number_format($result->kapalsGrt).'&nbsp;</td>';
+                //   echo '<td class="top right" align="right">Rp. '.number_format($jumlahTarifvar).'&nbsp;</td>';
+                //   echo '<td class="top right" align="right">Rp. '.number_format($jumlahTarif).'&nbsp;</td>';
+                //   echo '</tr>';
+                //
+                //   $totalTarif = $jumlahTarif+$totalTarif;
+                //   $dari=$ke;
+                //   $i++;
+                // }
+                //
+                //   $bht99=$totalTarif*(99/100);
+                //   $bht5=$bht99*(5/100);
+                //   $bhtPNBP=$bht99-$bht5;
+                //   $ppn=$bhtPNBP*(10/100);
+                //   $totalinv=$bhtPNBP+$ppn;
 
-                  // IF($G$12="Cilegon";2;
-                  // IF($G$12="Serang";2,5;
-                  // IF($G$12="Cilegon/Serang";2,25)))
-                  if (count($code)==1 && $code[0]=='Cilegon')$mobilisasi=2; else $mobilisasi=2.5;
-
-                  $jumlahWaktu=$mobilisasi+$selisihWaktu2;
-
-                  $kapalsGrt = $result->kapalsGrt;
-                  if ($kapalsGrt<=3500)$tariffix = 152.25*$kurs->nilai;
-                  else if ($kapalsGrt<=8000)$tariffix = 386.25*$kurs->nilai;
-                  else if ($kapalsGrt<=14000)$tariffix = 587.1*$kurs->nilai;
-                  else if ($kapalsGrt<=18000)$tariffix = 770*$kurs->nilai;
-                  else if ($kapalsGrt<=40000)$tariffix = 1220*$kurs->nilai;
-                  else if ($kapalsGrt<=75000)$tariffix = 1300*$kurs->nilai;
-                  else if ($kapalsGrt>75000)$tariffix = 1700*$kurs->nilai;
-
-                  $jumlahTariffix=$tariffix*$jumlahWaktu;
-
-                  if ($kapalsGrt<=14000)$tarifvar=0.005*$kurs->nilai;
-                  else if ($kapalsGrt<=40000)$tarifvar=0.004*$kurs->nilai;
-                  else if ($kapalsGrt>40000)$tarifvar=0.002*$kurs->nilai;
-
-                  $jumlahTarifvar=$tarifvar*$kapalsGrt*$jumlahWaktu;
-
-                  $jumlahTarif=$jumlahTarifvar+$jumlahTariffix;
-                  if ((count($query)-1)==$i)$ke='Laut/<i>Sea</i>'; else $ke=$row->name;
-              ?>
-                  <tr>
-                    <td class="left top right" align="center"><?php echo $result->lstp?></td>
-                    <td class="top right" align="center"><?php echo $dari?></td>
-                    <td class="top right" align="center"><?php echo $ke?></td>
-                    <!-- <td class="top right" align="center"><?php //echo 'Tunda/<i>Towing</i>'?></td> -->
-                    <td class="top right" align="center"><?php echo 'Tunda/<i>Towing</i>'?></td>
-                    <td class="top right" align="center"><?php echo date('d/m/y h:i',$row->tundaon)?></td>
-                    <td class="top right" align="center"><?php echo date('d/m/y h:i',$row->tundaoff)?></td>
-                    <td class="top right" align="right"><?php echo number_format($selisihWaktu,2)?>&nbsp;</td>
-                    <td class="top right" align="right"><?php echo number_format($selisihWaktu2,2)?>&nbsp;</td>
-                    <td class="top right" align="right"><?php echo number_format($mobilisasi,2)?> &nbsp;</td>
-                    <td class="top right" align="right"><?php echo number_format($jumlahWaktu,2)?>&nbsp;</td>
-                    <td class="top right" align="right">Rp. <?php echo number_format($tariffix)?>&nbsp;</td>
-                    <td class="top right" align="right">Rp. <?php echo number_format($jumlahTariffix)?>&nbsp;</td>
-                    <td class="top right" align="right">Rp. <?php echo ceil($tarifvar)?>&nbsp;</td>
-                    <td class="top right" align="right"><?php echo number_format($result->kapalsGrt)?>&nbsp;</td>
-                    <td class="top right" align="right">Rp. <?php echo number_format($jumlahTarifvar)?>&nbsp;</td>
-                    <td class="top right" align="right">Rp. <?php echo number_format($jumlahTarif)?>&nbsp;</td>
-                  </tr>
-              <?php
-                  $totalTarif = $jumlahTarif+$totalTarif;
-                  $dari=$ke;
-                  $i++;
+                foreach ($isi as $row) {
+                  echo '<tr>';
+                  echo '<td class="left top right" align="center"> '.$result->lstp.' </td>';
+                  echo '<td class="top right" align="center"> '.$row['dari'].' </td>';
+                  echo '<td class="top right" align="center"> '.$row['ke'].' </td>';
+                  echo '<td class="top right" align="center"> Tunda/<i>Towing</i> </td>';
+                  echo '<td class="top right" align="center"> </td>';
+                  echo '<td class="top right" align="center"> </td>';
+                  echo '<td class="top right" align="right">&nbsp;</td>';
+                  echo '<td class="top right" align="right">&nbsp;</td>';
+                  echo '<td class="top right" align="right">&nbsp;</td>';
+                  echo '<td class="top right" align="right">&nbsp;</td>';
+                  echo '<td class="top right" align="right">Rp. &nbsp;</td>';
+                  echo '<td class="top right" align="right">Rp. &nbsp;</td>';
+                  echo '<td class="top right" align="right">Rp. &nbsp;</td>';
+                  echo '<td class="top right" align="right">&nbsp;</td>';
+                  echo '<td class="top right" align="right">Rp. &nbsp;</td>';
+                  echo '<td class="top right" align="right">Rp. &nbsp;</td>';
+                  echo '</tr>';
                 }
-
-                  $bht99=$totalTarif*(99/100);
-                  $bht5=$bht99*(5/100);
-                  $bhtPNBP=$bht99-$bht5;
-                  $ppn=$bhtPNBP*(10/100);
-                  $totalinv=$bhtPNBP+$ppn;
               ?>
 
                 </tbody>
@@ -333,19 +363,19 @@
 
                   </td>
                   <td class="top" colspan="9" align="right">Total Tunda</td>
-                  <td class="left top right" align="right">Rp. <?php echo number_format($totalTarif)?>&nbsp;</td>
+                  <td class="left top right" align="right">Rp. <?php // echo number_format($totalTarif)?>&nbsp;</td>
                 </tr>
                 <tr>
                   <td colspan="9" align="right">Bagi Hasil Tunda setelah PNBP</td>
-                  <td class="left top right" align="right">Rp. <?php echo number_format($bhtPNBP)?>&nbsp;</td>
+                  <td class="left top right" align="right">Rp. <?php // echo number_format($bhtPNBP)?>&nbsp;</td>
                 </tr>
                 <tr>
                   <td colspan="9" align="right">PPn / Total after VAT</td>
-                  <td class="left top right" align="right">Rp. <?php echo number_format($ppn)?>&nbsp;</td>
+                  <td class="left top right" align="right">Rp. <?php // echo number_format($ppn)?>&nbsp;</td>
                 </tr>
                 <tr>
                   <td colspan="9" align="right">Total Tagihan Bagi Hasil / Total Invoice</td>
-                  <td class="left top right button" align="right">Rp. <?php echo number_format($totalinv)?>&nbsp;</td>
+                  <td class="left top right button" align="right">Rp. <?php // echo number_format($totalinv)?>&nbsp;</td>
                 </tr>
               </table>
             </div>

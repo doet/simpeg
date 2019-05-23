@@ -331,7 +331,7 @@ class OprasionalApiController extends Controller
         } catch (\Exception $e) {
           DB::rollback();
           $responce = array(
-            'msg' => $e,
+            'msg' => $e->errorInfo,
             'status' => $e,
           );
         }

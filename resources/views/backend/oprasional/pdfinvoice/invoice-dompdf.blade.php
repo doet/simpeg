@@ -199,29 +199,33 @@
                   else if ($kapalsGrt<=18000)$isi[$i]['tariffix'] = 770*$kurs->nilai;
                   else if ($kapalsGrt<=40000)$isi[$i]['tariffix'] = 1220*$kurs->nilai;
                   else if ($kapalsGrt<=75000)$isi[$i]['tariffix'] = 1300*$kurs->nilai;
-                  else if ($kapalsGrt>75000)$isi[$i]['tariffix'] = 1700*$kurs->nilai;
+                  else if ($kapalsGrt>75000)$isi[$i]['tariffix'] = 170*$kurs->nilai;
 
-                  $isi[$i]['jumlahTariffix']=$jumlahTariffix=$isi[$i]['tariffix']*$isi[$i]['jumlahWaktu'];
+// number_format($row['jumlahWaktu'],2)
+
+                  $isi[$i]['jumlahTariffix']=$isi[$i]['tariffix']*$isi[$i]['jumlahWaktu'];
 
                   if ($kapalsGrt<=14000)$tarifvar=0.005*$kurs->nilai;
                   else if ($kapalsGrt<=40000)$tarifvar=0.004*$kurs->nilai;
                   else if ($kapalsGrt>40000)$tarifvar=0.002*$kurs->nilai;
 
-                  $isi[$i]['jumlahTarifvar']=$jumlahTarifvar=$tarifvar*$kapalsGrt*$jumlahWaktu;
+                  $isi[$i]['jumlahTarifvar']=$tarifvar*$kapalsGrt*$jumlahWaktu;
 
-                  $isi[$i]['jumlahTarif']=$jumlahTarif=$jumlahTarifvar+$jumlahTariffix;
+                  $isi[$i]['jumlahTarif']=$jumlahTarif=$isi[$i]['jumlahTarifvar']+$isi[$i]['jumlahTariffix'];
 
-                  $totalTarif = $jumlahTarif+$totalTarif;
                   if ($row->ops=='Berth'){
                     if ($row->shift!='on'){
+                      $totalTarif = $isi[$i]['jumlahTarif']+$totalTarif;
                       $i++;
                     } else {
+                      $totalTarif = $isi[$i]['jumlahTarif']+$totalTarif;
                       $i++;
                     }
                   }
 
                   if ($row->ops=='Unberth'){
                     if ($row->shift!='on'){
+                      $totalTarif = $isi[$i]['jumlahTarif']+$totalTarif;
                       $i++;
                     } else {
 
@@ -229,12 +233,20 @@
                   }
 
                 }
-                // dd($kea);
-                $bht99=$totalTarif*(99/100);
-                $bht5=$bht99*(5/100);
-                $bhtPNBP=$bht99-$bht5;
-                $ppn=$bhtPNBP*(10/100);
-                $totalinv=$bhtPNBP+$ppn;
+                if ($headstatus=='Cigading 1' ||$headstatus=='Cigading 2'){
+                  $bht99=$totalTarif*(98/100);
+                  $bht5=$bht99*(5/100);
+                  $bhtPNBP=$bht99-$bht5;
+                  $ppn=$bhtPNBP*(10/100);
+                  $totalinv=$bhtPNBP+$ppn;
+                }
+                if ($headstatus=='Non Cigading 1' ||$headstatus=='Non Cigading 2'){
+                  $bht99=$totalTarif*(99/100);
+                  $bht5=$bht99*(5/100);
+                  $bhtPNBP=$bht99-$bht5;
+                  $ppn=$bhtPNBP*(10/100);
+                  $totalinv=$bhtPNBP+$ppn;
+                }
               ?>
 
               <div style="position:absolute; top:-90; left:600;">
@@ -311,7 +323,7 @@
                 <thead>
                   <tr>
                     <!-- rowspan="2" colspan="2" -->
-                    <td class="left top right" rowspan="3" width='35px'>LSTP<br>No</td>
+                    <td class="left top right" rowspan="3" width='40px'>LSTP<br>No</td>
                     <td class="top right" rowspan="2" colspan="2">Lokasi / <i>Location</i></td>
                     <td class="top right" rowspan="3" width='70px'>Uraian /<br> <i>Description</i></td>
                     <td class="top right" rowspan="3" width='90px'>Mulai / <i>Start</i><br> <i>(hr/bln/th jam:mnt)</i><br> <i>(dd/mm/yy hr:mnt)</i></td>
@@ -321,22 +333,22 @@
                     <td class="top right" rowspan="3">Total / <i>Total</i></td>
                   </tr>
                   <tr>
-                    <td class="top right" rowspan="2" width='55px'>Waktu / <br><i>Time</i></td>
-                    <td class="top right" rowspan="2" width='55px'>Terhitung / <br><i>Counted</i></td>
-                    <td class="top right" rowspan="2" width='55px'>Mobilisasi / <br><i>Mobilize</i></td>
-                    <td class="top right" rowspan="2" width='55px'>Total / <br><i>Total</i></td>
+                    <td class="top right" rowspan="2" width='45px'>Waktu/<br><i>Time</i></td>
+                    <td class="top right" rowspan="2" width='45px'>Terhitung/<br><i>Counted</i></td>
+                    <td class="top right" rowspan="2" width='45px'>Mobilisasi/<br><i>Mobilize</i></td>
+                    <td class="top right" rowspan="2" width='45px'>Total/<br><i>Total</i></td>
 
                     <td class="top right" colspan="2">Tetap / <i>Fixed</i></td>
                     <td class="top right" colspan="3">Variabel / <i>Variable</i></td>
                   </tr>
                   <tr>
-                    <td class="top right" width='90px'>Dari / <i>From</i></td>
-                    <td class="top right" width='90px'>Ke / <i>To</i></td>
+                    <td class="top right" width='120px'>Dari / <i>From</i></td>
+                    <td class="top right" width='120px'>Ke / <i>To</i></td>
 
                     <td class="top right">Tarif / <i>Tariff</i></td>
                     <td class="top right">Jumlah / <i>Amount</i></td>
                     <td class="top right">Tarif / <i>Tariff</i></td>
-                    <td class="top right" width='50px'>GRT</td>
+                    <td class="top right" width='45px'>GRT</td>
                     <td class="top right">Jumlah / <i>Amount</i></td>
                   </tr>
                   <tr>
@@ -347,7 +359,7 @@
               <?php
                 foreach ($isi as $row) {
                   echo '<tr>';
-                  echo '<td class="left top right" align="center"> '.$row['i'].' </td>';
+                  echo '<td class="left top right" align="center"> '.$result->lstp.' </td>';
                   echo '<td class="top right" align="center"> '.$row['dari'].' </td>';
                   echo '<td class="top right" align="center"> '.$row['ke'].' </td>';
                   echo '<td class="top right" align="center"> Tunda/<i>Towing</i> </td>';
@@ -359,34 +371,30 @@
                   echo '<td class="top right" align="right"> '.number_format($row['jumlahWaktu'],2).'&nbsp;  </td>';
                   echo '<td class="top right" align="right">Rp. '.number_format($row['tariffix']).'&nbsp;</td>';
                   echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTariffix']).'&nbsp;</td>';
-                  echo '<td class="top right" align="right">Rp. '.ceil($tarifvar).'&nbsp;</td>';
+                  echo '<td class="top right" align="right">Rp. '.number_format($tarifvar).'&nbsp;</td>';
                   echo '<td class="top right" align="right"> '.number_format($kapalsGrt).'&nbsp;</td>';
                   echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTarifvar']).'&nbsp;</td>';
-                  echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTarif']).'&nbsp;</td>';
+                  echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTarif'],2).'&nbsp;</td>';
                   echo '</tr>';
                 }
               ?>
 
                 </tbody>
                 <tr>
-                  <td class="top" colspan="6" rowspan="4">
-
-
-
-                  </td>
-                  <td class="top" colspan="9" align="right">Total Tunda</td>
+                  <td class="top" colspan="6" rowspan="4"> &nbsp; </td>
+                  <td class="top" colspan="9" align="right">Total Tunda&nbsp;</td>
                   <td class="left top right" align="right">Rp. <?php echo number_format($totalTarif)?>&nbsp;</td>
                 </tr>
                 <tr>
-                  <td colspan="9" align="right">Bagi Hasil Tunda setelah PNBP</td>
+                  <td colspan="9" align="right">Bagi Hasil Tunda setelah PNBP&nbsp;</td>
                   <td class="left top right" align="right">Rp. <?php echo number_format($bhtPNBP)?>&nbsp;</td>
                 </tr>
                 <tr>
-                  <td colspan="9" align="right">PPn / Total after VAT</td>
+                  <td colspan="9" align="right">PPn / Total after VAT&nbsp;</td>
                   <td class="left top right" align="right">Rp. <?php echo number_format($ppn)?>&nbsp;</td>
                 </tr>
                 <tr>
-                  <td colspan="9" align="right">Total Tagihan Bagi Hasil / Total Invoice</td>
+                  <td colspan="9" align="right">Total Tagihan Bagi Hasil / Total Invoice&nbsp;</td>
                   <td class="left top right button" align="right">Rp. <?php echo number_format($totalinv)?>&nbsp;</td>
                 </tr>
               </table>

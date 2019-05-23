@@ -811,6 +811,25 @@
 					$('#dompdf').submit();
 				}
 		})
+		.jqGrid('navButtonAdd',pager_selector,{
+				keys: true,
+				caption:"",
+				buttonicon:"ace-icon fa fa-file-pdf-o orange",
+				position:"last",
+				onClickButton:function(){
+					// var data = $(this).jqGrid('getRowData'); Get all data
+
+					$('#dompdf input[name=page]').val('ppjk2-dompdf');
+					// $('#dompdf input[name=bstdo]').val($('#NoBSTDO').html());
+					$('#dompdf input[name=start]').val(start);
+					$('#dompdf input[name=end]').val(end);
+					$('#dompdf input[name=sidx]').val('ppjk');
+
+					// console.log(setdate);
+
+					$('#dompdf').submit();
+				}
+		})
 
 		//var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
 

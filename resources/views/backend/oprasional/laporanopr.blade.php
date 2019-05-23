@@ -141,7 +141,7 @@
 
 								<div class="row">
 									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">ops</label>
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Ops</label>
 										<div class="col-xs-12 col-sm-4">
 											<div class="clearfix">
 												<select id="ops" name="ops" class="chosen-select" data-placeholder="Ops ..." >
@@ -151,6 +151,12 @@
 												</select>
 											</div>
 										</div>
+										<span class="help-inline col-sm-5">
+											<label class="middle">
+												<input id="shift" name="shift" class="ace" type="checkbox">
+												<span class="lbl">Shifting</span>
+											</label>
+										</span>
 									</div>
 								</div>
 								<div class="space-2"></div>
@@ -740,7 +746,8 @@
 							$('#jetty').val(data.jetty).trigger("chosen:updated");
 							$('#ops').val(data.ops).trigger("chosen:updated");
 
-							$('#pc').val(data.pc);
+							if (data.shift==='on')$('#shift').prop('checked', true);
+							// console.log(data.shift);
 
 							if (data.tunda != null) {
 								data.tunda.forEach(function(element) {

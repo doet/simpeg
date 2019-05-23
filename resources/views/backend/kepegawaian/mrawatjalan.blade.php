@@ -242,7 +242,7 @@
                                 '<button type="button" class="btn editable-cancel"><i class="ace-icon fa fa-times"></i></button>';
 
     $('.tgl').datepicker({format:'dd MM yyyy', autoclose:true});
-    
+
     //text editable
     $('#psdate').editable({
         type: 'adate',

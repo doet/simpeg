@@ -108,6 +108,7 @@ class OprasionalApiController extends Controller
           $responce['kapal']=$row->kapals_id;
           $responce['jetty']=$row->jettys_id;
           $responce['ops']=$row->ops;
+          $responce['shift']=$row->shift;
           $responce['pc']=$row->pc;
           $responce['tunda']=json_decode($row->tunda);
 
@@ -354,6 +355,7 @@ class OprasionalApiController extends Controller
             'jettys_id' =>$request->input('jetty',''),
             'date'      =>$date,
             'ops'       =>$request->input('ops',''),
+            'shift'     =>$request->input('shift',''),
             'pc'        =>$request->input('pc',''),
             'tunda'     =>$tunda,
             'tundaon'   =>AppHelpers::RangeDate($request->input('tundadate'))['startDate'],

@@ -125,7 +125,7 @@ class OprasionalApiController extends Controller
           $responce['dd']=$row->dd;
           $responce['ket']=$row->ket;
           // $responce['kurs']=$row->kurs;
-          // $responce['bapp']=$row->bapp;
+          $responce['bapp']=$row->bapp;
         }
       break;
       case 'agen':
@@ -405,21 +405,21 @@ class OprasionalApiController extends Controller
         );
       break;
       case 'lhp2':
-      $data_b=array(
-        // 'moring'=>$request->input('moring',''),
-        'tundaon'   =>AppHelpers::RangeDate($request->input('tundadate'))['startDate'],
-        'tundaoff'  =>AppHelpers::RangeDate($request->input('tundadate'))['endDate'],
-        'pcon'   =>AppHelpers::RangeDate($request->input('pcdate'))['startDate'],
-        'pcoff'  =>AppHelpers::RangeDate($request->input('pcdate'))['endDate'],
-        'bapp'  =>$request->input('bapp',''),
-      );
-      DB::table('tb_dls')->where('id', $request->input('dls_id',''))->update($data_b);
-      //
-      $responce = array(
-        'status' => 'success',
-        //"suscces",
-        'msg' => 'ok',
-      );
+        $data_b=array(
+          // 'moring'=>$request->input('moring',''),
+          'tundaon'   =>AppHelpers::RangeDate($request->input('tundadate'))['startDate'],
+          'tundaoff'  =>AppHelpers::RangeDate($request->input('tundadate'))['endDate'],
+          'pcon'   =>AppHelpers::RangeDate($request->input('pcdate'))['startDate'],
+          'pcoff'  =>AppHelpers::RangeDate($request->input('pcdate'))['endDate'],
+          'bapp'  =>$request->input('bapp',''),
+        );
+        DB::table('tb_dls')->where('id', $request->input('dls_id',''))->update($data_b);
+        //
+        $responce = array(
+          'status' => 'success',
+          //"suscces",
+          'msg' => 'ok',
+        );
       break;
 
       case 'bstdo':

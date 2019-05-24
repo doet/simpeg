@@ -65,7 +65,7 @@
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Tunda On/Off</label>
 										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="tundadate" name="tundadate" readonly></div>
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="tundadate" name="tundadate" ></div>
 										</div>
 									</div>
 								</div>
@@ -75,7 +75,7 @@
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">PC On/Off</label>
 										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="pcdate" name="pcdate" readonly></div>
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="pcdate" name="pcdate" ></div>
 										</div>
 									</div>
 								</div>
@@ -519,7 +519,7 @@
 					var gsr = $(this).jqGrid('getGridParam','selrow');
 					if(gsr){
 						var ppjks_id = $(this).jqGrid('getCell',gsr,'ppjks_id');
-						var bapp = $(this).jqGrid('getCell',gsr,'lstp');
+						var bapp = $(this).jqGrid('getCell',gsr,'bapp');
 						var moring = $(this).jqGrid('getCell',gsr,'moring');
 						$('#bapp').val(bapp);
 

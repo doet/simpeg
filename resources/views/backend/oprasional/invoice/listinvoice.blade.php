@@ -545,13 +545,21 @@ var i=0;
 						noinv = $(this).jqGrid('getCell',gsr,'noinv');
 						refno = $(this).jqGrid('getCell',gsr,'refno');
 						dkurs = $(this).jqGrid('getCell',gsr,'dkurs');
+						rute = $(this).jqGrid('getCell',gsr,'rute');
 
 						$('#pajak').val(pajak);
 						$('#noinv').val(noinv);
 						$('#refno').val(refno);
 						//
 						$('#tglinv').datepicker("setDate",tglinv);
-						$('#dkurs').datepicker("setDate",dkurs);
+						if (rute==='Domestic'){
+							$('#dkurs').prop('disabled', true);
+							$('#kurs').prop('disabled', true);
+						} else {
+							$('#dkurs').datepicker("setDate",dkurs);
+							$('#dkurs').prop('disabled', false);
+							$('#kurs').prop('disabled', false);
+						}
 
 						// console.log($('#dkurs').val());
 						// var oldDate = $('#dkurs').val();

@@ -193,22 +193,31 @@
                   $isi[$i]['jumlahWaktu']=$jumlahWaktu=$mobilisasi+$selisihWaktu2;
 
                   $kapalsGrt = $result->kapalsGrt;
-                  if ($kapalsGrt<=3500)$isi[$i]['tariffix'] = 152.25*$kurs->nilai;
-                  else if ($kapalsGrt<=8000)$isi[$i]['tariffix'] = 386.25*$kurs->nilai;
-                  else if ($kapalsGrt<=14000)$isi[$i]['tariffix'] = 587.1*$kurs->nilai;
-                  else if ($kapalsGrt<=18000)$isi[$i]['tariffix'] = 770*$kurs->nilai;
-                  else if ($kapalsGrt<=40000)$isi[$i]['tariffix'] = 1220*$kurs->nilai;
-                  else if ($kapalsGrt<=75000)$isi[$i]['tariffix'] = 1300*$kurs->nilai;
-                  else if ($kapalsGrt>75000)$isi[$i]['tariffix'] = 1700*$kurs->nilai;
 
-// dd($isi[$i]['tariffix']);
+                  if($result->rute == '$') {
+                    if ($kapalsGrt<=3500)$tariffix = 152.25*$kurs->nilai;
+                    else if ($kapalsGrt<=8000)$tariffix = 386.25*$kurs->nilai;
+                    else if ($kapalsGrt<=14000)$tariffix = 587.1*$kurs->nilai;
+                    else if ($kapalsGrt<=18000)$tariffix = 770*$kurs->nilai;
+                    else if ($kapalsGrt<=40000)$tariffix = 1220*$kurs->nilai;
+                    else if ($kapalsGrt<=75000)$tariffix = 1300*$kurs->nilai;
+                    else if ($kapalsGrt>75000)$tariffix = 1700*$kurs->nilai;
+                  } else {
+                    if ($kapalsGrt<=3500)$tariffix = 495000;
+                    else if ($kapalsGrt<=8000)$tariffix = 577500;
+                    else if ($kapalsGrt<=14000)$tariffix = 825000;
+                    else if ($kapalsGrt<=18000)$tariffix = 1031250;
+                  }
 
-                  $isi[$i]['jumlahTariffix']=$isi[$i]['tariffix']*$isi[$i]['jumlahWaktu'];
+                  $isi[$i]['jumlahTariffix']=$tariffix*$isi[$i]['jumlahWaktu'];
 
-                  if ($kapalsGrt<=14000)$tarifvar=0.005*$kurs->nilai;
-                  else if ($kapalsGrt<=40000)$tarifvar=0.004*$kurs->nilai;
-                  else if ($kapalsGrt>40000)$tarifvar=0.002*$kurs->nilai;
-
+                  if($result->rute == '$') {
+                    if ($kapalsGrt<=14000)$tarifvar=0.005*$kurs->nilai;
+                    else if ($kapalsGrt<=40000)$tarifvar=0.004*$kurs->nilai;
+                    else if ($kapalsGrt>40000)$tarifvar=0.002*$kurs->nilai;
+                  } else {
+                    $tarifvar=3.30;
+                  }
                   $isi[$i]['jumlahTarifvar']=$tarifvar*$kapalsGrt*$jumlahWaktu;
 
                   $isi[$i]['jumlahTarif']=$jumlahTarif=$isi[$i]['jumlahTarifvar']+$isi[$i]['jumlahTariffix'];
@@ -306,7 +315,7 @@
                     <td class="top right">&nbsp;BASTDO No.</td>
                     <td class="top right">&nbsp;<?php echo $result->bstdo?></td>
                     <td class="top right">&nbsp;Jalur</td>
-                    <td class="top right">&nbsp;<?php if($result->rute == '$') echo 'International'; else if($result->rute == 'Rp') echo 'Domestic'?></td>
+                    <td class="top right">&nbsp;<?php if($result->rute == '$') echo 'International'; else if($result->rute == 'Rp') echo 'Indonesia'?></td>
                   </tr>
                   <tr>
                     <td class="left top right button">&nbsp;Telepon / <i>Telephone</i></td>

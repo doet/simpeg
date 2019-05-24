@@ -378,9 +378,13 @@
                   echo '<td class="top right" align="right"> '.number_format($row['selisihWaktu2'],2).'&nbsp;  </td>';
                   echo '<td class="top right" align="right"> '.number_format($row['mobilisasi'],2).'&nbsp;  </td>';
                   echo '<td class="top right" align="right"> '.number_format($row['jumlahWaktu'],2).'&nbsp;  </td>';
-                  echo '<td class="top right" align="right">Rp. '.number_format($row['tariffix']).'&nbsp;</td>';
+                  echo '<td class="top right" align="right">Rp. '.number_format($tariffix).'&nbsp;</td>';
                   echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTariffix']).'&nbsp;</td>';
-                  echo '<td class="top right" align="right">Rp. '.number_format($tarifvar).'&nbsp;</td>';
+                  if($result->rute == '$') {
+                    echo '<td class="top right" align="right">Rp. '.number_format($tarifvar).'&nbsp;</td>';
+                  } else{
+                    echo '<td class="top right" align="right">Rp. '.number_format($tarifvar,2).'&nbsp;</td>';
+                  }
                   echo '<td class="top right" align="right"> '.number_format($kapalsGrt).'&nbsp;</td>';
                   echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTarifvar']).'&nbsp;</td>';
                   echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTarif'],2).'&nbsp;</td>';
@@ -410,7 +414,10 @@
             </div>
 
             <div style="position:absolute; top:260; left:30; width:300; font-family:'Arial', Helvetica, sans-serif ; font-size:11px;">
-              Kurs Jual Bank Indonesia 1 USD / <?php echo date('d M Y', $kurs->date)?>	= Rp. <?php echo number_format($kurs->nilai)?>
+              <?php
+              if($result->rute == '$') {
+                echo 'Kurs Jual Bank Indonesia 1 USD /'.date('d M Y', $kurs->date).' = Rp. '.number_format($kurs->nilai);
+              } ?>
               <table>
                 <thead>
                   <tr>

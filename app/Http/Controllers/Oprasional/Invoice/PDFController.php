@@ -82,8 +82,8 @@ class PDFController extends Controller
 
         $kurs = DB::table('tb_kurs')
           ->where(function ($query) use ($result){
-            $query->where('date','<=',$result->tglinv);
-          })->orderBy('date', 'desc')
+            $query->where('date',$result->dkurs);
+          })
           ->first();
 
         $page = 'backend.oprasional.pdfinvoice.'.$request->input('page');

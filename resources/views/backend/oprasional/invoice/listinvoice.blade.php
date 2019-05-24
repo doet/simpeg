@@ -218,11 +218,29 @@
 		});
 		var setdate = moment().format('D MMMM YYYY');
 
-
 		$('.tgl').datepicker({
 			format:'dd-mm-yyyy',
 			autoclose:true,
 		});
+
+		$('#dkurs').on('changeDate', function (ev) {
+			kurs($(this).val());
+		});
+		function kurs(dkurs){
+			var posdata= {'datatb':'kurs','search':dkurs};
+			// console.log(tglinv);
+			getparameter("{{url('/api/oprasional/invoice/json')}}",posdata,function(data){
+				if (data[1] !== null) {
+					var a = new Date(data[1].date*1000);
+					$('#dkurs').datepicker("update", a.getDate() +'-'+(a.getMonth()+1)+'-'+a.getFullYear());
+					$('#kurs').val(Numbers(data[1].nilai));
+				} else {
+					// $('#dkurs').datepicker("update", tglinv);
+					// $('#dkurs').val('');
+					$('#kurs').val('');
+				}
+			});
+		}
 
 		if(!ace.vars['touch']) {
 			$('.chosen-select').chosen({
@@ -331,7 +349,7 @@
 			sortname:'bstdo',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:[' ', 'BSTDO','PPJK','Agen','Kapal','Jalur','Tanggal Doc','Faktur Pajak','Nomor Invoice','Ref No','Status'],
+			colNames:[' ', 'BSTDO','PPJK','Agen','Kapal','Jalur','Tanggal Doc','Faktur Pajak','Nomor Invoice','Ref No','Status','dkurs'],
 			colModel:[
 				{name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false, align: 'center'},
 				{name:'bstdo',index:'bstdo', width:40,editable: false},
@@ -343,7 +361,8 @@
 				{name:'pajak',index:'pajak', width:60, editable: false},
 				{name:'noinv',index:'noinv', width:60, editable: false},
 				{name:'refno',index:'refno', width:60, editable: false},
-				{name:'status',index:'status', width:60, editable: false, formatter:status}
+				{name:'status',index:'status', width:60, editable: false, formatter:status},
+				{name:'dkurs',index:'dkurs', width:60, editable: false}
 			],
 
 			viewrecords : true,
@@ -416,7 +435,7 @@
 			}, 0);
 		}
 
-
+var i=0;
 		//navButtons
 		jQuery(grid_selector).jqGrid('navGrid',pager_selector,
 			{ 	//navbar options
@@ -516,46 +535,60 @@
 				buttonicon:"ace-icon fa fa-pencil blue",
 				position:"first",
 				onClickButton:function(){
-					$('#form').trigger("reset");
 
+					$('#form').trigger("reset");
+					$('.tgl').datepicker('update', '');
 					var gsr = $(this).jqGrid('getGridParam','selrow');
 					if(gsr){
 						tglinv = $(this).jqGrid('getCell',gsr,'tglinv');
 						pajak = $(this).jqGrid('getCell',gsr,'pajak');
 						noinv = $(this).jqGrid('getCell',gsr,'noinv');
 						refno = $(this).jqGrid('getCell',gsr,'refno');
-						// var moring = $(this).jqGrid('getCell',gsr,'moring');
-						// console.log($('#tglinv').val());
-						// $('#tglinv').datepicker("setDate", tglinv ).on("change", function(e) {
-						// 	if ($('#tglinv').val()!=='') kurs(this.value);
-						// });
-
-						// $('#tglinv').datepicker({
-					  //   onSelect: function(formattedDate, date, inst) {
-					  //       // $(inst.el).trigger('change');
-						// 		console.log('awam');
-					  //   }
-						// });
-						var oldDate = $('#dkurs').val();
-						$('#dkurs').datepicker().on('changeDate', function (ev) {
-						  if (oldDate !== $(this).val()){
-								// kurs($(this).val());
-								// console.log(oldDate +'!=='+ $(this).val());
-							}
-							oldDate = $(this).val();
-						});
+						dkurs = $(this).jqGrid('getCell',gsr,'dkurs');
 
 						$('#pajak').val(pajak);
 						$('#noinv').val(noinv);
 						$('#refno').val(refno);
+						//
+						$('#tglinv').datepicker("setDate",tglinv);
+						$('#dkurs').datepicker("setDate",dkurs);
 
-						if (tglinv!==''){
-							$('#tglinv').datepicker("setDate",tglinv).on("change", function(e) {
-								kurs($('#tglinv').val());
-								console.log('masuk sinic');
-							})
-							kurs($('#tglinv').val());
-						}
+						// console.log($('#dkurs').val());
+						// var oldDate = $('#dkurs').val();
+						// $('#dkurs').on('changeDate', function (ev) {
+						// 	console.log(i);
+						// 	console.log($(this).val());
+						//
+						//
+						//   // if (oldDate !== $(this).val()){
+						// 	// 	// kurs($(this).val());
+						// 	// 	console.log(oldDate +'!=='+ $(this).val());
+						// 	//
+						// 	// }
+						// 	// oldDate = $(this).val();
+						// });i++;
+						//
+						// var oldDate = $('#dkurs').val();
+						// $('#dkurs').datepicker("setDate",dkurs).on('change', function (ev) {
+						// 	alert(oldDate+'-'+$(this).val());
+						// 	oldDate = $(this).val();
+						// });
+						// $('#dkurs').datepicker().on('changeDate', function (ev) {
+						//   if (oldDate !== $(this).val()){
+						// 		// kurs($(this).val());
+						// 		// console.log(oldDate +'!=='+ $(this).val());
+						//
+						// 	}
+						// 	oldDate = $(this).val();
+						// });
+						// if (tglinv!==''){
+						// 	// console.log(dkurs);
+						// 	$('#tglinv').datepicker("setDate",tglinv).on("change", function(e) {
+						// 		// kurs(dkurs);
+						// 		// console.log(dkurs);
+						// 	})
+						// 	// kurs(dkurs);
+						// }
 
 						postsave.post = '';
 						postsave.post += 'oper=edit&id='+gsr+'&';
@@ -565,21 +598,7 @@
 					}
 				}
 		});
-		function kurs(tglinv){
-			var posdata= {'datatb':'kurs','search':tglinv};
-			getparameter("{{url('/api/oprasional/invoice/json')}}",posdata,function(data){
-				console.log(data);
-				if (data[1] !== null) {
-					var a = new Date(data[1].date*1000);
-					$('#dkurs').datepicker("setDate", a.getDate() +'-'+(a.getMonth()+1)+'-'+a.getFullYear());
-					$('#kurs').val(Numbers(data[1].nilai));
-				} else {
-					$('#dkurs').datepicker("setDate", tglinv);
-					// $('#dkurs').val('');
-					$('#kurs').val('');
-				}
-			});
-		}
+
 
 		$(document).one('ajaxloadstart.page', function(e) {
 			$.jgrid.gridDestroy(grid_selector);

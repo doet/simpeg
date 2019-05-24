@@ -67,14 +67,15 @@ class InvoiceApiController extends Controller
         }
       break;
       case 'kurs':
+        if ($request->input('search')==null)$search='-';else $search=strtotime($request->input('search'));
         $query = DB::table('tb_kurs')
-        ->where(function ($query) use ($request){
-          if ($request->input('search')){
-            $query->where('date','<=',strtotime($request->input('search')));
-          };
-        })->orderBy('date', 'desc')
-        ->first();
-        $responce[]=array('a'=>strtotime($request->input('search')));
+          ->where(function ($query) use ($request, $search){
+            // if ($search!='-'){
+              $query->where('date',$search);
+            // };
+          })->orderBy('date', 'desc')
+          ->first();
+        $responce[]=array('a'=>$search);
         // $responce=$query;
         array_push($responce,$query);
       break;
@@ -117,23 +118,27 @@ class InvoiceApiController extends Controller
     switch ($datatb) {
       case 'inv':
         if ($request->input('tglinv')!='')$tglinv=strtotime($request->input('tglinv'));else $tglinv='';
+        if ($request->input('dkurs') == '')$dkurs=null;else $dkurs=strtotime($request->input('dkurs'));
         $datanya=array(
           'noinv'=>$request->input('noinv'),
           'pajak'=>$request->input('pajak'),
           'refno'=>$request->input('refno'),
-          'tglinv'=>$tglinv
+          'tglinv'=>$tglinv,
+          'dkurs'=>$dkurs,
         );
-        DB::table('tb_ppjks')->where('id', $id)->update($datanya);
+        $dddd = DB::table('tb_ppjks')->where('id', $id)->update($datanya);
 
         $kurs = str_replace('.', '', $request->input('kurs'));
         $datakurs=array(
           'date'=>strtotime($request->input('dkurs')),
           'nilai'=>$kurs,
         );
-        if (DB::table('tb_kurs')->where('date', strtotime($request->input('dkurs')))->exists()){
-          DB::table('tb_kurs')->where('date', strtotime($request->input('dkurs')))->update($datakurs);
-        } else {
-          DB::table('tb_kurs')->where('date', strtotime($request->input('dkurs')))->insert($datakurs);
+        if ($request->input('dkurs') != ''){
+          if (DB::table('tb_kurs')->where('date', strtotime($request->input('dkurs')))->exists()){
+            DB::table('tb_kurs')->where('date', strtotime($request->input('dkurs')))->update($datakurs);
+          } else {
+            DB::table('tb_kurs')->where('date', strtotime($request->input('dkurs')))->insert($datakurs);
+          }
         }
 
         $responce = array(
@@ -239,6 +244,7 @@ class InvoiceApiController extends Controller
             // if ($row->ppjk == '' || $row->ppjk == null) $row->ppjk = ''; else $row->ppjk = substr($row->ppjk, -5);
             if ($row->tglinv == '') $tglinv='';else $tglinv=date('d-m-Y', $row->tglinv);
             if ($row->rute != '' && $row->rute == '$')$row->rute = 'Internasional'; else if ($row->rute != '' && $row->rute == 'Rp')$row->rute = 'Domestic';
+            if ($row->dkurs !='')$dkurs=date("d-m-Y",$row->dkurs); else $dkurs='';
             $responce['rows'][$i]['id'] = $row->id;
             $responce['rows'][$i]['cell'] = array(
               $row->id,
@@ -251,7 +257,8 @@ class InvoiceApiController extends Controller
               $row->pajak,
               $row->noinv,
               $row->refno,
-              $row->id
+              $row->id,
+              $dkurs
               // date("d/m/y H:i",$row->date),
               // AppHelpers::formatNomer($row->kapalsGrt),
               // AppHelpers::formatNomer($row->kapalsLoa),

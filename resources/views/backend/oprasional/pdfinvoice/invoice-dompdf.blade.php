@@ -199,9 +199,9 @@
                   else if ($kapalsGrt<=18000)$isi[$i]['tariffix'] = 770*$kurs->nilai;
                   else if ($kapalsGrt<=40000)$isi[$i]['tariffix'] = 1220*$kurs->nilai;
                   else if ($kapalsGrt<=75000)$isi[$i]['tariffix'] = 1300*$kurs->nilai;
-                  else if ($kapalsGrt>75000)$isi[$i]['tariffix'] = 170*$kurs->nilai;
+                  else if ($kapalsGrt>75000)$isi[$i]['tariffix'] = 1700*$kurs->nilai;
 
-// number_format($row['jumlahWaktu'],2)
+// dd($isi[$i]['tariffix']);
 
                   $isi[$i]['jumlahTariffix']=$isi[$i]['tariffix']*$isi[$i]['jumlahWaktu'];
 

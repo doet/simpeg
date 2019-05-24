@@ -218,51 +218,6 @@
 		});
 		var setdate = moment().format('D MMMM YYYY');
 
-		// var nobstdo = 0;
-		// var posdata= {'datatb':'ppjk', _token:'{{ csrf_token() }}'};
-		// $.ajax({
-		// 	type: "POST",
-		//   url: "{{url('/api/oprasional/json')}}",
-		// 	data: posdata,
-		//   // async: false,
-		//   success: function(data) {
-		// 		var No = new Array();
-		// 		$.each(data, function (idx, obj) {
-		// 			No.push(data[idx].bstdo);
-		// 		});
-		// 		No.sort();
-		// 		if (No[0]!==null){
-		// 			$('#NoBSTDO')
-		// 			.editable('setValue',No[0])
-		// 			.val(No[0])
-		// 			.html(No[0]);
-		//
-		// 			get_ppjk(No[0]);
-		// 			// console.log(No[0]);
-		// 			// window.onload = function () {
-		// 			setTimeout(function() {
-		// 				$(grid_selector).jqGrid('setGridParam',{postData:{bstdo:No[0]}}).trigger("reloadGrid");
-		// 				// alert('test');
-		// 			}, 500);
-		// 		}
-		//   }
-		// });
-
-		// $('#NoBSTDO').editable({
-		// 	type:'typeaheadjs',
-		// 	success: function(response, newValue) {
-    //     // if(response.status == 'error') return response.msg; //msg will be shown in editable form
-		// 		get_ppjk(newValue);
-		// 		$(grid_selector).jqGrid('setGridParam',{postData:{bstdo:newValue}}).trigger("reloadGrid");
-		// 	},
-		// 	typeahead: {
-		// 		name: 'bsto',
-		// 		remote: {
-		// 	    wildcard: '%QUERY',
-		// 	    url: "{{url('/api/oprasional/autoc')}}?datatb=bstdo&cari=%QUERY",
-		// 	  }
-		// 	}
-		// });
 
 		$('.tgl').datepicker({
 			format:'dd-mm-yyyy',
@@ -320,29 +275,6 @@
 				// },function(data){});
 	    }
 		});
-
-		// function get_ppjk(setbstdo){
-		// 	console.log(setbstdo);
-		// 	var posdata= {'datatb':'ppjk', _token:'{{ csrf_token() }}'};
-		// 	var $select_elem = $("#ppjk");
-		// 	if (setbstdo===''){
-		// 		$select_elem.multiselect('disable');
-		// 	} else {
-		// 		// $select_elem.empty();
-		// 		$select_elem.html('');
-		// 		getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
-		// 			var No = new Array();
-		// 			$.each(data, function (idx, obj) {
-		// 				if (data[idx].bstdo == setbstdo){
-		// 					$select_elem.append('<option value="'+data[idx].id+'" selected>'+data[idx].ppjk+'</option>');
-		// 				} else if (data[idx].bstdo === null && data[idx].lhp !== null){
-		// 					$select_elem.append('<option value="'+data[idx].id+'">'+data[idx].ppjk+'</option>');
-		// 				}
-		// 			});
-		// 			$select_elem.multiselect('rebuild');
-		// 		},function(data){});
-		// 	}
-		// }
 
 		var postsave={};
 		postsave.url = "{{url('/api/oprasional/invoice/cud')}}";
@@ -594,9 +526,9 @@
 						refno = $(this).jqGrid('getCell',gsr,'refno');
 						// var moring = $(this).jqGrid('getCell',gsr,'moring');
 						// console.log($('#tglinv').val());
-						$('#tglinv').datepicker("setDate", tglinv ).on("change", function(e) {
-							if ($('#tglinv').val()!=='') kurs(this.value);
-						});
+						// $('#tglinv').datepicker("setDate", tglinv ).on("change", function(e) {
+						// 	if ($('#tglinv').val()!=='') kurs(this.value);
+						// });
 
 						// $('#tglinv').datepicker({
 					  //   onSelect: function(formattedDate, date, inst) {
@@ -604,61 +536,27 @@
 						// 		console.log('awam');
 					  //   }
 						// });
+						var oldDate = $('#dkurs').val();
+						$('#dkurs').datepicker().on('changeDate', function (ev) {
+						  if (oldDate !== $(this).val()){
+								// kurs($(this).val());
+								// console.log(oldDate +'!=='+ $(this).val());
+							}
+							oldDate = $(this).val();
+						});
+
 						$('#pajak').val(pajak);
 						$('#noinv').val(noinv);
 						$('#refno').val(refno);
 
 						if (tglinv!==''){
+							$('#tglinv').datepicker("setDate",tglinv).on("change", function(e) {
+								kurs($('#tglinv').val());
+								console.log('masuk sinic');
+							})
 							kurs($('#tglinv').val());
 						}
 
-						// $('#dkurs').datepicker("setDate", setdate ).on("change", function(e) {
-						// 	var posdata= {'datatb':'kurs','search':this.value};
-						// 	getparameter("{{url('/api/oprasional/invoice/json')}}",posdata,function(data){
-						// 		$('#kurs').val(Numbers(data.nilai));
-						// 	});
-						// });
-
-						//
-						// var posdata= {'datatb':'kurs','search':setdate};
-						// getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
-						// 	$('#tundadate').daterangepicker({
-						// 		'applyClass' : 'btn-sm btn-success',
-						// 		'cancelClass' : 'btn-sm btn-default',
-						// 		"opens": "center",
-						// 		timePicker: true,
-						// 		timePicker24Hour: true,
-						// 		startDate: data.tundaon,
-						// 		endDate: data.tundaoff,
-						// 		locale: {
-						// 			applyLabel: 'Apply',
-						// 			cancelLabel: 'Cancel',
-						// 			format: 'DD/MM/YY HH:mm'
-						// 		}
-						// 	})
-						// 	.prev().on(ace.click_event, function(){
-						// 		$(this).next().focus();
-						// 	});
-						//
-						// 	$('#pcdate').daterangepicker({
-						// 		'applyClass' : 'btn-sm btn-success',
-						// 		'cancelClass' : 'btn-sm btn-default',
-						// 		"opens": "center",
-						// 		timePicker: true,
-						// 		timePicker24Hour: true,
-						// 		startDate: data.pcon,
-						// 		endDate: data.pcoff,
-						// 		locale: {
-						// 			applyLabel: 'Apply',
-						// 			cancelLabel: 'Cancel',
-						// 			format: 'DD/MM/YY HH:mm'
-						// 		}
-						// 	})
-						// 	.prev().on(ace.click_event, function(){
-						// 		$(this).next().focus();
-						// 	});
-						// 	console.log(data.pcon);
-						// });
 						postsave.post = '';
 						postsave.post += 'oper=edit&id='+gsr+'&';
 						$('#modal').modal('show');
@@ -667,15 +565,19 @@
 					}
 				}
 		});
-
 		function kurs(tglinv){
 			var posdata= {'datatb':'kurs','search':tglinv};
 			getparameter("{{url('/api/oprasional/invoice/json')}}",posdata,function(data){
-				var a = new Date(data[1].date*1000);
-				$('#dkurs').datepicker("setDate", a.getDate() +'-'+(a.getMonth()+1)+'-'+a.getFullYear());
-				$('#kurs').val(Numbers(data[1].nilai));
-				// console.log(a +'-'+data[1].date );
-				// console.log(data);
+				console.log(data);
+				if (data[1] !== null) {
+					var a = new Date(data[1].date*1000);
+					$('#dkurs').datepicker("setDate", a.getDate() +'-'+(a.getMonth()+1)+'-'+a.getFullYear());
+					$('#kurs').val(Numbers(data[1].nilai));
+				} else {
+					$('#dkurs').datepicker("setDate", tglinv);
+					// $('#dkurs').val('');
+					$('#kurs').val('');
+				}
 			});
 		}
 

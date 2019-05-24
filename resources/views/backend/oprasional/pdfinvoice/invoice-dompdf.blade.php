@@ -290,9 +290,9 @@
                     <td class="left top right" width="150px">&nbsp;Perusahaan / <i>Company</i></td>
                     <td class="top right" width="300px">&nbsp;<?php echo $result->agenName?></i></td>
                     <td class="top right" width="150px">&nbsp;PPJ No.</td>
-                    <td class="top right" width="300px">&nbsp;<?php echo $result->ppjk?></td>
+                    <td class="top right">&nbsp;<?php echo $result->ppjk?></td>
                     <td class="top right" width="150px">&nbsp;Nama kapal / <i>Vessel name</i></td>
-                    <td class="top right">&nbsp;<?php echo $result->kapalsJenis.'. '.$result->kapalsName?></td>
+                    <td class="top right" width="250px">&nbsp;<?php echo $result->kapalsJenis.'. '.$result->kapalsName?></td>
                   </tr>
                   <tr>
                     <td class="left top right" rowspan="2">&nbsp;Alamat / <i>Address</i></td>

@@ -123,7 +123,7 @@ class InvoiceApiController extends Controller
           'refno'=>$request->input('refno'),
           'tglinv'=>$tglinv
         );
-        if ($oper=='edit')DB::table('tb_ppjks')->where('id', $id)->update($datanya);
+        DB::table('tb_ppjks')->where('id', $id)->update($datanya);
 
         $kurs = str_replace('.', '', $request->input('kurs'));
         $datakurs=array(
@@ -237,7 +237,7 @@ class InvoiceApiController extends Controller
             // if ($row->pcoff == '') $pcoff=$row->pcon; else $pcoff=date("H:i",$row->pcoff);
 
             // if ($row->ppjk == '' || $row->ppjk == null) $row->ppjk = ''; else $row->ppjk = substr($row->ppjk, -5);
-            if ($row->tglinv == '') $tglinv='';else $tglinv=date('d M Y', $row->tglinv);
+            if ($row->tglinv == '') $tglinv='';else $tglinv=date('d-m-Y', $row->tglinv);
             if ($row->rute != '' && $row->rute == '$')$row->rute = 'Internasional'; else if ($row->rute != '' && $row->rute == 'Rp')$row->rute = 'Domestic';
             $responce['rows'][$i]['id'] = $row->id;
             $responce['rows'][$i]['cell'] = array(

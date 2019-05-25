@@ -113,8 +113,12 @@
                 <b>BADAN USAHA MILIK DAERAH<br />
                   PEMERINTAH KOTA CILEGON<br />
                   PT. PELABUHAN CILEGON MANDIRI<br />
-                  Jl. Yos Sudarso No. 20 Kec. Pulo Merak, Cilegon - Banten 42438  Tel. 0254-574000  Fax. 574894
+                  Jl. Yos Sudarso No. 20 Kec. Pulo Merak, Cilegon - Banten <br />
+                  42438  Tel. 0254-574000  Fax. 574894
                 </b>
+              </div>
+              <div style="position:absolute; top:-85; left:400; width:300">
+                <img src="{{public_path().'\\pic\\logo.png'}}" width="200px">
               </div>
               <?php
                 $totalTarif = 0;
@@ -125,7 +129,7 @@
 
                 foreach ($query as $row ) {
                   $isi[$i]['i']=$i;
-                  if (substr($row->code,0,1)=='S'){
+                  if (substr($row->jettyCode,0,1)=='S'){
                     if(!in_array('Serang',$code))array_push($code,'Serang');
                     // $area='Serang';
                   } else {
@@ -133,7 +137,7 @@
                     // $area='Cilegon';
                   }
 
-                  if(!in_array($row->name,$name))array_push($name,$row->name);
+                  if(!in_array($row->jettyName,$name))array_push($name,$row->jettyName);
                   if(in_array('Cigading',$name)){
                     if ($result->rute == '$') $headstatus='Cigading 1'; else $headstatus='Cigading 2';
                   } else {
@@ -143,15 +147,15 @@
                   if ($row->ops=='Berth'){
                     if ($row->shift!='on'){
                       $isi[$i]['dari'] = 'Laut/<i>Sea</i>';
-                      $isi[$i]['ke'] = $row->name;
-                      $dari=$row->name;
-                      $isi[$i]['daria']=$isi[$i]['kea']=substr($row->code,0,1);
+                      $isi[$i]['ke'] = $row->jettyName;
+                      $dari=$row->jettyName;
+                      $isi[$i]['daria']=$isi[$i]['kea']=substr($row->jettyCode,0,1);
                     } else {
                       $isi[$i]['dari'] = $dari;
-                      $isi[$i]['ke'] = $row->name;
-                      $dari=$row->name;
+                      $isi[$i]['ke'] = $row->jettyName;
+                      $dari=$row->jettyName;
                       $isi[$i]['daria']=$isi[$i-1]['kea'];
-                      $isi[$i]['kea']=substr($row->code,0,1);
+                      $isi[$i]['kea']=substr($row->jettyCode,0,1);
                     }
                   }
 
@@ -164,7 +168,7 @@
                       $isi[$i]['kea']=$isi[$i-1]['kea'];
                     } else {
                       // $isi[$i]['dari'] = $dari;
-                      $dari=$row->name;
+                      $dari=$row->jettyName;
                       $tundaon=$row->tundaon;
                       $isi[$i]['daria']='';
                       $isi[$i]['kea']='';

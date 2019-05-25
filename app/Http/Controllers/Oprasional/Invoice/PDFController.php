@@ -78,6 +78,12 @@ class PDFController extends Controller
           ->where(function ($query) use ($result){
             $query->where('tb_dls.ppjks_id',$result->id);
           })
+          ->select(
+            'tb_jettys.code as jettyCode',
+            'tb_jettys.name as jettyName',
+            'tb_dls.*'
+          )
+          ->orderBy('tundaon', 'asc')
           ->get();
 
         $kurs = DB::table('tb_kurs')

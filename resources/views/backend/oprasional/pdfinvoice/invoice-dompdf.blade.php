@@ -433,7 +433,7 @@
                   <tr>
                     <td class="left top right button">&nbsp;Bank BNI (IDR)</td>
                     <td class="top right button">&nbsp;231.05.45</td>
-                    <td class="top right button" rowspan="3" align="center">&nbsp;<b><?php echo date('d M Y', $result->tglinv)?></b></i></td>
+                    <td class="top right button" rowspan="3" align="center">&nbsp;<b><?php echo date('d M Y', $result->tglinv+((24 * 60 *60)*3))?></b></i></td>
                   </tr>
                   <tr>
                     <td class="left top right button">&nbsp;Bank Mandiri (IDR)</td>

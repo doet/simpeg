@@ -191,7 +191,7 @@
         }
     }).on('save', function(e, params) {
         $(grid_selector).jqGrid('setGridParam',{postData:{lhp:params.newValue}}).trigger("reloadGrid");
-				console.log(params.newValue);
+				// console.log(params.newValue);
         setdate = params.newValue;
 				get_ppjk(setdate);
     });
@@ -282,9 +282,10 @@
 		$('#save').click(function(e) {
 			e.preventDefault();
 			postsave.post += $("#form").serialize()+'&datatb=lhp2';
+			// console.log(postsave);
 			SaveGrid(postsave);
 		});
-//////////////////////////////////////////////
+//////////////////////////////////////////
 
 		var grid_selector = "#grid-table";
 		var pager_selector = "#grid-pager";
@@ -560,7 +561,7 @@
 							.prev().on(ace.click_event, function(){
 								$(this).next().focus();
 							});
-							console.log(data.pcon);
+							// console.log(data.pcon);
 						});
 						postsave.post = '';
 						postsave.post += 'oper=edit&dls_id='+gsr+'&ppjks_id='+ppjks_id+'&';

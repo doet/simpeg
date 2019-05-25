@@ -117,8 +117,8 @@ class OprasionalApiController extends Controller
           $responce['tundaon']=date("d/m/y H:i",$row->tundaon);
           $responce['tundaoff']=date("d/m/y H:i",$row->tundaoff);
 
-          if ($row->pcon == '')$row->pcon = $row->date;
-          if ($row->pcoff == '')$row->pcoff = $row->date;
+          if ($row->pcon == '')$row->pcon = $row->tundaon;
+          if ($row->pcoff == '')$row->pcoff = $row->tundaoff;
           $responce['pcon']=date("d/m/y H:i",$row->pcon);
           $responce['pcoff']=date("d/m/y H:i",$row->pcoff);
 

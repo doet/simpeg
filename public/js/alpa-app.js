@@ -101,28 +101,28 @@ function getparameter2(url,posdata,success,beforeSend){
   });
 }
 
-function SaveGrid(postsave){
-  getparameter2(postsave.url,postsave.post,
-    function(data){
-      var newHTML = '<i class="ace-icon fa fa-floppy-o"></i>Save';
-      $('#save').html(newHTML);
-
-      if(data.status == "success"){
-        console.log(data.status);
-        $(postsave.grid.toString()).trigger("reloadGrid");
-        $(postsave.modal.toString()).modal('hide');
-        $('#form').trigger("reset");
-
-      } else {
-        alert (data.msg);
-      }
-    },
-    function(data){
-      var newHTML = '<i class="ace-icon fa fa-spinner fa-spin "></i>Loading...';
-      $('#save').html(newHTML);
-    }
-  )
-}
+// function SaveGrid(postsave){
+//   getparameter2(postsave.url,postsave.post,
+//     function(data){
+//       var newHTML = '<i class="ace-icon fa fa-floppy-o"></i>Save';
+//       $('#save').html(newHTML);
+//
+//       if(data.status == "success"){
+//         console.log(data.status);
+//         $(postsave.grid.toString()).trigger("reloadGrid");
+//         $(postsave.modal.toString()).modal('hide');
+//         $('#form').trigger("reset");
+//
+//       } else {
+//         alert (data.msg);
+//       }
+//     },
+//     function(data){
+//       var newHTML = '<i class="ace-icon fa fa-spinner fa-spin "></i>Loading...';
+//       $('#save').html(newHTML);
+//     }
+//   )
+// }
 
 function saveGrid(prm){
   var posdata = $("#form-1").serialize();

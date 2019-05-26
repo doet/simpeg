@@ -226,7 +226,7 @@
                     else if ($kapalsGrt<=14000)$tariffix = 825000;
                     else if ($kapalsGrt<=18000)$tariffix = 1031250;
 
-                    $tariffixpc=37.4*$kurs->nilai;
+                    $tariffixpc=46200;
                   }
 
                   $isi[$i]['jumlahTariffix']=$tariffix*$isi[$i]['jumlahWaktu'];
@@ -241,7 +241,7 @@
                   } else {
                     $tarifvar=3.30;
 
-                    $tarifvarpc=0.011*$kurs->nilai;
+                    $tarifvarpc=13.20;
                   }
                   $isi[$i]['jumlahTarifvar']=$tarifvar*$kapalsGrt*$jumlahWaktu;
                   $isi[$i]['jumlahTarifvarpc']=$tarifvarpc*$kapalsGrt;

@@ -416,7 +416,8 @@
 			// }, 0);
 			// console.log(cellvalue);
 			var url="{{ url('oprasional/PDFInvoice') }}?page=invoice-dompdf&id="+cellvalue;
-			return '<div><a class="fa fa-file-pdf-o orange" method="POST" href='+url+' target="_blank"></a> - <a class="fa fa-credit-card orange"></a></div>';
+			var url2="{{ url('oprasional/PDFInvoice') }}?page=invoice-dompdf2&id="+cellvalue;
+			return '<div><a class="fa fa-file-pdf-o orange" method="POST" href='+url+' target="_blank"></a> - <a class="fa fa-file-pdf-o orange" method="POST" href='+url2+' target="_blank"></a> - <a class="fa fa-credit-card orange"></a></div>';
 		}
 
 		//switch element when editing inline

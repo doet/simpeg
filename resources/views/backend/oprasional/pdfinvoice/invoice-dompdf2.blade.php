@@ -121,8 +121,8 @@
                 <img src="{{public_path().'\\pic\\logo.png'}}" width="200px">
               </div>
               <?php
-                $totalTarif = 0;
-                $area=$tundaon=$dari=$ke= '';
+                $totalTarif=$totalTarifPc=$totalTarifAll=0;
+                $area=$tundaon=$pcon=$dari=$ke= '';
 
                 $code=$name=$isi=array();
                 $i=0;
@@ -164,12 +164,14 @@
                       $isi[$i]['dari'] = $dari;
                       $isi[$i]['ke'] = 'Laut/<i>Sea</i>';
                       $tundaon='';
+                      $pcon='';
                       $isi[$i]['daria']=$isi[$i-1]['kea'];
                       $isi[$i]['kea']=$isi[$i-1]['kea'];
                     } else {
                       // $isi[$i]['dari'] = $dari;
                       $dari=$row->jettyName;
                       $tundaon=$row->tundaon;
+                      $pcon=$row->pcon;
                       $isi[$i]['daria']='';
                       $isi[$i]['kea']='';
                     }
@@ -177,13 +179,23 @@
 
                   if ($tundaon!=''){
                     $isi[$i]['tundaon']=date('d/m/y H:i',$tundaon);
+                    $isi[$i]['pcon']=date('d/m/y H:i',$pcon);
                     $row->tundaon = $tundaon;
-                  } else $isi[$i]['tundaon']=date('d/m/y H:i',$row->tundaon);
+                    $row->pcon = $pcon;
+                  } else {
+                    $isi[$i]['tundaon']=date('d/m/y H:i',$row->tundaon);
+                    $isi[$i]['pcon']=date('d/m/y H:i',$row->pcon);
+                  }
 
                   $isi[$i]['tundaoff']=date('d/m/y H:i',$row->tundaoff);
+                  $isi[$i]['pcoff']=date('d/m/y H:i',$row->pcoff);
 
                   $isi[$i]['selisihWaktu']=$selisihWaktu=number_format(($row->tundaoff-$row->tundaon)/3600,2);
                   $exWaktu = explode(".",$selisihWaktu);
+
+                  $isi[$i]['selisihWaktupc']=$selisihWaktupc=number_format(($row->pcoff-$row->pcon)/3600,2);
+                  $isi[$i]['jumlahWaktupc']=$isi[$i]['selisihWaktupc'];
+                  // $isi[$i]['selisihWaktupc']=$row->pcoff.'-'.$row->pcon;
 
                   if ($exWaktu[1]<=50)$selisihWaktu2=$exWaktu[0]+0.5; else $selisihWaktu2=ceil($selisihWaktu);
                   if ($selisihWaktu2<1)$selisihWaktu2=1;
@@ -206,32 +218,47 @@
                     else if ($kapalsGrt<=40000)$tariffix = 1220*$kurs->nilai;
                     else if ($kapalsGrt<=75000)$tariffix = 1300*$kurs->nilai;
                     else if ($kapalsGrt>75000)$tariffix = 1700*$kurs->nilai;
+
+                    $tariffixpc=37.4*$kurs->nilai;
                   } else {
                     if ($kapalsGrt<=3500)$tariffix = 495000;
                     else if ($kapalsGrt<=8000)$tariffix = 577500;
                     else if ($kapalsGrt<=14000)$tariffix = 825000;
                     else if ($kapalsGrt<=18000)$tariffix = 1031250;
+
+                    $tariffixpc=37.4*$kurs->nilai;
                   }
 
                   $isi[$i]['jumlahTariffix']=$tariffix*$isi[$i]['jumlahWaktu'];
+                  $isi[$i]['jumlahTariffixpc']=$tariffixpc;
 
                   if($result->rute == '$') {
                     if ($kapalsGrt<=14000)$tarifvar=0.005*$kurs->nilai;
                     else if ($kapalsGrt<=40000)$tarifvar=0.004*$kurs->nilai;
                     else if ($kapalsGrt>40000)$tarifvar=0.002*$kurs->nilai;
+
+                    $tarifvarpc=0.011*$kurs->nilai;
                   } else {
                     $tarifvar=3.30;
+
+                    $tarifvarpc=0.011*$kurs->nilai;
                   }
                   $isi[$i]['jumlahTarifvar']=$tarifvar*$kapalsGrt*$jumlahWaktu;
+                  $isi[$i]['jumlahTarifvarpc']=$tarifvarpc*$kapalsGrt;
 
                   $isi[$i]['jumlahTarif']=$jumlahTarif=$isi[$i]['jumlahTarifvar']+$isi[$i]['jumlahTariffix'];
+                  $isi[$i]['jumlahTarifpc']=$jumlahTarifpc=$isi[$i]['jumlahTarifvarpc']+$isi[$i]['jumlahTariffixpc'];
 
                   if ($row->ops=='Berth'){
                     if ($row->shift!='on'){
                       $totalTarif = $isi[$i]['jumlahTarif']+$totalTarif;
+                      $totalTarifPc = $isi[$i]['jumlahTarifpc']+$totalTarifPc;
+                      $totalTarifAll = $isi[$i]['jumlahTarif']+$isi[$i]['jumlahTarifpc']+$totalTarifAll;
                       $i++;
                     } else {
                       $totalTarif = $isi[$i]['jumlahTarif']+$totalTarif;
+                      $totalTarifPc = $isi[$i]['jumlahTarifpc']+$totalTarifPc;
+                      $totalTarifAll = $isi[$i]['jumlahTarif']+$isi[$i]['jumlahTarifpc']+$totalTarifAll;
                       $i++;
                     }
                   }
@@ -239,6 +266,8 @@
                   if ($row->ops=='Unberth'){
                     if ($row->shift!='on'){
                       $totalTarif = $isi[$i]['jumlahTarif']+$totalTarif;
+                      $totalTarifPc = $isi[$i]['jumlahTarifpc']+$totalTarifPc;
+                      $totalTarifAll = $isi[$i]['jumlahTarif']+$isi[$i]['jumlahTarifpc']+$totalTarifAll;
                       $i++;
                     } else {
 
@@ -372,9 +401,30 @@
               <?php
                 foreach ($isi as $row) {
                   echo '<tr>';
-                  echo '<td class="left top right" align="center"> '.$result->lstp.' </td>';
-                  echo '<td class="top right" align="center"> '.$row['dari'].' </td>';
-                  echo '<td class="top right" align="center"> '.$row['ke'].' </td>';
+                  echo '<td class="left top right" align="center" rowspan="2"> '.$result->lstp.' </td>';
+                  echo '<td class="top right" align="center" rowspan="2"> '.$row['dari'].' </td>';
+                  echo '<td class="top right" align="center" rowspan="2"> '.$row['ke'].' </td>';
+                  echo '<td class="top right" align="center"> Pandu/<i>Piloting</i> </td>';
+                  echo '<td class="top right" align="center"> '.$row['pcon'].' </td>';
+                  echo '<td class="top right" align="center"> '.$row['pcoff'].' </td>';
+                  echo '<td class="top right" align="right"> '.number_format($row['selisihWaktupc'],2).'&nbsp; </td>';
+                  echo '<td class="top right" align="right"> &nbsp;  </td>';
+                  echo '<td class="top right" align="right"> &nbsp;  </td>';
+                  echo '<td class="top right" align="right"> '.number_format($row['jumlahWaktupc'],2).'&nbsp;  </td>';
+                  echo '<td class="top right" align="right">Rp. '.number_format($tariffixpc).'&nbsp;</td>';
+                  echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTariffixpc']).'&nbsp;</td>';
+                  if($result->rute == '$') {
+                    echo '<td class="top right" align="right">Rp. '.number_format($tarifvarpc).'&nbsp;</td>';
+                  } else{
+                    echo '<td class="top right" align="right">Rp. '.number_format($tarifvarpc,2).'&nbsp;</td>';
+                  }
+                  echo '<td class="top right" align="right"> '.number_format($kapalsGrt).'&nbsp;</td>';
+                  echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTarifvarpc']).'&nbsp;</td>';
+                  echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTarifpc'],2).'&nbsp;</td>';
+                  echo '</tr>';
+
+                  //////////////////////////////////////////////////////
+                  echo '<tr>';
                   echo '<td class="top right" align="center"> Tunda/<i>Towing</i> </td>';
                   echo '<td class="top right" align="center"> '.$row['tundaon'].' </td>';
                   echo '<td class="top right" align="center"> '.$row['tundaoff'].' </td>';
@@ -398,25 +448,31 @@
 
                 </tbody>
                 <tr>
-                  <td class="top" colspan="6" rowspan="4"> &nbsp; </td>
-                  <td class="top" colspan="9" align="right">Total Tunda&nbsp;</td>
+                  <td colspan="15" align="right" class="top">Total Pandu&nbsp;</td>
+                  <td class="left top right" align="right">Rp. <?php echo number_format($totalTarifPc)?>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td colspan="15" align="right">Total Tunda&nbsp;</td>
                   <td class="left top right" align="right">Rp. <?php echo number_format($totalTarif)?>&nbsp;</td>
                 </tr>
                 <tr>
-                  <td colspan="9" align="right">Bagi Hasil Tunda setelah PNBP&nbsp;</td>
+                  <td colspan="15" align="right">Total Pandu + Tunda &nbsp;</td>
+                  <td class="left top right" align="right">Rp. <?php echo number_format($totalTarifAll)?>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td colspan="15" align="right">Bagi Hasil Tunda setelah PNBP&nbsp;</td>
                   <td class="left top right" align="right">Rp. <?php echo number_format($bhtPNBP)?>&nbsp;</td>
                 </tr>
                 <tr>
-                  <td colspan="9" align="right">PPn / Total after VAT&nbsp;</td>
+                  <td colspan="15" align="right">PPn / Total after VAT&nbsp;</td>
                   <td class="left top right" align="right">Rp. <?php echo number_format($ppn)?>&nbsp;</td>
                 </tr>
                 <tr>
-                  <td colspan="9" align="right">Total Tagihan Bagi Hasil / Total Invoice&nbsp;</td>
+                  <td colspan="15" align="right">Total Tagihan Bagi Hasil / Total Invoice&nbsp;</td>
                   <td class="left top right button" align="right">Rp. <?php echo number_format($totalinv)?>&nbsp;</td>
                 </tr>
               </table>
             </div>
-
             <div style="position:absolute; top:85; left:650; width:300; font-family:'Arial', Helvetica, sans-serif ; font-size:11px;">
               <?php
               if($result->rute == '$') {
@@ -425,6 +481,7 @@
             </div>
 
             <div style="position:absolute; top:275; left:30; width:300; font-family:'Arial', Helvetica, sans-serif ; font-size:11px;">
+
               <table>
                 <thead>
                   <tr>

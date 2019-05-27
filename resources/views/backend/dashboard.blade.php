@@ -54,7 +54,7 @@
                 Welcome to
                 <strong class="green">
                     CiPS
-                    <small>(Integreted Port System)</small>
+                    <small>(Cilegon Integreted Port System)</small>
                 </strong>,
             </div>
 

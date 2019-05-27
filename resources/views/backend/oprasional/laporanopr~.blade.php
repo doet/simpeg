@@ -484,7 +484,7 @@
 		$('#save').click(function(e) {
 			e.preventDefault();
 			postsave.post += $("#form").serialize()+'&datatb=dl'+'&tunda='+$('#tunda').val();
-			SaveGrid(postsave);
+			saveGrid(postsave);
 		});
 
 		var grid_selector = "#grid-table";

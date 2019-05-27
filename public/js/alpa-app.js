@@ -125,9 +125,8 @@ function getparameter2(url,posdata,success,beforeSend){
 // }
 
 function saveGrid(prm){
-  var posdata = $("#form-1").serialize();
-  //  alert(JSON.stringify(postData));
-
+  var posdata = prm.post
+  
   $.ajax({
     type: "POST",
     dataType: "json",

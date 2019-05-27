@@ -331,7 +331,7 @@
 		$('#save').click(function(e) {
 			e.preventDefault();
 			postsave.post += $("#form").serialize()+'&datatb=lstp';
-			SaveGrid(postsave);
+			saveGrid(postsave);
 		});
 //////////////////////////////////////////////
 

@@ -301,7 +301,7 @@
 		$('#save').click(function(e) {
 			e.preventDefault();
 			postsave.post += $("#form").serialize()+'&datatb=inv';
-			SaveGrid(postsave);
+			saveGrid(postsave);
 		});
 //////////////////////////////////////////////
 

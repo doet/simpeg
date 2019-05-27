@@ -520,7 +520,7 @@
 		$('#save').click(function(e) {
 			e.preventDefault();
 			postsave.post += $("#form").serialize()+'&datatb=ppjk';
-			SaveGrid(postsave);
+			saveGrid(postsave);
 		});
 
 		var grid_selector = "#grid-table";

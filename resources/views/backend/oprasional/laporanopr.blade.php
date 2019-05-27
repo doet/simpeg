@@ -490,7 +490,8 @@
 		$('#save').click(function(e) {
 			e.preventDefault();
 			postsave.post += $("#form").serialize()+'&datatb=dl'+'&tunda='+$('#tunda').val();
-			SaveGrid(postsave);
+			// console.log(postsave);
+			saveGrid(postsave);
 		});
 
 		var grid_selector = "#grid-table";
@@ -738,13 +739,14 @@
 
 						var posdata= {'datatb':'dl','search':gsr};
 						getparameter("{{url('/api/oprasional/json')}}",posdata,function(data){
-
+							// console.log(data)
 							$('#ppjk').val(data.ppjk).trigger("chosen:updated");
 							$('#agen').val(data.agen).trigger("chosen:updated");
 							$('#date').data("DateTimePicker").date(data.date);
 							$('#kapal').val(data.kapal).trigger("chosen:updated");
 							$('#jetty').val(data.jetty).trigger("chosen:updated");
 							$('#ops').val(data.ops).trigger("chosen:updated");
+							$('#pc').val(data.pc);
 
 							if (data.shift==='on')$('#shift').prop('checked', true);
 							// console.log(data.shift);
@@ -773,7 +775,7 @@
 							.prev().on(ace.click_event, function(){
 								$(this).next().focus();
 							});
-							console.log(data.tundaoff);
+							// console.log(data.tundaoff);
 
 							$('#dd').val(data.dd);
 							$('#ket').val(data.ket);

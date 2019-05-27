@@ -283,7 +283,7 @@
 			e.preventDefault();
 			postsave.post += $("#form").serialize()+'&datatb=lhp2';
 			// console.log(postsave);
-			SaveGrid(postsave);
+			saveGrid(postsave);
 		});
 //////////////////////////////////////////
 

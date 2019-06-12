@@ -36,6 +36,8 @@ class PDFController extends Controller
     $sidx = $request->input('sidx', 'id');
 
     $category = $request->input('page', 'unknow');
+
+    // dd($request->input());
     switch ($category) {
       case 'ppjk1-dompdf': //Pengajuan Pembiyayaan
       // dd($request->input());
@@ -262,6 +264,11 @@ class PDFController extends Controller
     $pdf->loadHTML($view)
         //->setOrientation($orientation)
         ->setPaper('A4',$orientation);
+
+    $dom_pdf = $pdf->getDomPDF();
+    $canvas = $dom_pdf->get_canvas();
+
+    $canvas->page_text(30, 805, "Halaman {PAGE_NUM} dari {PAGE_COUNT}", null, 8, array(0, 0, 0));
 
     return $pdf->stream($nfile);
 

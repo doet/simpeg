@@ -811,25 +811,42 @@
 					$('#dompdf').submit();
 				}
 		})
+		// .jqGrid('navButtonAdd',pager_selector,{
+		// 		keys: true,
+		// 		caption:"",
+		// 		buttonicon:"ace-icon fa fa-file-pdf-o orange",
+		// 		position:"last",
+		// 		onClickButton:function(){
+		// 			// var data = $(this).jqGrid('getRowData'); Get all data
+		//
+		// 			$('#dompdf input[name=page]').val('ppjk2-dompdf');
+		// 			// $('#dompdf input[name=bstdo]').val($('#NoBSTDO').html());
+		// 			$('#dompdf input[name=start]').val(start);
+		// 			$('#dompdf input[name=end]').val(end);
+		// 			$('#dompdf input[name=sidx]').val('ppjk');
+		//
+		// 			// console.log(setdate);
+		//
+		// 			$('#dompdf').submit();
+		// 		}
+		// })
 		.jqGrid('navButtonAdd',pager_selector,{
-				keys: true,
 				caption:"",
-				buttonicon:"ace-icon fa fa-file-pdf-o orange",
-				position:"last",
+				buttonicon:"ace-icon fa fa-file-excel-o green",
+				position:"next",
 				onClickButton:function(){
-					// var data = $(this).jqGrid('getRowData'); Get all data
-
-					$('#dompdf input[name=page]').val('ppjk2-dompdf');
-					// $('#dompdf input[name=bstdo]').val($('#NoBSTDO').html());
-					$('#dompdf input[name=start]').val(start);
-					$('#dompdf input[name=end]').val(end);
-					$('#dompdf input[name=sidx]').val('ppjk');
-
-					// console.log(setdate);
-
-					$('#dompdf').submit();
+					var posdata = {category:'ppjk1',start:start,end:end,_token:'{{csrf_token()}}'};
+					getparameter2("{{url('/oprasional/XLS_Oprasional')}}",posdata,
+						function(data){
+							$("#loading").modal('hide');
+							window.open("{{ url('/public/files/tmp/data_ppjk.xlsx') }}");
+						},
+						function(data){
+							$("#loading").modal();
+						},
+					);
 				}
-		})
+		});
 
 		//var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
 

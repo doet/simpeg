@@ -8,7 +8,7 @@
             /* main { position: fixed; top: 50px; left: 0px; bottom: -10px; right: 0px;  } */
 
             footer { position: fixed; left: 10px; bottom: -15px; right: 0px;}
-            footer .page:after { content: counter(page, normal); }
+            /* footer .page:after { content: counter(page, normal); } */
 
             header {
                 /* position: fixed;
@@ -37,7 +37,7 @@
                 text-align: center;
                 line-height: 35px; */
             }
-            .hal:after { content: counter(page, normal); }
+            .hal:after { content: counter(page); }
 
             thead {
               text-align: center;
@@ -99,9 +99,9 @@
           <font size="-1"><?php echo $mulai;?></font></center> -->
         </header>
 
-        <footer>
+        <!-- <footer>
           <p class="page">Halaman </p>
-        </footer>
+        </footer> -->
 
         <!-- Wrap the content of your PDF inside a main tag -->
         <main>
@@ -124,7 +124,7 @@
                   </tr>
                   <tr>
                     <td class="left top" align="left"> &nbsp;Halaman</td>
-                    <td class="left top right" colspan="3" align="left"> &nbsp;<span class="hal"></span> DARI <span class="hal"></span> </td>
+                    <td class="left top right" colspan="3" align="left"> &nbsp;<span class="hal"></span></td>
                   </tr>
                   <tr>
                     <td class="left top">No</td>
@@ -167,7 +167,7 @@
               </table>
             </div>
             <p style="page-break-after: never;">
-                Content Page 2
+
             </p>
         </main>
     </body>

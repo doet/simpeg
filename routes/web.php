@@ -76,6 +76,7 @@ Route::prefix('oprasional')->group(function(){
   Route::match(['get', 'post'],   'FilesJson',					'Oprasional\FilesCrudController@json');
   Route::match(['get', 'post'],   'FilesSave',		  		'Oprasional\FilesCrudController@save');
   Route::match(['get', 'post'],   'PDFAdmin', 		    	'Oprasional\PdfController@PDFMarker');
+  Route::match(['get', 'post'],	  'XLS_Oprasional',     'Oprasional\XlsOprasionalController@XLSMarker');
   Route::match(['get', 'post'],   'Chart',	     	  		'Oprasional\FilesCrudController@chart');
 
   Route::get('/listinvoice',  'Oprasional\Invoice\InvoiceController@listinvoice');

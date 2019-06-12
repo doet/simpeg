@@ -89,7 +89,7 @@ class PDFController extends Controller
           $page = 'backend.oprasional.pdf.'.$request->input('page');
           $nfile = $request->input('file');
           $orientation = 'portrait';
-          // dd($result);
+          // dd($request->input());
           $view =  \View::make($page, compact('result','mulai'))->render();
       break;
       case 'dl-dompdf': //Pengajuan Pembiyayaan

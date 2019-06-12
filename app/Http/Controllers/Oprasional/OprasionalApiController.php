@@ -61,8 +61,8 @@ class OprasionalApiController extends Controller
         //   'tb_kapals.loa as kapalsLoa',
         //   'tb_kapals.bendera as kapalsBendera',
         //   'tb_jettys.name as jettyName',
-        //   // 'tb_jettys.color as jettyColor',
-          // 'tb_ppjks.*'
+        //   'tb_jettys.color as jettyColor',
+        //   'tb_ppjks.*'
         )
         ->get();
         foreach($query as $row) {

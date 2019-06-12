@@ -366,7 +366,7 @@
     }).on('save', function(e, params) {
         $(grid_selector).jqGrid('setGridParam',{postData:{start:params.newValue}}).trigger("reloadGrid");
         // $('input[name="start"]').val(params.newValue);
-        setdate = params.newValue;
+        setdate = start = params.newValue;
     });
 
 		$('#pedate').html(moment().endOf('month').format('D MMMM YYYY'));
@@ -385,7 +385,7 @@
     }).on('save', function(e, params) {
         $(grid_selector).jqGrid('setGridParam',{postData:{end:params.newValue}}).trigger("reloadGrid");
         // $('input[name="start"]').val(params.newValue);
-        setdate = params.newValue;
+        setdate = end = params.newValue;
     });
 
 		var setdate = moment().format('D MMMM YYYY');

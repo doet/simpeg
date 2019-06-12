@@ -78,7 +78,7 @@ class PDFController extends Controller
             'tb_ppjks.*'
             // 'tb_dls.*'
           )
-          // ->orderBy($sidx, $sord)
+          ->orderBy('date_issue', 'desc')
           ->get();
           // $result = json_encode(json_decode($qu));
           // $result = json_decode($result,true);

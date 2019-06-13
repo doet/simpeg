@@ -196,6 +196,46 @@ class OprasionalApiController extends Controller
         }
         unset($responce['items'][null]);
       break;
+      case 'r_rute':
+        $query = DB::table('tb_ppjks')
+        ->where(function ($query) use ($request){
+          if ($request->input('search')){
+            $query->where('id',$request->input('search'));
+          };
+          if ($request->input('filter')){
+            $query->where($request->input('filter'),null);
+          };
+        })
+        ->select(
+
+        )
+        ->get();
+        // $responce[0]['label']='Rp';
+        // $responce[1]['label']='$';
+
+        $items=array();
+        $count=0;
+        foreach($query as $row) {
+          if ($row->rute != ''){
+            if (isset($items[$row->rute])) $items[$row->rute]= $items[$row->rute]+1 ; else $items[$row->rute]= 1 ;
+          } else {
+            if (isset($items['unknow'])) $items['unknow']= $items['unknow']+1 ; else $items['unknow']= 1 ;
+          }
+          $count++;
+        }
+
+        $i=0;
+        foreach($items as $key=>$val) {
+          $responce[$i]['label'] = $key;
+          $responce[$i]['data'] =$val;
+           // number_format((100/$count)*$val,2);
+          $i++;
+        }
+        $responce[0]['color']="#DA5430";
+        $responce[1]['color']="#2091CF";
+        $responce[2]['color']="#FEE074";
+
+      break;
     }
     return  Response()->json($responce);
   }

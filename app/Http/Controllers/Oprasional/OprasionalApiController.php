@@ -281,6 +281,24 @@ class OprasionalApiController extends Controller
         }
         if(empty($responce))$responce[0]='Null';
       break;
+      case 'ppjk':
+        $cari = $request->input('cari');
+        $query = DB::table('tb_ppjks')
+          // ->distinct('code')
+          ->where('ppjk','like','%'.$cari.'%')
+          ->orderBy('ppjk', 'asc')
+          ->get();
+        $i=0;
+        $value_n='';
+        foreach($query as $row) {
+          if ($row->ppjk != $value_n){
+            $responce[$i] = $row->ppjk;
+            $i++;
+            $value_n=$row->ppjk;
+          }
+        }
+        if(empty($responce))$responce[0]='Null';
+      break;
     }
     return  Response()->json($responce);
   }
@@ -576,20 +594,24 @@ class OprasionalApiController extends Controller
         case 'ppjk':   // Vaariabel Master
           $qu = DB::table('tb_ppjks')
             ->leftJoin('tb_agens', function ($join) {
-              $join->on('tb_ppjks.agens_id', '=', 'tb_agens.id');
+              $join->on('tb_ppjks.agens_id', 'tb_agens.id');
             })
             ->leftJoin('tb_kapals', function ($join) {
-              $join->on('tb_ppjks.kapals_id', '=', 'tb_kapals.id');
+              $join->on('tb_ppjks.kapals_id', 'tb_kapals.id');
             })
             ->leftJoin('tb_jettys', function ($join) {
-              $join->on('tb_ppjks.jettys_idx', '=', 'tb_jettys.id');
+              $join->on('tb_ppjks.jettys_idx', 'tb_jettys.id');
             })
-            ->where(function ($query) use ($mulai,$akhir){
-                $mulai = strtotime($mulai);
-                $akhir = strtotime($akhir);
-                if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
-                $query->where('date_issue', '>=', $mulai)
-                  ->Where('date_issue', '<', $akhir);
+            ->where(function ($query) use ($mulai,$akhir,$request){
+                if ($request->input('s_ppjk')) {
+                  $query->where('tb_ppjks.ppjk', $request->input('s_ppjk'));
+                } else {
+                  $mulai = strtotime($mulai);
+                  $akhir = strtotime($akhir);
+                  if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
+                  $query->where('date_issue', '>=', $mulai)
+                    ->Where('date_issue', '<', $akhir);
+                }
             })
             ->select(
               'tb_agens.code as agenCode',

@@ -315,8 +315,8 @@
 						<input name="end" value="" hidden/>
 					</form>
 
+					<input class="input-sm" type="text" id="search" name="search">
 					<table id="grid-table"></table>
-
 					<div id="grid-pager"></div>
           <!-- PAGE CONTENT ENDS -->
         </div><!-- /.col -->
@@ -557,6 +557,7 @@
 		})
 		*/
 
+
 		jQuery(grid_selector).jqGrid({
 			caption: "Input PPJK",
       datatype: "json",            //supported formats XML, JSON or Arrray
@@ -569,19 +570,19 @@
 			height: 'auto',
 			colNames:['id','Date Issue','PPJK','AGEN','Kapal','Jetty','ETA','ETD','Asal','Tujuan','Etmal','Cargo','Muatan'],
 			colModel:[
-				{name:'id',index:'id', width:40, fixed:true, sortable:true, resize:false, align: 'center'},
-				{name:'date_issue',index:'date_issue', width:50, sorttype:"int", editable: false},
+				{name:'id',index:'id', width:40, fixed:true, sortable:true, resize:false, align: 'center',search:false},
+				{name:'date_issue',index:'date_issue', width:50, sorttype:"int", editable: false,search:false},
 				{name:'PPJK',index:'PPJK', width:60, sorttype:"int", editable: false},
-				{name:'AGEN',index:'AGEN',width:30, editable:false, align: 'center'},
-				{name:'Kapal',index:'Kapal', width:90,editable: false},
-				{name:'Jetty',index:'Jetty', width:90, editable: false},
-				{name:'ETA',index:'ETA', width:80, editable: false, align: 'center'},
-				{name:'ETD',index:'ETD', width:80, sortable:false, align: 'center'},
-				{name:'Asal',index:'Asal', width:70, editable: false},
-        {name:'Tujuan',index:'Tujuan', width:70, editable: false},
-        {name:'Etmal',index: 'Etmal', width: 50,editable: false, align: 'center'},
-        {name:'Cargo',index:'Cargo',width:50, editable: false, align: 'center'},
-				{name:'Muatan',index:'Muatan',width:50, editable: false, align: 'center'}
+				{name:'AGEN',index:'AGEN',width:30, editable:false, align: 'center',search:false},
+				{name:'Kapal',index:'Kapal', width:90,editable: false,search:false},
+				{name:'Jetty',index:'Jetty', width:90, editable: false,search:false},
+				{name:'ETA',index:'ETA', width:80, editable: false, align: 'center',search:false},
+				{name:'ETD',index:'ETD', width:80, sortable:false, align: 'center',search:false},
+				{name:'Asal',index:'Asal', width:70, editable: false,search:false},
+        {name:'Tujuan',index:'Tujuan', width:70, editable: false,search:false},
+        {name:'Etmal',index: 'Etmal', width: 50,editable: false, align: 'center',search:false},
+        {name:'Cargo',index:'Cargo',width:50, editable: false, align: 'center',search:false},
+				{name:'Muatan',index:'Muatan',width:50, editable: false, align: 'center',search:false}
 			],
 
 			viewrecords : true,
@@ -846,6 +847,28 @@
 						},
 					);
 				}
+		});
+
+		$("#search").autocomplete({
+			source: function( request, response ) {
+				var postcar= {'datatb':'ppjk', cari: request.term, _token:'{{ csrf_token() }}'};
+				getparameter("{{url('/api/oprasional/autoc')}}",postcar,function(data){
+					response( $.map( data, function( item ) {
+						return {
+							label: item,
+							value: item
+						}
+					}));
+				},function(data){
+					//be4 send
+				});
+			},
+			autoFocus: true,
+			minLength: 0,
+			select: function( event, ui ) {
+				jQuery(grid_selector).jqGrid('setGridParam', { postData: {datatb:'ppjk',s_ppjk:ui.item.value,start:start,end:end,_token:'{{ csrf_token() }}'}, }).trigger("reloadGrid");
+				console.log(ui.item.value);
+			}
 		});
 
 		//var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');

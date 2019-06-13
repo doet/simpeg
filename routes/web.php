@@ -62,6 +62,7 @@ Route::prefix('oprasional')->group(function(){
   Route::get('/dl',           'Oprasional\OprasionalController@dl');
   Route::get('/lhp',          'Oprasional\OprasionalController@lhp');
   Route::get('/bstdo',        'Oprasional\OprasionalController@bstdo');
+  Route::get('/report',       'Oprasional\OprasionalController@report');
   Route::get('/upload',       'Oprasional\OprasionalController@upload');
   Route::get('/chart',        'Oprasional\OprasionalController@chart');
 

@@ -60,6 +60,13 @@ class OprasionalController extends Controller
     $aktif_menu = menuadmins::aktif_menu($index['id']);
     return view('backend.oprasional.bstdo', compact('multilevel','aktif_menu'));
   }
+  public function report()
+  {
+    $multilevel = menuadmins::get_data();
+    $index      = menuadmins::where('part','oprasional\report')->first();
+    $aktif_menu = menuadmins::aktif_menu($index['id']);
+    return view('backend.oprasional.report', compact('multilevel','aktif_menu'));
+  }
   public function upload()
   {
     $multilevel = menuadmins::get_data();

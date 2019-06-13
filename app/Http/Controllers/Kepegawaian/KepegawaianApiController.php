@@ -575,7 +575,7 @@ class KepegawaianApiController extends Controller
           if ($oper=='del')absen::destroy($id);
       break;
     }
-
+    dd($request->input());
     return  Response()->json($responce);
   }
 

@@ -187,7 +187,6 @@
                 <div class="modal-body">
                     <form class="form-horizontal form-aktif" id="form-1" method="get">
                         {!! csrf_field() !!}
-                        <input type="hidden" name="datatb" value="absen" />
                         <input type="hidden" id='oper' name="oper" value="add" />
                         <input type="hidden" id='id' name="id" value="" />
                         <input type="hidden" id='id_uu' name="id_uu" value="" />
@@ -287,22 +286,17 @@
                         </div><div class="space-2"></div>
                     </form>                  .
                 </div>
-    <!-- 02 end body Form -->
-    <!-- 03 footer Form -->
+                <!-- 02 end body Form -->
+                <!-- 03 footer Form -->
                 <div class="modal-footer">
-                    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
-                        <i class="ace-icon fa fa-times"></i>Close
-                    </button>
-                    <button  class="btn btn-sm btn-danger pull-right" id='save' onclick="
-                      saveGrid({
-                        'url'   : '{{ url('/api/kepegawaian/cud') }}',
-                        'grid'  : '#grid-table',
-                        'modal' : '#my-modal'
-                      })">
-                        <i class="ace-icon fa fa-floppy-o"></i>Save
-                    </button>
+                  <button class="btn btn-sm btn-danger pull-right" id='save'>
+                      <i class="ace-icon fa fa-floppy-o"></i>Save
+                  </button>
+                  <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
+                      <i class="ace-icon fa fa-times"></i>Close
+                  </button>
                 </div>
-    <!-- 03 end footer Form -->
+                <!-- 03 end footer Form -->
             </div>
         </div><!-- /.modal-dialog -->
     </div>
@@ -445,6 +439,16 @@
     $('input[name="start"]').val(start);
     $('input[name="end"]').val(end);
     $('input[name="karyawan"]').val(idu);
+
+    var postsave={};
+    postsave.url = "{{ url('/api/kepegawaian/cud') }}";
+    postsave.grid = '#grid-table';
+    postsave.modal = '#my-modal';
+    $('#save').click(function(e) {
+      e.preventDefault();
+      postsave.post += $("#form-1").serialize()+'&datatb=absen';
+      saveGrid(postsave);
+    });
 
     var grid_selector = "#grid-table";
     var pager_selector = "#grid-pager";

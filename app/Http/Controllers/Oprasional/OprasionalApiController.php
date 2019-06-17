@@ -226,7 +226,7 @@ class OprasionalApiController extends Controller
 
         $i=0;
         foreach($items as $key=>$val) {
-          $responce[$i]['label'] = $key;
+          $responce[$i]['label'] = $key .' = '.$val;
           $responce[$i]['data'] =$val;
            // number_format((100/$count)*$val,2);
           $i++;
@@ -324,17 +324,30 @@ class OprasionalApiController extends Controller
       case 'ppjk':
         $cari = $request->input('cari');
         $query = DB::table('tb_ppjks')
+          ->leftJoin('tb_kapals', function ($join) {
+            $join->on('tb_kapals.id','tb_ppjks.kapals_id');
+          })
           // ->distinct('code')
-          ->where('ppjk','like','%'.$cari.'%')
+          ->where(function ($q) use ($cari){
+            $q->where('tb_ppjks.ppjk','like','%'.$cari.'%')
+              ->orWhere('tb_kapals.name', 'like','%'.$cari.'%');
+          })
+          ->select(
+            'tb_kapals.name as kapalsName',
+            //   // 'tb_jettys.color as jettyColor',
+            'tb_ppjks.*'
+            )
           ->orderBy('ppjk', 'asc')
           ->get();
         $i=0;
         $value_n='';
         foreach($query as $row) {
           if ($row->ppjk != $value_n){
-            $responce[$i] = $row->ppjk;
+            $responce[$i]['value'] = $row->ppjk .' - '. $row->kapalsName;
+            $responce[$i]['label'] = $row->ppjk .' - '. $row->kapalsName;
+            $responce[$i]['id'] = $row->id;
             $i++;
-            $value_n=$row->ppjk;
+            $value_n=$row->ppjk .' - '. $row->kapalsName;
           }
         }
         if(empty($responce))$responce[0]='Null';
@@ -643,8 +656,8 @@ class OprasionalApiController extends Controller
               $join->on('tb_ppjks.jettys_idx', 'tb_jettys.id');
             })
             ->where(function ($query) use ($mulai,$akhir,$request){
-                if ($request->input('s_ppjk')) {
-                  $query->where('tb_ppjks.ppjk', $request->input('s_ppjk'));
+                if ($request->input('s_id')) {
+                  $query->where('tb_ppjks.id', $request->input('s_id'));
                 } else {
                   $mulai = strtotime($mulai);
                   $akhir = strtotime($akhir);

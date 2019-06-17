@@ -241,80 +241,275 @@ class FilesCrudController extends Controller
   }
 
   public function chart(Request $request){
+    $datatb = $request->input('datatb', '');
     $tmp = array();
-    $start = 1567270800;
-    $end = 1567702800;
-    $day1 = (60 * 60 * 24);
+    switch ($datatb) {
+      case 'jetty':
 
-    // ////////////// data dalam range ///////////////////
-    // $jetty2 = DB::table('tb_dls')
-    //   ->join('tb_jettys', function ($join) {
-    //     $join->on('tb_dls.jetty_id', '=', 'tb_jettys.id');
-    //   })
-    //   ->select('tb_jettys.value as jettyName', 'tb_dls.*')
-    //   ->get();
-    //
-    // foreach ($jetty2 as $row) {
-    //   $val[] = $row->jetty_id;
-    //   $name[$row->jetty_id] = $row->jettyName;
-    // }
-    //
-    // $countjetty = array_count_values($val); // data jjety dalam 1 bulan
-    // // arsort($countjetty);
-    // $tmp['countjetty'] = $countjetty;
-    // $i= 0;
-    // foreach ($countjetty as $key=>$va) {
-    //   $tmp['ds'][$i]['backgroundColor'] = ["rgba(105, 0, 132, .2)"];
-    //   $tmp['ds'][$i]['borderColor'] = ["rgba(200, 99, 132, .7)"];
-    //   $tmp['ds'][$i]['borderWidth'] = 2;
-    //   $tmp['ds'][$i]['data'] = [28, 48, 40, 19, 86, 27, 90];
-    //   $tmp['ds'][$i]['fill'] = false;
-    //   $tmp['ds'][$i]['label'] = $name[$key];
-    //   $i++;
-    // }
-    $i=$n= 0;
-    /////////////////////// data harian
-    for($start; $start < $end; $start = $start+$day1) {
-      ////////////// data dalam 1 tanggal //////////////
-      $tmp['label'][] = $start; // ambil tanggal sumbu x
+        $start = 1558026000;
+        $end = 1559802600;
+        $day1 = (60 * 60 * 24);
 
-      $jetty = DB::table('tb_dls')
-        ->join('tb_jettys', function ($join) {
-          $join->on('tb_dls.jetty_id', '=', 'tb_jettys.id');
-        })
-        ->where(function ($query) use ($start,$day1){
-            $query->where('date', '>', $start)
-              ->Where('date', '<', $start+$day1);
-        })
-        ->select('tb_jettys.name as jettyName','tb_jettys.color as jettyColor', 'tb_dls.*')
-        ->get();
-        $jty=0;
-      foreach ($jetty as $row) {
-        $jettyname[$row->jetty_id] = $row->jettyName;
-        $jettycolor[$row->jetty_id] = $row->jettyColor;
-        $subdata[$start][] = $row->jetty_id;
-        $subdata2[$row->jetty_id][$n][] = $row->jetty_id;
-      }
-      $tmp['subdata'][$start] = array_count_values($subdata[$start]); // data jetty dalam satu hari
-      $n++;
+        $i=$n= 0;
+        /////////////////////// data harian
+        for($start; $start < $end; $start = $start+$day1) {
+          ////////////// data dalam 1 tanggal //////////////
+          $tmp['label'][] = $start; // ambil tanggal sumbu x
+
+          $jetty = DB::table('tb_dls')
+            ->join('tb_jettys', function ($join) {
+              $join->on('tb_dls.jettys_id','tb_jettys.id');
+            })
+            ->where(function ($query) use ($start,$day1){
+                $query->where('date', '>', $start)
+                  ->Where('date', '<', $start+$day1);
+            })
+            ->select('tb_jettys.name as jettyName','tb_jettys.color as jettyColor', 'tb_dls.*')
+            ->get();
+            $jty=0;
+          // dd($jetty);
+          foreach ($jetty as $row) {
+            $jettyname[$row->jettys_id] = $row->jettyName;
+            $jettycolor[$row->jettys_id] = $row->jettyColor;
+            $subdata[$start][] = $row->jettys_id;
+            $subdata2[$row->jettys_id][$n][] = $row->jettys_id;
+          }
+          $tmp['subdata'][$start] = array_count_values($subdata[$start]); // data jetty dalam satu hari
+          $n++;
+        }
+
+        foreach ($jettyname as $key=>$jn){
+          $jm=0;
+          for($il=0; $il < count($tmp['label']); $il++) {
+            // if (isset($subdata2[$key][$il])) $hasil[$key][] = array_count_values($subdata2[$key][$il]); else $hasil[$key][] = array($key=>0);
+            if (isset($subdata2[$key][$il])) $jm = count($subdata2[$key][$il]); else $jm = 0;
+            $tmp['pro'][$key][] = $jm;
+          }
+
+          $tmp['ds'][$i]['backgroundColor'] = ["$jettycolor[$key]"];
+          $tmp['ds'][$i]['borderColor'] = ["$jettycolor[$key]"];
+          $tmp['ds'][$i]['borderWidth'] = 2;
+          $tmp['ds'][$i]['data'] = $tmp['pro'][$key];
+          $tmp['ds'][$i]['fill'] = false;
+          $tmp['ds'][$i]['label'] = $jn;
+          $i++;
+        }
+      break;
+      case 'rute':
+        if($request->input('type')=='bulan'){
+          $m_end = strtotime($request->input('end'));
+          $end = date('m',$m_end);
+          $day1 = (60 * 60 * 24);
+
+          $i=$n= 0;
+          $items=$all=array();
+          /////////////////////// data harian
+          for($start=0; $start < $end; $start++) {
+            ////////////// data dalam 1 tanggal //////////////
+            $startt = $start+1;
+            $d_start=strtotime(date('Y',$m_end).'-'. $startt .'-1');
+            $d_end=date('Y-m-t',$d_start);
+            $tmp['label'][] = date('M y',$d_start); // ambil tanggal sumbu x
+            // $tmp['label2'][]=strtotime($d_end);
+            $query = DB::table('tb_ppjks')
+              ->where(function ($query) use ($d_start,$d_end){
+                $query->where('date_issue', '>', strtotime($d_start))
+                ->Where('date_issue', '<', strtotime($d_end));
+              })
+              ->get();
+
+              $data['unknow'][$start] = array();
+            foreach ($query as $row) {
+              if ($row->rute==null)$row->rute='unknow';
+              $data[$row->rute][$start][]=$row->rute;
+              $all[$start][]=$row->rute;
+              $data[$row->rute] = array_filter($data[$row->rute]);
+            }
+          }
+          $data['all']=$all;
+          $data = array_filter($data); //hapus element array yang kosong
+          // dd($data);
+
+          foreach ($data as $key=>$val){
+            for($start=0; $start < $end; $start++) {
+              if ($key=='')$key='unknow';
+              if(isset($data[$key][$start]))$jumlah= count($data[$key][$start]);else $jumlah='';
+              $tmp['ds'][$key]['borderWidth'] = 2;
+              $tmp['ds'][$key]['data'][$start] = $jumlah;
+              $tmp['ds'][$key]['label'] = $key;
+              if(!in_array($key,$items,true))array_push($items,$key);
+            }
+            $i++;
+          }
+          $tmp['ds'] = array_values($tmp['ds']);
+          $tmp['items']=$items;
+        }
+        // dd($items);
+        // array_values($tmp['ds']);
+
+        $tmp['ds'][array_search('unknow',$items)]['backgroundColor'] = 'rgb(255, 205, 86)';
+        $tmp['ds'][array_search('unknow',$items)]['borderColor'] = 'rgb(255, 205, 86)';
+        $tmp['ds'][array_search('unknow',$items)]['fill'] = false;
+        $tmp['ds'][array_search('unknow',$items)]['borderDash'] = [5, 5];
+
+        $tmp['ds'][array_search('Rp',$items)]['backgroundColor'] = 'rgb(54, 162, 235)';
+        $tmp['ds'][array_search('Rp',$items)]['borderColor'] = 'rgb(54, 162, 235)';
+        $tmp['ds'][array_search('Rp',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('$',$items)]['backgroundColor'] = 'rgb(255, 99, 132)';
+        $tmp['ds'][array_search('$',$items)]['borderColor'] = 'rgb(255, 99, 132)';
+        $tmp['ds'][array_search('$',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('all',$items)]['backgroundColor'] = 'rgba(201, 203, 207,0.3)';
+        $tmp['ds'][array_search('all',$items)]['borderColor'] = 'rgb(255, 159, 64)';
+        $tmp['ds'][array_search('all',$items)]['fill'] = true;
+
+      break;
+      case 'gerakan':
+        if($request->input('type')=='bulan'){
+          $m_end = strtotime($request->input('end'));
+          $end = date('m',$m_end);
+          $day1 = (60 * 60 * 24);
+
+          $i=$n= 0;
+          $items=$all=array();
+          /////////////////////// data harian
+          for($start=0; $start < $end; $start++) {
+            ////////////// data dalam 1 tanggal //////////////
+            $startt = $start+1;
+            $d_start=strtotime(date('Y',$m_end).'-'. $startt .'-1');
+            $d_end=date('Y-m-t',$d_start);
+            $tmp['label'][] = date('M y',$d_start); // ambil tanggal sumbu x
+            // $tmp['label2'][]=strtotime($d_end);
+            $query = DB::table('tb_dls')
+              ->join('tb_jettys', function ($join) {
+                $join->on('tb_dls.jettys_id','tb_jettys.id');
+              })
+              ->where(function ($query) use ($d_start,$d_end){
+                $query->where('date', '>', strtotime($d_start))
+                ->Where('date', '<', strtotime($d_end));
+              })
+              ->select('tb_jettys.name as jettyName','tb_jettys.code as jettyCode', 'tb_dls.*')
+              ->get();
+
+            $data['unknow'] = array();
+            foreach ($query as $row) {
+              if ($row->jettyCode=='')$row->jettyCode='unknow';
+              else if ($row->jettyCode[0]=='S')$row->jettyCode='Serang';
+              else $row->jettyCode='Cilegon';
+
+              $data[$row->jettyCode][$start][]=$row->jettyCode;
+              $all[$start][]=$row->jettyCode;
+            }
+          }
+          $data['all']=$all;
+          $data = array_filter($data); //hapus element array yang kosong
+          // dd($data);
+
+          foreach ($data as $key=>$val){
+            for($start=0; $start < $end; $start++) {
+              if ($key=='')$key='unknow';
+              if(isset($data[$key][$start]))$jumlah= count($data[$key][$start]);else $jumlah='';
+              $tmp['ds'][$key]['borderWidth'] = 2;
+              $tmp['ds'][$key]['data'][$start] = $jumlah;
+              $tmp['ds'][$key]['label'] = $key;
+              if(!in_array($key,$items,true))array_push($items,$key);
+            }
+            $i++;
+          }
+          $tmp['ds'] = array_values($tmp['ds']);
+          $tmp['items']=$items;
+        }
+        // dd($items);
+        // array_values($tmp['ds']);
+
+        $tmp['ds'][array_search('Serang',$items)]['backgroundColor'] = 'rgb(54, 162, 235)';
+        $tmp['ds'][array_search('Serang',$items)]['borderColor'] = 'rgb(54, 162, 235)';
+        $tmp['ds'][array_search('Serang',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('Cilegon',$items)]['backgroundColor'] = 'rgb(255, 99, 132)';
+        $tmp['ds'][array_search('Cilegon',$items)]['borderColor'] = 'rgb(255, 99, 132)';
+        $tmp['ds'][array_search('Cilegon',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('all',$items)]['backgroundColor'] = 'rgba(201, 203, 207,0.3)';
+        $tmp['ds'][array_search('all',$items)]['borderColor'] = 'rgb(255, 159, 64)';
+        $tmp['ds'][array_search('all',$items)]['fill'] = true;
+
+      break;
+      case 'rutegrt':
+        if($request->input('type')=='bulan'){
+          $m_end = strtotime($request->input('end'));
+          $end = date('m',$m_end);
+          $day1 = (60 * 60 * 24);
+
+          $i=$n= 0;
+          $items=$all=array();
+          /////////////////////// data harian
+          for($start=0; $start < $end; $start++) {
+            ////////////// data dalam 1 tanggal //////////////
+            $startt = $start+1;
+            $d_start=strtotime(date('Y',$m_end).'-'. $startt .'-1');
+            $d_end=date('Y-m-t',$d_start);
+            $tmp['label'][] = date('M y',$d_start); // ambil tanggal sumbu x
+            // $tmp['label2'][]=strtotime($d_end);
+            $query = DB::table('tb_ppjks')
+              ->where(function ($query) use ($d_start,$d_end){
+                $query->where('date_issue', '>', strtotime($d_start))
+                ->Where('date_issue', '<', strtotime($d_end));
+              })
+              ->get();
+
+              $data['unknow'][$start] = array();
+            foreach ($query as $row) {
+              if ($row->rute==null)$row->rute='unknow';
+              $data[$row->rute][$start][]=$row->rute;
+              $all[$start][]=$row->rute;
+              $data[$row->rute] = array_filter($data[$row->rute]);
+            }
+          }
+          $data['all']=$all;
+          $data = array_filter($data); //hapus element array yang kosong
+          // dd($data);
+
+          foreach ($data as $key=>$val){
+            for($start=0; $start < $end; $start++) {
+              if ($key=='')$key='unknow';
+              if(isset($data[$key][$start]))$jumlah= count($data[$key][$start]);else $jumlah='';
+              $tmp['ds'][$key]['borderWidth'] = 2;
+              $tmp['ds'][$key]['data'][$start] = $jumlah;
+              $tmp['ds'][$key]['label'] = $key;
+              if(!in_array($key,$items,true))array_push($items,$key);
+            }
+            $i++;
+          }
+          $tmp['ds'] = array_values($tmp['ds']);
+          $tmp['items']=$items;
+        }
+        // dd($items);
+        // array_values($tmp['ds']);
+
+        $tmp['ds'][array_search('unknow',$items)]['backgroundColor'] = 'rgb(255, 205, 86)';
+        $tmp['ds'][array_search('unknow',$items)]['borderColor'] = 'rgb(255, 205, 86)';
+        $tmp['ds'][array_search('unknow',$items)]['fill'] = false;
+        $tmp['ds'][array_search('unknow',$items)]['borderDash'] = [5, 5];
+
+        $tmp['ds'][array_search('Rp',$items)]['backgroundColor'] = 'rgb(54, 162, 235)';
+        $tmp['ds'][array_search('Rp',$items)]['borderColor'] = 'rgb(54, 162, 235)';
+        $tmp['ds'][array_search('Rp',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('$',$items)]['backgroundColor'] = 'rgb(255, 99, 132)';
+        $tmp['ds'][array_search('$',$items)]['borderColor'] = 'rgb(255, 99, 132)';
+        $tmp['ds'][array_search('$',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('all',$items)]['backgroundColor'] = 'rgba(201, 203, 207,0.3)';
+        $tmp['ds'][array_search('all',$items)]['borderColor'] = 'rgb(255, 159, 64)';
+        $tmp['ds'][array_search('all',$items)]['fill'] = true;
+
+      break;
     }
 
-    foreach ($jettyname as $key=>$jn){
-      $jm=0;
-      for($il=0; $il < count($tmp['label']); $il++) {
-        // if (isset($subdata2[$key][$il])) $hasil[$key][] = array_count_values($subdata2[$key][$il]); else $hasil[$key][] = array($key=>0);
-        if (isset($subdata2[$key][$il])) $jm = count($subdata2[$key][$il]); else $jm = 0;
-        $tmp['pro'][$key][] = $jm;
-      }
 
-      $tmp['ds'][$i]['backgroundColor'] = ["$jettycolor[$key]"];
-      $tmp['ds'][$i]['borderColor'] = ["$jettycolor[$key]"];
-      $tmp['ds'][$i]['borderWidth'] = 2;
-      $tmp['ds'][$i]['data'] = $tmp['pro'][$key];
-      $tmp['ds'][$i]['fill'] = false;
-      $tmp['ds'][$i]['label'] = $jn;
-      $i++;
-    }
+
     // $tmp['hasil'] = $tmp['pro'][1][0][1];
     return $tmp;
   }

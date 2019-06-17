@@ -4,15 +4,15 @@
 
 	<!-- page specific plugin styles -->
 	<link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}" />
-	<link href="{{ asset('/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('/css/daterangepicker.min.css') }}" rel="stylesheet">
+	<link rel="stylesheet" href="{{ asset('/css/bootstrap-datepicker3.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('/css/bootstrap-datetimepicker.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('/css/daterangepicker.min.css') }}" />
 	<link rel="stylesheet" href="{{ asset('css/ui.jqgrid.min.css') }}" />
 
-	<link href="{{ asset('/css/bootstrap-editable.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('css/bootstrap-multiselect.min.css') }}" rel="stylesheet">
+	<link rel="stylesheet" href="{{ asset('/css/bootstrap-editable.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('css/bootstrap-multiselect.min.css') }}" />
 
-	<link href="{{ asset('/css/chosen.min.css') }}" rel="stylesheet">
+	<link rel="stylesheet" href="{{ asset('/css/chosen.min.css') }}" />
 	<style>
 		.ui-autocomplete { position: absolute; cursor: default; z-index: 1100 !important;}
 	</style>
@@ -315,7 +315,11 @@
 						<input name="end" value="" hidden/>
 					</form>
 
-					<input class="input-sm" type="text" id="search" name="search">
+					<div class="row">
+		        <div class="col-xs-12">
+							<input class="input-sm col-xs-3" type="text" id="search" name="search">
+						</div>
+					</div>
 					<table id="grid-table"></table>
 					<div id="grid-pager"></div>
           <!-- PAGE CONTENT ENDS -->
@@ -556,13 +560,13 @@
 			}
 		})
 		*/
-
+		var parameters = {datatb:'ppjk',start:start,end:end,_token:'{{ csrf_token() }}'};
 
 		jQuery(grid_selector).jqGrid({
 			caption: "Input PPJK",
       datatype: "json",            //supported formats XML, JSON or Arrray
       mtype : "post",
-      postData: {datatb:'ppjk',start:start,end:end,_token:'{{ csrf_token() }}'},
+      postData: parameters,
 			url:"{{url('/api/oprasional/jqgrid')}}",
 			editurl: "{{url('/api/oprasional/cud')}}",//nothing is saved
 			sortname:'date_issue',
@@ -855,8 +859,9 @@
 				getparameter("{{url('/api/oprasional/autoc')}}",postcar,function(data){
 					response( $.map( data, function( item ) {
 						return {
-							label: item,
-							value: item
+							label: item.label,
+							value: item.value,
+							id: item.id
 						}
 					}));
 				},function(data){
@@ -866,8 +871,9 @@
 			autoFocus: true,
 			minLength: 0,
 			select: function( event, ui ) {
-				jQuery(grid_selector).jqGrid('setGridParam', { postData: {datatb:'ppjk',s_ppjk:ui.item.value,start:start,end:end,_token:'{{ csrf_token() }}'}, }).trigger("reloadGrid");
-				console.log(ui.item.value);
+				jQuery(grid_selector).jqGrid('setGridParam', { postData: {datatb:'ppjk',s_id:ui.item.id,start:start,end:end,_token:'{{ csrf_token() }}'}, }).trigger("reloadGrid");
+				console.log(ui.item.id);
+				parameters = {datatb:'ppjk',start:start,end:end,_token:'{{ csrf_token() }}'};
 			}
 		});
 

@@ -83,6 +83,7 @@ Route::prefix('oprasional')->group(function(){
   Route::get('/listinvoice',  'Oprasional\Invoice\InvoiceController@listinvoice');
 
   Route::match(['get', 'post'],   'PDFInvoice', 		    	'Oprasional\Invoice\PdfController@PDFMarker');
+  Route::match(['get', 'post'],   'PDFReport', 		      	'Oprasional\Report\PdfController@PDFMarker');
 });
 
 Route::prefix('surat')->group(function(){

@@ -127,6 +127,8 @@
                 $code=$name=$isi=array();
                 $i=0;
 
+                if ($result->selisih!='')$match=explode(",",$result->selisih);
+
                 foreach ($query as $row ) {
                   $isi[$i]['i']=$i;
                   if (substr($row->jettyCode,0,1)=='S'){
@@ -224,7 +226,10 @@
                   }
                   $isi[$i]['jumlahTarifvar']=$tarifvar*$kapalsGrt*$jumlahWaktu;
 
-                  $isi[$i]['jumlahTarif']=$jumlahTarif=$isi[$i]['jumlahTarifvar']+$isi[$i]['jumlahTariffix'];
+                  if (empty($match[$i]))$match[$i]=0;
+                  // dd($match);
+
+                  $isi[$i]['jumlahTarif']=$jumlahTarif=$isi[$i]['jumlahTarifvar']+$isi[$i]['jumlahTariffix']+$match[$i];
 
                   if ($row->ops=='Berth'){
                     if ($row->shift!='on'){
@@ -245,6 +250,7 @@
                     }
                   }
                 }
+
                 // dd(substr($headstatus,0,9));
                 if (substr($headstatus,0,8)=='Cigading'){
                   $bht99=$totalTarif*(98/100);

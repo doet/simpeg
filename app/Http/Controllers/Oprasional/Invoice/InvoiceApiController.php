@@ -125,6 +125,7 @@ class InvoiceApiController extends Controller
           'refno'=>$request->input('refno'),
           'tglinv'=>$tglinv,
           'dkurs'=>$dkurs,
+          'selisih'=>$request->input('selisih'),
         );
         $dddd = DB::table('tb_ppjks')->where('id', $id)->update($datanya);
 
@@ -257,6 +258,7 @@ class InvoiceApiController extends Controller
               $row->pajak,
               $row->noinv,
               $row->refno,
+              $row->selisih,
               $row->id,
               $dkurs
               // date("d/m/y H:i",$row->date),

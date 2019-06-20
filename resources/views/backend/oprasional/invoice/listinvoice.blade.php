@@ -81,6 +81,16 @@
 								</div>
 								<div class="space-2"></div>
 
+								<div class="row">
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Selisih</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix"><input class="input-sm col-sm-9" type="text" id="selisih" name="selisih"></div>
+										</div>
+									</div>
+								</div>
+								<div class="space-2"></div>
+
 							</div>
 							<div class="col-xs-12 col-sm-6">
 								<div class="row">
@@ -112,6 +122,8 @@
 									</div>
 								</div>
 								<div class="space-2"></div>
+
+
 							</div>
 						</div>
 
@@ -349,7 +361,7 @@
 			sortname:'bstdo',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:[' ', 'BSTDO','PPJK','Agen','Kapal','Jalur','Tanggal Doc','Faktur Pajak','Nomor Invoice','Ref No','Status','dkurs'],
+			colNames:[' ', 'BSTDO','PPJK','Agen','Kapal','Jalur','Tanggal Doc','Faktur Pajak','Nomor Invoice','Ref No','Selisih','Status','dkurs'],
 			colModel:[
 				{name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false, align: 'center'},
 				{name:'bstdo',index:'bstdo', width:40,editable: false},
@@ -361,6 +373,7 @@
 				{name:'pajak',index:'pajak', width:60, editable: false},
 				{name:'noinv',index:'noinv', width:60, editable: false},
 				{name:'refno',index:'refno', width:60, editable: false},
+				{name:'selisih',index:'selisih', width:60, editable: false},
 				{name:'status',index:'status', width:60, editable: false, formatter:status},
 				{name:'dkurs',index:'dkurs', width:60, editable: false}
 			],
@@ -547,10 +560,13 @@ var i=0;
 						refno = $(this).jqGrid('getCell',gsr,'refno');
 						dkurs = $(this).jqGrid('getCell',gsr,'dkurs');
 						rute = $(this).jqGrid('getCell',gsr,'rute');
+						selisih = $(this).jqGrid('getCell',gsr,'selisih');
 
 						$('#pajak').val(pajak);
 						$('#noinv').val(noinv);
 						$('#refno').val(refno);
+						$('#selisih').val(selisih);
+
 						//
 						$('#tglinv').datepicker("setDate",tglinv);
 						if (rute==='Domestic'){

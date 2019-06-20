@@ -521,7 +521,7 @@
 					if(gsr){
 						var ppjks_id = $(this).jqGrid('getCell',gsr,'ppjks_id');
 						var bapp = $(this).jqGrid('getCell',gsr,'bapp');
-						var moring = $(this).jqGrid('getCell',gsr,'moring');
+						// var mooring = $(this).jqGrid('getCell',gsr,'mooring');
 						$('#bapp').val(bapp);
 
 						var posdata= {'datatb':'dl','search':gsr};

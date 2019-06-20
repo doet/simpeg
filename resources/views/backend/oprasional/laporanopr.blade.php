@@ -219,15 +219,15 @@
 								</div>
 								<div class="space-2"></div>
 
-								<!-- <div class="row">
+								<div class="row">
 									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Kurs</label>
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">Mooring</label>
 										<div class="col-xs-12 col-sm-9">
-											<div class="clearfix"><input class="input-sm col-sm-3" type="text" id="kurs" name="kurs"></div>
+											<div class="clearfix"><input class="input-sm" type="text" id="mooring" name="mooring"></div>
 										</div>
 									</div>
 								</div>
-								<div class="space-2"></div> -->
+								<div class="space-2"></div>
 
 							</div>
 						</div>
@@ -538,15 +538,15 @@
 			sortname:'date',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:['id', 'PPJK','AGEN','Waktu','Kapal','GRT','LOA','Bendera','Dermaga','OPS','bapp','PC','ON','OFF','Tunda','ON','OFF','DD','Ket','Rute'],
+			colNames:['id', 'PPJK','AGEN','Waktu','Kapal','GRT','LOA','Bendera','Dermaga','OPS','bapp','PC','ON','OFF','Tunda','ON','OFF','DD','Ket','Rute','Mooring'],
 			colModel:[
 				{name:'tb_dls.id',index:'tb_dls.id', width:50, fixed:true, sortable:true, resize:false, align: 'center'},
-				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
+				{name:'ppjk',index:'ppjk', width:50, sorttype:"int", editable: false},
 				{name:'agenCode',index:'agenCode',width:45, editable:false, align: 'center'},
-				{name:'date',index:'date', width:120,editable: false},
+				{name:'date',index:'date', width:80,editable: false},
 				{name:'kapalsName',index:'kapalsName', width:150, editable: false},
 				{name:'grt',index:'grt', width:50, editable: false, align: 'right'},
-				{name:'loa',index:'loa', width:50, editable:false, align: 'right'},
+				{name:'loa',index:'loa', width:35, editable:false, align: 'right'},
 				{name:'bendera',index:'bendera', width:80, editable: false},
         {name:'jettyName',index:'jettyName', width:100, editable: false},
         {name:'ops',index: 'ops', width: 60,editable: false, align: 'center'},
@@ -557,9 +557,10 @@
         {name:'tunda',index:'tunda',width:100, sortable:false, editable: false},
 				{name:'on',index:'on',width:40, sortable:false, editable: false},
 				{name:'off',index:'off',width:40, sortable:false, editable: false},
-        {name:'dd',index:'dd',width:40, editable: false},
-        {name:'ket',index:'ket',width:100, editable: false},
-        {name:'rute',index:'rute',width:50, editable: false, align: 'center'}
+        {name:'dd',index:'dd',width:30, editable: false},
+        {name:'ket',index:'ket',width:80, editable: false},
+        {name:'rute',index:'rute',width:50, editable: false, align: 'center'},
+				{name:'moring',index:'moring',width:120, editable: false}
 			],
 
 			viewrecords : true,
@@ -779,6 +780,7 @@
 
 							$('#dd').val(data.dd);
 							$('#ket').val(data.ket);
+							$('#mooring').val(data.mooring);
 							// $('#bapp').val(data.bapp);
 							// //
 							// $('#pcdate').daterangepicker({

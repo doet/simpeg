@@ -124,8 +124,8 @@ class OprasionalApiController extends Controller
 
           $responce['dd']=$row->dd;
           $responce['ket']=$row->ket;
-          // $responce['kurs']=$row->kurs;
           $responce['bapp']=$row->bapp;
+          $responce['mooring']=$row->mooring;
         }
       break;
       case 'agen':
@@ -432,7 +432,8 @@ class OprasionalApiController extends Controller
             'tundaon'   =>AppHelpers::RangeDate($request->input('tundadate'))['startDate'],
             'tundaoff'  =>AppHelpers::RangeDate($request->input('tundadate'))['endDate'],
             'dd'        =>$request->input('dd',''),
-            'ket'       =>$request->input('ket','')
+            'ket'       =>$request->input('ket',''),
+            'mooring'   =>$request->input('mooring','')
           );
         }
 
@@ -852,8 +853,8 @@ class OprasionalApiController extends Controller
               $row->dd,
               $row->ket,
               $row->rute,
+              $row->mooring,
               $row->lstp,
-              $row->moring,
               $row->ppjks_id,
             );
             $i++;

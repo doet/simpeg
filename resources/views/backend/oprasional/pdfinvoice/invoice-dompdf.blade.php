@@ -138,13 +138,8 @@
                   }
 
                   if(!in_array($row->jettyCode,$name))array_push($name,$row->jettyCode);
-                  // dd()
                   if(in_array('12',$name)){
-                    if ($result->rute == '$') {
-                      if ($row->jettyName=='Cigading')$headstatus='Cigading 1'; else $headstatus='Cigading.'.substr($row->jettyName,9,4).' .1';
-                    } else
-                      if ($row->jettyName=='Cigading')$headstatus='Cigading 2'; else $headstatus='Cigading.'.substr($row->jettyName,9,4).' .2';
-
+                    if ($result->rute == '$') $headstatus=$row->jettyName.' .1'; else $headstatus=$row->jettyName.' .2';
                   } else {
                     if ($result->rute == '$') $headstatus='Non Cigading 1'; else $headstatus='Non Cigading 2';
                   }
@@ -249,8 +244,8 @@
 
                     }
                   }
-
                 }
+                // dd(substr($headstatus,0,9));
                 if (substr($headstatus,0,8)=='Cigading'){
                   $bht99=$totalTarif*(98/100);
                   $bht5=$bht99*(5/100);

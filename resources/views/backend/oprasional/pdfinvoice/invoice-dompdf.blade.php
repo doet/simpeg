@@ -184,8 +184,8 @@
 
                   $isi[$i]['selisihWaktu']=$selisihWaktu=number_format(($row->tundaoff-$row->tundaon)/3600,2);
                   $exWaktu = explode(".",$selisihWaktu);
-
-                  if ($exWaktu[1]<=50)$selisihWaktu2=$exWaktu[0]+0.5; else $selisihWaktu2=ceil($selisihWaktu);
+                  // dd($exWaktu);
+                  if ($exWaktu[1]<=50 && $exWaktu[1]!=00 )$selisihWaktu2=$exWaktu[0]+0.5; else $selisihWaktu2=ceil($selisihWaktu);
                   if ($selisihWaktu2<1)$selisihWaktu2=1;
                   $isi[$i]['selisihWaktu2']=$selisihWaktu2=number_format($selisihWaktu2,2);
 
@@ -301,7 +301,7 @@
                   </tr>
                   <tr>
                     <td class="left top right" width="150px">&nbsp;Perusahaan / <i>Company</i></td>
-                    <td class="top right" width="300px">&nbsp;<?php echo $result->agenName?></i></td>
+                    <td class="top right" width="300px">&nbsp;<?php //echo $result->agenName?>PT Krakatau Bandar Samudera</td>
                     <td class="top right" width="150px">&nbsp;PPJ No.</td>
                     <td class="top right">&nbsp;<?php echo $result->ppjk?></td>
                     <td class="top right" width="150px">&nbsp;Nama kapal / <i>Vessel name</i></td>
@@ -309,7 +309,7 @@
                   </tr>
                   <tr>
                     <td class="left top right" rowspan="2">&nbsp;Alamat / <i>Address</i></td>
-                    <td class="top right" rowspan="2">&nbsp;<?php echo $result->agenAlamat?></td>
+                    <td class="top right" rowspan="2">&nbsp;<?php //echo $result->agenAlamat?>Jl. May.Jen S.Parman KM.13 Cigading, Cilegon</td>
                     <td class="top right">&nbsp;Ref.No</td>
                     <td class="top right">&nbsp;<?php echo $result->refno?></td>
                     <td class="top right">&nbsp;GRT(Ton)</td>
@@ -323,7 +323,7 @@
                   </tr>
                   <tr>
                     <td class="left top right button">&nbsp;Telepon / <i>Telephone</i></td>
-                    <td class="top right button">&nbsp;<?php echo $result->agenTlp?></td>
+                    <td class="top right button">&nbsp;<?php //echo $result->agenTlp?></td>
                     <td class="top right button">&nbsp;Area</td>
                     <td class="top right button">&nbsp;<?php if (count($code)>1) echo 'Cilegon/Serang'; else echo $code[0]; ?></td>
                     <td class="top right button"></td>
@@ -436,7 +436,8 @@
                   <tr>
                     <td class="left top right button">&nbsp;Bank BNI (IDR)</td>
                     <td class="top right button">&nbsp;231.05.45</td>
-                    <td class="top right button" rowspan="3" align="center">&nbsp;<b><?php echo date('d M Y', $result->tglinv+((24 * 60 *60)*3))?></b></i></td>
+
+                    <td class="top right button" rowspan="3" align="center">&nbsp;<b><?php echo $tempo?></b></i></td>
                   </tr>
                   <tr>
                     <td class="left top right button">&nbsp;Bank Mandiri (IDR)</td>

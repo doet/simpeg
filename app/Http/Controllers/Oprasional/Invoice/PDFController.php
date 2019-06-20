@@ -92,11 +92,14 @@ class PDFController extends Controller
           })
           ->first();
 
+        $tempo = date('d M Y',cek_libur($result->tglinv,3));
+        // $tempo = cek_libur($result->tglinv,3);
+
         $page = 'backend.oprasional.pdfinvoice.'.$request->input('page');
         $nfile = $request->input('file');
         $orientation = 'landscape';
 
-        $view =  \View::make($page, compact('result','query','kurs'))->render();
+        $view =  \View::make($page, compact('result','query','kurs','tempo'))->render();
         // return view($page, compact('result','mulai'));
       break;
       case 'invoice-dompdf2':
@@ -178,4 +181,26 @@ class PDFController extends Controller
 
     // } else { echo "page tidak dapat di diperbaharui, silahkan kembali kehalaman sebelum";}
   }
+}
+function cek_libur($day,$n,$status='false'){
+  $day1=24*60*60;
+
+  if ($n<0){
+    return $day-$day1;
+  } else {
+
+    $libnas = DB::table('tb_libur')
+      ->where(function ($query) use ($day){
+        $query->where('tgllibur',$day);
+      })
+      ->get();
+    if (!empty($libnas[0]) || date('N', $day)==6 || date('N', $day)==7 ){
+      $n++;
+    }
+    $day = $day+$day1;
+
+    $n--;
+    return cek_libur($day,$n,$status);
+  }
+  return $day;
 }

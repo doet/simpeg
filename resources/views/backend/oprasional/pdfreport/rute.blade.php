@@ -134,9 +134,9 @@
                     <td class="top right left" width='40px' rowspan="2">No</td>
                     <td class="top right" rowspan="2">Bulan</td>
                     <td class="top right button" colspan="<?php echo count($tmp['items'])-1?>">Gerakan</td>
-                    <td class="top right" width='60px' rowspan="2">Total</td>
+                    <td class="top right" width='70px' rowspan="2">Total</td>
                     <td class="top right button" colspan="<?php echo count($tmp['items'])-1?>">Perbandingan</td>
-                    <td class="top right" width='60px' rowspan="2">Total</td>
+                    <td class="top right" width='70px' rowspan="2">Total</td>
                   </tr>
                   <tr>
                     <?php
@@ -144,7 +144,7 @@
                       foreach ($tmp['items'] as $val) {
                       if ($val!='all'){
                         if ($val=='unknow')$val='Tidak Diketahui';else if ($val=='Rp')$val='Dalam Negeri'; else if ($val=='$')$val='Luar Negeri';
-                        echo '<td class="right" width="60px">'.$val.'</td>';
+                        echo '<td class="right" width="70px">'.$val.'</td>';
                       }
                     }
                     ?>
@@ -152,7 +152,7 @@
                     <?php foreach ($tmp['items'] as $val) {
                       if ($val!='all'){
                         if ($val=='unknow')$val='Tidak Diketahui';else if ($val=='Rp')$val='Dalam Negeri'; else if ($val=='$')$val='Luar Negeri';
-                        echo '<td class="right" width="60px">'.$val.'</td>';
+                        echo '<td class="right" width="70px">'.$val.'</td>';
                       }
                     }
                     ?>

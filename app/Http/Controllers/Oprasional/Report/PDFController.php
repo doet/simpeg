@@ -49,26 +49,27 @@ class PDFController extends Controller
           for($start=0; $start < $end; $start++) {
             ////////////// data dalam 1 tanggal //////////////
             $startt = $start+1;
-            $d_start=strtotime(date('Y',$m_end).'-'. $startt .'-1');
-            $d_end=date('Y-m-t',$d_start);
-            $tmp['label'][] = date('M y',$d_start); // ambil tanggal sumbu x
+            $d_start=date('Y',$m_end).'-'. $startt .'-1';
+            $d_end=date('Y-m-t',strtotime($d_start));
+            // dd($d_end);
+            $tmp['label'][] = date('M y',strtotime($d_start)); // ambil tanggal sumbu x
             // $tmp['label2'][]=strtotime($d_end);
             $query = DB::table('tb_ppjks')
               ->where(function ($query) use ($d_start,$d_end){
-                $query->where('date_issue', '>', strtotime($d_start))
-                ->Where('date_issue', '<', strtotime($d_end));
+                $query->where('date_issue', '>=', strtotime($d_start))
+                ->Where('date_issue', '<=', strtotime($d_end));
               })
               ->get();
 
-              $data['unknow'][$start] = array();
+              // $data['unknow'][$start] = array();
             foreach ($query as $row) {
               if ($row->rute==null)$row->rute='unknow';
               $data[$row->rute][$start][]=$row->rute;
               $all[$start][]=$row->rute;
               $data[$row->rute] = array_filter($data[$row->rute]);
             }
+            $data['all']=$all;
           }
-          $data['all']=$all;
           $data = array_filter($data); //hapus element array yang kosong
           // dd($data);
 
@@ -105,9 +106,10 @@ class PDFController extends Controller
           for($start=0; $start < $end; $start++) {
             ////////////// data dalam 1 tanggal //////////////
             $startt = $start+1;
-            $d_start=strtotime(date('Y',$m_end).'-'. $startt .'-1');
-            $d_end=date('Y-m-t',$d_start);
-            $tmp['label'][] = date('M y',$d_start); // ambil tanggal sumbu x
+            $d_start=date('Y',$m_end).'-'. $startt .'-1';
+            $d_end=date('Y-m-t',strtotime($d_start));
+            // dd($d_end);
+            $tmp['label'][] = date('M y',strtotime($d_start)); // ambil tanggal sumbu x
             // $tmp['label2'][]=strtotime($d_end);
             $query = DB::table('tb_dls')
               ->join('tb_jettys', function ($join) {
@@ -167,9 +169,10 @@ class PDFController extends Controller
           for($start=0; $start < $end; $start++) {
             ////////////// data dalam 1 tanggal //////////////
             $startt = $start+1;
-            $d_start=strtotime(date('Y',$m_end).'-'. $startt .'-1');
-            $d_end=date('Y-m-t',$d_start);
-            $tmp['label'][] = date('M y',$d_start); // ambil tanggal sumbu x
+            $d_start=date('Y',$m_end).'-'. $startt .'-1';
+            $d_end=date('Y-m-t',strtotime($d_start));
+            // dd($d_end);
+            $tmp['label'][] = date('M y',strtotime($d_start)); // ambil tanggal sumbu x
             // $tmp['label2'][]=strtotime($d_end);
             $query = DB::table('tb_ppjks')
               ->join('tb_kapals', function ($join) {
@@ -182,8 +185,8 @@ class PDFController extends Controller
               ->select('tb_kapals.grt as kapalsGrt', 'tb_ppjks.*')
               ->get();
 
-              $data['down']['unknow'][$start] = array();
-              $data['up']['unknow'][$start] = array();
+              // $data['down']['unknow'][$start] = array();
+              // $data['up']['unknow'][$start] = array();
             foreach ($query as $row) {
               if ($row->kapalsGrt>18000)$group='up'; else $group='down';
               if ($row->rute==null)$row->rute='unknow';
@@ -241,9 +244,10 @@ class PDFController extends Controller
           for($start=0; $start < $end; $start++) {
             ////////////// data dalam 1 tanggal //////////////
             $startt = $start+1;
-            $d_start=strtotime(date('Y',$m_end).'-'. $startt .'-1');
-            $d_end=date('Y-m-t',$d_start);
-            $tmp['label'][] = date('M y',$d_start); // ambil tanggal sumbu x
+            $d_start=date('Y',$m_end).'-'. $startt .'-1';
+            $d_end=date('Y-m-t',strtotime($d_start));
+            // dd($d_end);
+            $tmp['label'][] = date('M y',strtotime($d_start)); // ambil tanggal sumbu x
             // $tmp['label2'][]=strtotime($d_end);
             $query = DB::table('tb_dls')
               ->where(function ($query) use ($d_start,$d_end){

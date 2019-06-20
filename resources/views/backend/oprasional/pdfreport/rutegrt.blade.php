@@ -110,7 +110,7 @@
               <table width="350px">
                 <thead>
                   <tr>
-                    <td class="top right left" rowspan="2" colspan="<?php echo (count($tmp['items'])*2)+2-4?>">FORMULIR</td>
+                    <td class="top right left" rowspan="2" colspan="<?php echo (count($tmp['items']))+2-4?>">FORMULIR</td>
                     <td class="top right" colspan="2">Doc No </td>
                     <td class="top right" colspan="2">F.PDP/01.004</td>
                   </tr>
@@ -119,7 +119,7 @@
                     <td class="top right" colspan="2">0.0</td>
                   </tr>
                   <tr>
-                    <td class="top right left" rowspan="2" colspan="<?php echo (count($tmp['items'])*2)+2-4?>">LAPORAN BULANAN OPERASIONAL</td>
+                    <td class="top right left" rowspan="2" colspan="<?php echo (count($tmp['items']))+2-4?>">LAPORAN BULANAN OPERASIONAL</td>
                     <td class="top right" colspan="2">Tgl Efektif</td>
                     <td class="top right" colspan="2"><?php //echo date("d/m/Y",$mulai);?></td>
                   </tr>
@@ -128,38 +128,61 @@
                     <td class="top right" colspan="2">1 dari 1</td>
                   </tr>
                   <tr>
-                    <td class="top" colspan="<?php echo (count($tmp['items'])*2)+2?>"></td>
+                    <td class="left top right" colspan="<?php echo (count($tmp['items']))+2?>" align="left">&nbsp; III.Gerakan kapal berdasarkan GRT kapal</td>
                   </tr>
                   <tr>
                     <td class="top right left" width='40px' rowspan="2">No</td>
                     <td class="top right" rowspan="2">Bulan</td>
-                    <td class="top right button" colspan="<?php echo count($tmp['items'])-1?>">Gerakan</td>
-                    <td class="top right" width='60px' rowspan="2">Total</td>
-                    <td class="top right button" colspan="<?php echo count($tmp['items'])-1?>">Perbandingan</td>
-                    <td class="top right" width='60px' rowspan="2">Total</td>
+                    <?php
+                    $i=0;
+                    foreach ($tmp['items'] as $val) {
+                      if($val[0]=='d'){
+                        if ($val!='d-all'){
+                          $i++;
+                          $colspan = $i;
+                        }
+                      }
+                    }
+                    ?>
+                    <td class="top right button" colspan="<?php echo $colspan?>"> kurang dari 18000 GRT</td>
+                    <td class="top right" width='65px' rowspan="2">Total</td>
+                    <?php
+                    $i=0;
+                    foreach ($tmp['items'] as $val) {
+                      if($val[0]=='u'){
+                        if ($val!='u-all'){
+                          $i++;
+                          $colspan = $i;
+                        }
+                      }
+                    }
+                    ?>
+                    <td class="top right button" colspan="<?php echo $colspan?>"> lebih dari 18000 GRT</td>
+                    <td class="top right" width='65px' rowspan="2">Total</td>
                   </tr>
                   <tr>
                     <?php
-
-                      foreach ($tmp['items'] as $val) {
-                      if ($val!='all'){
-                        // if ($val=='unknow')$val='Tidak Diketahui';else if ($val=='Rp')$val='Dalam Negeri'; else if ($val=='$')$val='Luar Negeri';
-                        echo '<td class="right" width="60px">'.$val.'</td>';
+                    foreach ($tmp['items'] as $val) {
+                      if($val[0]=='d'){
+                        if ($val!='d-all'){
+                          if ($val=='d-unknow')$val='Tidak Diketahui';else if ($val=='d-Rp')$val='Dalam Negeri'; else if ($val=='d-$')$val='Luar Negeri';
+                          echo '<td class="right" width="65px">'.$val.'</td>';
+                        }
                       }
                     }
-                    ?>
-
-                    <?php foreach ($tmp['items'] as $val) {
-                      if ($val!='all'){
-                        // if ($val=='unknow')$val='Tidak Diketahui';else if ($val=='Rp')$val='Dalam Negeri'; else if ($val=='$')$val='Luar Negeri';
-                        echo '<td class="right" width="60px">'.$val.'</td>';
+                    foreach ($tmp['items'] as $val) {
+                      if($val[0]=='u'){
+                        if ($val!='u-all'){
+                          if ($val=='d-unknow')$val='Tidak Diketahui';else if ($val=='u-Rp')$val='Dalam Negeri'; else if ($val=='u-$')$val='Luar Negeri';
+                          echo '<td class="right" width="65px">'.$val.'</td>';
+                        }
                       }
                     }
                     ?>
 
                   </tr>
                   <tr>
-                    <td class="top" colspan="<?php echo (count($tmp['items'])*2)+2?>"></td>
+                    <td class="top" colspan="<?php echo (count($tmp['items']))+2?>"></td>
                   </tr>
                 </thead>
                 <tbody class="zebra">
@@ -174,22 +197,11 @@
                     foreach ($tmp['ds'] as $row) {
                       echo '<td class="top right" align="center">'.$row['data'][$key].'</td>';
                     }
-                    $total = 0;
-                    foreach ($tmp['ds'] as $row) {
-                      if($jumlah[$key]!=0 && $row['data'][$key]!=''){
-                        // $row['data'][$key]=0;
-                        $total = round(($row['data'][$key]/$jumlah[$key])*100,2) .' %';
-                        // numbre($total)
-                      } else {
-                        $total = '';
-                      }
-                      echo '<td class="top right" align="center">'.$total.'</td>';
-                    }
                     echo '</tr>';
                   }
                   ?>
                   <tr>
-                  <td class="top" colspan="<?php echo (count($tmp['items'])*2)+2?>"></td>
+                  <td class="top" colspan="<?php echo (count($tmp['items']))+2?>"></td>
                   </tr>
                 </tbody>
               </table>

@@ -137,8 +137,8 @@
                     // $area='Cilegon';
                   }
 
-                  if(!in_array($row->jettyName,$name))array_push($name,$row->jettyName);
-                  if(in_array('Cigading',$name)){
+                  if(!in_array($row->jettyCode,$name))array_push($name,$row->jettyCode);
+                  if(in_array('12',$code)){
                     if ($result->rute == '$') $headstatus='Cigading 1'; else $headstatus='Cigading 2';
                   } else {
                     if ($result->rute == '$') $headstatus='Non Cigading 1'; else $headstatus='Non Cigading 2';

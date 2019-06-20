@@ -453,18 +453,125 @@ class FilesCrudController extends Controller
             $tmp['label'][] = date('M y',$d_start); // ambil tanggal sumbu x
             // $tmp['label2'][]=strtotime($d_end);
             $query = DB::table('tb_ppjks')
+              ->join('tb_kapals', function ($join) {
+                $join->on('tb_ppjks.kapals_id','tb_kapals.id');
+              })
               ->where(function ($query) use ($d_start,$d_end){
                 $query->where('date_issue', '>', strtotime($d_start))
                 ->Where('date_issue', '<', strtotime($d_end));
+              })
+              ->select('tb_kapals.grt as kapalsGrt', 'tb_ppjks.*')
+              ->get();
+
+              $data['down']['unknow'][$start] = array();
+              $data['up']['unknow'][$start] = array();
+            foreach ($query as $row) {
+              if ($row->kapalsGrt>18000)$group='up'; else $group='down';
+              if ($row->rute==null)$row->rute='unknow';
+              $data[$group][$row->rute][$start][]=$row->rute;
+              $all[$group][$start][]=$row->rute;
+              $data[$group][$row->rute] = array_filter($data[$group][$row->rute]);
+            }
+          }
+          $data['down']['all']=$all['down'];
+          $data['up']['all']=$all['up'];
+          $data['down'] = array_filter($data['down']); //hapus element array yang kosong
+          $data['up'] = array_filter($data['up']);
+
+          foreach ($data['down'] as $key=>$val){
+            for($start=0; $start < $end; $start++) {
+              if ($key=='')$key='unknow';
+              if(isset($data['down'][$key][$start]))$jumlah= count($data['down'][$key][$start]);else $jumlah='';
+              $tmp['ds']['d-'.$key]['borderWidth'] = 2;
+              $tmp['ds']['d-'.$key]['data'][$start] = $jumlah;
+              $tmp['ds']['d-'.$key]['label'] = 'd-'.$key;
+              if(!in_array('d-'.$key,$items,true))array_push($items,'d-'.$key);
+            }
+            $i++;
+          }
+          foreach ($data['up'] as $key=>$val){
+            for($start=0; $start < $end; $start++) {
+              if ($key=='')$key='unknow';
+              if(isset($data['up'][$key][$start]))$jumlah= count($data['up'][$key][$start]);else $jumlah='';
+              $tmp['ds']['u-'.$key]['borderWidth'] = 2;
+              $tmp['ds']['u-'.$key]['data'][$start] = $jumlah;
+              $tmp['ds']['u-'.$key]['label'] = 'u-'.$key;
+              if(!in_array('u-'.$key,$items,true))array_push($items,'u-'.$key);
+            }
+            $i++;
+          }
+          $tmp['ds'] = array_values($tmp['ds']);
+          $tmp['items']=$items;
+        }
+        // dd($tmp['items']);
+        // dd($tmp['ds']);
+        // array_values($tmp['ds']);
+
+        $tmp['ds'][array_search('u-unknow',$items)]['backgroundColor'] = 'rgb(255, 205, 86)';
+        $tmp['ds'][array_search('u-unknow',$items)]['borderColor'] = 'rgb(255, 205, 86)';
+        $tmp['ds'][array_search('u-unknow',$items)]['fill'] = false;
+        $tmp['ds'][array_search('u-unknow',$items)]['borderDash'] = [5, 5];
+
+        $tmp['ds'][array_search('u-Rp',$items)]['backgroundColor'] = 'rgb(54, 162, 235)';
+        $tmp['ds'][array_search('u-Rp',$items)]['borderColor'] = 'rgb(54, 162, 235)';
+        $tmp['ds'][array_search('u-Rp',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('u-$',$items)]['backgroundColor'] = 'rgb(255, 99, 132)';
+        $tmp['ds'][array_search('u-$',$items)]['borderColor'] = 'rgb(255, 99, 132)';
+        $tmp['ds'][array_search('u-$',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('u-all',$items)]['backgroundColor'] = 'rgba(201, 203, 207,0.3)';
+        $tmp['ds'][array_search('u-all',$items)]['borderColor'] = 'rgb(255, 159, 64)';
+        $tmp['ds'][array_search('u-all',$items)]['fill'] = false;
+
+
+        $tmp['ds'][array_search('d-unknow',$items)]['backgroundColor'] = 'rgb(255, 205, 0)';
+        $tmp['ds'][array_search('d-unknow',$items)]['borderColor'] = 'rgb(255, 205, 0)';
+        $tmp['ds'][array_search('d-unknow',$items)]['fill'] = false;
+        $tmp['ds'][array_search('d-unknow',$items)]['borderDash'] = [5, 5];
+
+        $tmp['ds'][array_search('d-Rp',$items)]['backgroundColor'] = 'rgb(54, 162, 149)';
+        $tmp['ds'][array_search('d-Rp',$items)]['borderColor'] = 'rgb(54, 162, 149)';
+        $tmp['ds'][array_search('d-Rp',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('d-$',$items)]['backgroundColor'] = 'rgb(255, 99, 46)';
+        $tmp['ds'][array_search('d-$',$items)]['borderColor'] = 'rgb(255, 99, 46)';
+        $tmp['ds'][array_search('d-$',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('d-all',$items)]['backgroundColor'] = 'rgba(201, 203, 207,0.3)';
+        $tmp['ds'][array_search('d-all',$items)]['borderColor'] = 'rgb(255, 100, 0)';
+        $tmp['ds'][array_search('d-all',$items)]['fill'] = false;
+
+      break;
+      case 'pandu':
+        if($request->input('type')=='bulan'){
+          $m_end = strtotime($request->input('end'));
+          $end = date('m',$m_end);
+          $day1 = (60 * 60 * 24);
+
+          $i=$n= 0;
+          $items=$all=array();
+          /////////////////////// data harian
+          for($start=0; $start < $end; $start++) {
+            ////////////// data dalam 1 tanggal //////////////
+            $startt = $start+1;
+            $d_start=strtotime(date('Y',$m_end).'-'. $startt .'-1');
+            $d_end=date('Y-m-t',$d_start);
+            $tmp['label'][] = date('M y',$d_start); // ambil tanggal sumbu x
+            // $tmp['label2'][]=strtotime($d_end);
+            $query = DB::table('tb_dls')
+              ->where(function ($query) use ($d_start,$d_end){
+                $query->where('date', '>', strtotime($d_start))
+                ->Where('date', '<', strtotime($d_end));
               })
               ->get();
 
               $data['unknow'][$start] = array();
             foreach ($query as $row) {
-              if ($row->rute==null)$row->rute='unknow';
-              $data[$row->rute][$start][]=$row->rute;
-              $all[$start][]=$row->rute;
-              $data[$row->rute] = array_filter($data[$row->rute]);
+              if ($row->pc==null)$row->pc='unknow';
+              $data[$row->pc][$start][]=$row->pc;
+              $all[$start][]=$row->pc;
+              $data[$row->pc] = array_filter($data[$row->pc]);
             }
           }
           $data['all']=$all;
@@ -485,7 +592,7 @@ class FilesCrudController extends Controller
           $tmp['ds'] = array_values($tmp['ds']);
           $tmp['items']=$items;
         }
-        // dd($items);
+        // dd($tmp);
         // array_values($tmp['ds']);
 
         $tmp['ds'][array_search('unknow',$items)]['backgroundColor'] = 'rgb(255, 205, 86)';
@@ -493,13 +600,53 @@ class FilesCrudController extends Controller
         $tmp['ds'][array_search('unknow',$items)]['fill'] = false;
         $tmp['ds'][array_search('unknow',$items)]['borderDash'] = [5, 5];
 
-        $tmp['ds'][array_search('Rp',$items)]['backgroundColor'] = 'rgb(54, 162, 235)';
-        $tmp['ds'][array_search('Rp',$items)]['borderColor'] = 'rgb(54, 162, 235)';
-        $tmp['ds'][array_search('Rp',$items)]['fill'] = false;
+        $tmp['ds'][array_search('12',$items)]['backgroundColor'] = 'rgb(54, 162, 235)';
+        $tmp['ds'][array_search('12',$items)]['borderColor'] = 'rgb(54, 162, 235)';
+        $tmp['ds'][array_search('12',$items)]['fill'] = false;
 
-        $tmp['ds'][array_search('$',$items)]['backgroundColor'] = 'rgb(255, 99, 132)';
-        $tmp['ds'][array_search('$',$items)]['borderColor'] = 'rgb(255, 99, 132)';
-        $tmp['ds'][array_search('$',$items)]['fill'] = false;
+        $tmp['ds'][array_search('15',$items)]['backgroundColor'] = 'rgb(100, 255, 132)';
+        $tmp['ds'][array_search('15',$items)]['borderColor'] = 'rgb(100, 255, 132)';
+        $tmp['ds'][array_search('15',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('16',$items)]['backgroundColor'] = 'rgb(54, 162, 185)';
+        $tmp['ds'][array_search('16',$items)]['borderColor'] = 'rgb(54, 162, 185)';
+        $tmp['ds'][array_search('16',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('18',$items)]['backgroundColor'] = 'rgb(200, 100, 100)';
+        $tmp['ds'][array_search('18',$items)]['borderColor'] = 'rgb(200, 100, 100)';
+        $tmp['ds'][array_search('18',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('20',$items)]['backgroundColor'] = 'rgb(54, 162, 135)';
+        $tmp['ds'][array_search('20',$items)]['borderColor'] = 'rgb(54, 162, 135)';
+        $tmp['ds'][array_search('20',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('24',$items)]['backgroundColor'] = 'rgb(255, 99, 32)';
+        $tmp['ds'][array_search('24',$items)]['borderColor'] = 'rgb(255, 99, 32)';
+        $tmp['ds'][array_search('24',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('26',$items)]['backgroundColor'] = 'rgb(54, 255, 235)';
+        $tmp['ds'][array_search('26',$items)]['borderColor'] = 'rgb(54, 255, 235)';
+        $tmp['ds'][array_search('26',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('C3',$items)]['backgroundColor'] = 'rgb(255, 200, 132)';
+        $tmp['ds'][array_search('C3',$items)]['borderColor'] = 'rgb(255, 200, 132)';
+        $tmp['ds'][array_search('C3',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('C11',$items)]['backgroundColor'] = 'rgb(50, 100, 235)';
+        $tmp['ds'][array_search('C11',$items)]['borderColor'] = 'rgb(50, 100, 235)';
+        $tmp['ds'][array_search('C11',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('C13',$items)]['backgroundColor'] = 'rgb(255, 0, 132)';
+        $tmp['ds'][array_search('C13',$items)]['borderColor'] = 'rgb(255, 0, 132)';
+        $tmp['ds'][array_search('C13',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('C14',$items)]['backgroundColor'] = 'rgb(54, 112, 185)';
+        $tmp['ds'][array_search('C14',$items)]['borderColor'] = 'rgb(54, 112, 185)';
+        $tmp['ds'][array_search('C14',$items)]['fill'] = false;
+
+        $tmp['ds'][array_search('C15',$items)]['backgroundColor'] = 'rgb(200, 80, 200)';
+        $tmp['ds'][array_search('C15',$items)]['borderColor'] = 'rgb(200, 80, 200)';
+        $tmp['ds'][array_search('C15',$items)]['fill'] = false;
 
         $tmp['ds'][array_search('all',$items)]['backgroundColor'] = 'rgba(201, 203, 207,0.3)';
         $tmp['ds'][array_search('all',$items)]['borderColor'] = 'rgb(255, 159, 64)';
@@ -507,9 +654,6 @@ class FilesCrudController extends Controller
 
       break;
     }
-
-
-
     // $tmp['hasil'] = $tmp['pro'][1][0][1];
     return $tmp;
   }

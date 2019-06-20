@@ -110,33 +110,31 @@
               <table width="350px">
                 <thead>
                   <tr>
-                    <td class="top right left" rowspan="2" colspan="<?php echo (count($tmp['items'])*2)+2-4?>">FORMULIR</td>
-                    <td class="top right" colspan="2">Doc No </td>
-                    <td class="top right" colspan="2">F.PDP/01.004</td>
+                    <td class="top right left" rowspan="2" colspan="<?php echo (count($tmp['items']))-4?>">FORMULIR</td>
+                    <td class="top right" colspan="3">Doc No </td>
+                    <td class="top right" colspan="3">F.PDP/01.004</td>
                   </tr>
                   <tr>
-                    <td class="top right" colspan="2">Rev</td>
-                    <td class="top right" colspan="2">0.0</td>
+                    <td class="top right" colspan="3">Rev</td>
+                    <td class="top right" colspan="3">0.0</td>
                   </tr>
                   <tr>
-                    <td class="top right left" rowspan="2" colspan="<?php echo (count($tmp['items'])*2)+2-4?>">LAPORAN BULANAN OPERASIONAL</td>
-                    <td class="top right" colspan="2">Tgl Efektif</td>
-                    <td class="top right" colspan="2"><?php //echo date("d/m/Y",$mulai);?></td>
+                    <td class="top right left" rowspan="2" colspan="<?php echo (count($tmp['items']))-4?>">LAPORAN BULANAN OPERASIONAL</td>
+                    <td class="top right" colspan="3">Tgl Efektif</td>
+                    <td class="top right" colspan="3"><?php //echo date("d/m/Y",$mulai);?></td>
                   </tr>
                   <tr>
-                    <td class="top right" colspan="2">Halaman</td>
-                    <td class="top right" colspan="2">1 dari 1</td>
+                    <td class="top right" colspan="3">Halaman</td>
+                    <td class="top right" colspan="3">1 dari 1</td>
                   </tr>
                   <tr>
-                    <td class="left top right" colspan="<?php echo (count($tmp['items'])*2)+2?>" align="left">&nbsp; II.Gerakan kapal berdasarkan daerah kerja</td>
+                    <td class="left top right" colspan="<?php echo (count($tmp['items']))+2?>" align="left">&nbsp; IV. Performa pandu berdasarkan gerakan</td>
                   </tr>
                   <tr>
                     <td class="top right left" width='40px' rowspan="2">No</td>
                     <td class="top right" rowspan="2">Bulan</td>
-                    <td class="top right button" colspan="<?php echo count($tmp['items'])-1?>">Gerakan</td>
-                    <td class="top right" width='70px' rowspan="2">Total</td>
-                    <td class="top right button" colspan="<?php echo count($tmp['items'])-1?>">Perbandingan</td>
-                    <td class="top right" width='70px' rowspan="2">Total</td>
+                    <td class="top right button" colspan="<?php echo count($tmp['items'])-1?>">Kode Pandu</td>
+                    <td class="top right" width='25' rowspan="2">Total</td>
                   </tr>
                   <tr>
                     <?php
@@ -144,22 +142,15 @@
                       foreach ($tmp['items'] as $val) {
                       if ($val!='all'){
                         // if ($val=='unknow')$val='Tidak Diketahui';else if ($val=='Rp')$val='Dalam Negeri'; else if ($val=='$')$val='Luar Negeri';
-                        echo '<td class="right" width="70px">'.$val.'</td>';
+                        echo '<td class="right" width="25">'.$val.'</td>';
                       }
                     }
                     ?>
 
-                    <?php foreach ($tmp['items'] as $val) {
-                      if ($val!='all'){
-                        // if ($val=='unknow')$val='Tidak Diketahui';else if ($val=='Rp')$val='Dalam Negeri'; else if ($val=='$')$val='Luar Negeri';
-                        echo '<td class="right" width="70px">'.$val.'</td>';
-                      }
-                    }
-                    ?>
 
                   </tr>
                   <tr>
-                    <td class="top" colspan="<?php echo (count($tmp['items'])*2)+2?>"></td>
+                    <td class="top" colspan="<?php echo (count($tmp['items']))+2?>"></td>
                   </tr>
                 </thead>
                 <tbody class="zebra">
@@ -175,21 +166,11 @@
                       echo '<td class="top right" align="center">'.$row['data'][$key].'</td>';
                     }
                     $total = 0;
-                    foreach ($tmp['ds'] as $row) {
-                      if($jumlah[$key]!=0 && $row['data'][$key]!=''){
-                        // $row['data'][$key]=0;
-                        $total = round(($row['data'][$key]/$jumlah[$key])*100,2) .' %';
-                        // numbre($total)
-                      } else {
-                        $total = '';
-                      }
-                      echo '<td class="top right" align="center">'.$total.'</td>';
-                    }
                     echo '</tr>';
                   }
                   ?>
                   <tr>
-                  <td class="top" colspan="<?php echo (count($tmp['items'])*2)+2?>"></td>
+                  <td class="top" colspan="<?php echo (count($tmp['items']))+2?>"></td>
                   </tr>
                 </tbody>
               </table>
@@ -200,3 +181,4 @@
         </main>
     </body>
 </html>
+tml>

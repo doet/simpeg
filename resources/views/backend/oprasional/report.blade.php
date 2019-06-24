@@ -368,7 +368,7 @@
           responsive: true,
   				tooltips: {
   					mode: 'index',
-  					intersect: 'false',
+  					intersect: 'true',
   				},
         }
       });

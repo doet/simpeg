@@ -218,7 +218,7 @@ left: 30%;" /></div>
 							</ul>
 						</li> -->
 
-						<!-- <li class="green dropdown-modal">
+						<li class="green dropdown-modal">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
 								<span class="badge badge-success">5</span>
@@ -237,8 +237,8 @@ left: 30%;" /></div>
 												<img src="{{asset('images/avatars/avatar.png')}}" class="msg-photo" alt="Alex's Avatar" />
 												<span class="msg-body">
 													<span class="msg-title">
-														<span class="blue">Alex:</span>
-														Ciao sociis natoque penatibus et auctor ...
+														<span class="blue">Admin:</span>
+														Cooming Soon
 													</span>
 
 													<span class="msg-time">
@@ -254,8 +254,8 @@ left: 30%;" /></div>
 												<img src="{{asset('images/avatars/avatar3.png')}}" class="msg-photo" alt="Susan's Avatar" />
 												<span class="msg-body">
 													<span class="msg-title">
-														<span class="blue">Susan:</span>
-														Vestibulum id ligula porta felis euismod ...
+														<span class="blue">Admin:</span>
+														Cooming Soon
 													</span>
 
 													<span class="msg-time">
@@ -271,8 +271,8 @@ left: 30%;" /></div>
 												<img src="{{asset('images/avatars/avatar4.png')}}" class="msg-photo" alt="Bob's Avatar" />
 												<span class="msg-body">
 													<span class="msg-title">
-														<span class="blue">Bob:</span>
-														Nullam quis risus eget urna mollis ornare ...
+														<span class="blue">Admin:</span>
+														Cooming Soon
 													</span>
 
 													<span class="msg-time">
@@ -288,8 +288,8 @@ left: 30%;" /></div>
 												<img src="{{asset('images/avatars/avatar2.png')}}" class="msg-photo" alt="Kate's Avatar" />
 												<span class="msg-body">
 													<span class="msg-title">
-														<span class="blue">Kate:</span>
-														Ciao sociis natoque eget urna mollis ornare ...
+														<span class="blue">Admin:</span>
+														Cooming Soon
 													</span>
 
 													<span class="msg-time">
@@ -305,8 +305,8 @@ left: 30%;" /></div>
 												<img src="{{asset('images/avatars/avatar5.png')}}" class="msg-photo" alt="Fred's Avatar" />
 												<span class="msg-body">
 													<span class="msg-title">
-														<span class="blue">Fred:</span>
-														Vestibulum id penatibus et auctor  ...
+														<span class="blue">Admin:</span>
+														Cooming Soon
 													</span>
 
 													<span class="msg-time">
@@ -326,7 +326,7 @@ left: 30%;" /></div>
 									</a>
 								</li>
 							</ul>
-						</li> -->
+						</li>
 
 						<li class="light-blue dropdown-modal">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">

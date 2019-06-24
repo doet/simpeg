@@ -54,8 +54,8 @@
               margin-bottom:10px;
               max-height:50px;
               height:40px ;
-              font-family :"Arial", Helvetica, sans-serif !important;
-              font-size: 10px;
+              /* font-family :"Arial", Helvetica, sans-serif !important; */
+              font-size: 12px;
             }
             .right{
                 border-right: 1px dotted;
@@ -90,7 +90,8 @@
             }
         </style>
     </head>
-    <body style="font-family:'Arial', Helvetica, sans-serif ; font-size:12px;">
+    <!-- <body style="font-family:'Arial', Helvetica, sans-serif ; font-size:12px;"> -->
+    <body style="font-size:12px;">
         <!-- Define header and footer blocks before your content -->
         <!-- <header>
           <img src="{{public_path().'\\pic\\logo.png'}}" width="125px"><div style="position:absolute; top:10; left:100"><b>PT. PELABUHAN CILEGON MANDIRI<br />
@@ -110,16 +111,16 @@
                 <img src="{{public_path().'\\images\\pemda.png'}}" width="100px">
               </div>
               <div style="position:absolute; top:-88; left:110">
-                <b>BADAN USAHA MILIK DAERAH<br />
-                  PEMERINTAH KOTA CILEGON<br />
-                  PT. PELABUHAN CILEGON MANDIRI<br />
-                  Jl. Yos Sudarso No. 20 Kec. Pulo Merak, Cilegon - Banten <br />
+                <b style="font-size:15px">BADAN USAHA MILIK DAERAH<br />
+                  PEMERINTAH KOTA CILEGON<br /></b>
+                <b style="font-size:20px">PT. PELABUHAN CILEGON MANDIRI</b><br />
+                <b style="font-size:11px"> Jl. Yos Sudarso No. 20 Kec. Pulo Merak, Cilegon - Banten <br />
                   42438  Tel. 0254-574000  Fax. 574894
                 </b>
               </div>
-              <div style="position:absolute; top:-85; left:400; width:300">
+              <!-- <div style="position:absolute; top:-85; left:400; width:300">
                 <img src="{{public_path().'\\pic\\logo.png'}}" width="200px">
-              </div>
+              </div> -->
               <?php
                 $totalTarif = 0;
                 $area=$tundaon=$dari=$ke= '';
@@ -271,9 +272,9 @@
               <div style="position:absolute; top:-90; left:600;">
                 <table>
                   <tr>
-                    <td class="left top right button" align="center"><b><?php echo $headstatus?></b></td>
+                    <td class="left top right button" align="center"><b style="font-size:15px"><?php echo $headstatus?></b></td>
                     <td width='50px'>&nbsp;</td>
-                    <td>
+                    <td style="font-size: 10px;">
                       Distribusi/Distribution<br>
                       (1) Pengguna Jasa<br>
                       (2) Keuangan PT PCM<br>
@@ -282,24 +283,22 @@
                     </td>
                   </tr>
                 </table>
-                <table>
-                  <tr>
-                    <td class="left top right" align="center" style="background-color: #DCDCDC;" height='18px'>&nbsp;Nomor Faktur Pajak</td>
-                    <td class="top right" align="center" style="background-color: #DCDCDC;">&nbsp;Nomor Invoice</td>
+                <table >
+                  <tr style="font-size:11px; font-weight: bold;">
+                    <td class="left top right" align="center" style="background-color: #DCDCDC;" height='18px' width='140px'>&nbsp;Nomor Faktur Pajak</td>
+                    <td class="top right" align="center" style="background-color: #DCDCDC;" width='120px'>&nbsp;Nomor Invoice</td>
                     <td class="top right" align="center" style="background-color: #DCDCDC;">&nbsp;Tanggal / <i>Date</i></td>
                   </tr>
-                  <tr>
+                  <tr style="font-size:13px">
                     <td class="left top right button" align="center" height='18px'>&nbsp;<?php echo $result->pajak?></td>
                     <td class="top right button" align="center">&nbsp;<?php echo $result->noinv?></td>
                     <td class="top right button" align="center">&nbsp;<?php echo date('d M Y', $result->tglinv)?></i></td>
                   </tr>
                 </table>
               </div>
-
-
-              <b><i>NOTA TAGIHAN / INVOICE</i></b>
+              <div style="position:absolute; top:-8; left:5;"><b><i style="font-size:15px">NOTA TAGIHAN / INVOICE</i></b></div>
               <table >
-                  <tr>
+                  <tr tr style="font-size:11px; font-weight: bold;">
                     <!-- rowspan="2" colspan="2" -->
                     <td class="left top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Kepada / <i>To :</i></td>
                     <td class="top right" colspan="2" style="background-color: #DCDCDC;">&nbsp;Berdasarkan / <i>Base on :</i></td>
@@ -336,9 +335,8 @@
                     <td class="top right button"></td>
                   </tr>
               </table>
-
               Silahkan dibayarkan tagihan berikut / <i>Please pay invoice as follow :</i>
-              <table>
+              <table style="font-size:11px;">
                 <thead>
                   <tr>
                     <!-- rowspan="2" colspan="2" -->
@@ -423,27 +421,27 @@
               </table>
             </div>
 
-            <div style="position:absolute; top:85; left:650; width:300; font-family:'Arial', Helvetica, sans-serif ; font-size:11px;">
+            <div style="position:absolute; top:80; left:650; width:300; font-size:11px;">
               <?php
               if($result->rute == '$') {
                 echo 'Kurs Jual Bank Indonesia 1 USD / '.date('d M Y', $kurs->date).' = Rp. '.number_format($kurs->nilai);
               } ?>
             </div>
 
-            <div style="position:absolute; top:275; left:30; width:300; font-family:'Arial', Helvetica, sans-serif ; font-size:11px;">
+            <div style="position:absolute; top:270; left:30; width:300; font-size:11px;">
               <table>
                 <thead>
                   <tr>
-                    <td class="left top right" style="background-color: #DCDCDC;" colspan="2" height='17'>Dibayarkan ke / <i>Payable</i></td>
-                    <td class="top right" style="background-color: #DCDCDC;">Tanggal jatuh tempo / <i>Due</i></td>
+                    <td class="left top right" style="background-color: #DCDCDC;" colspan="2" height='17px'>Dibayarkan ke / <i>Payable</i></td>
+                    <td class="top right" style="background-color: #DCDCDC;" width="150px">Tanggal jatuh tempo / <i>Due</i></td>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="left top right button">&nbsp;Bank BNI (IDR)</td>
-                    <td class="top right button">&nbsp;231.05.45</td>
+                    <td class="top right button" width="130px">&nbsp;231.05.45</td>
 
-                    <td class="top right button" rowspan="3" align="center">&nbsp;<b><?php echo $tempo?></b></i></td>
+                    <td class="top right button" rowspan="3" align="center">&nbsp;<b style="font-size:15px;"><?php echo $tempo?></b></i></td>
                   </tr>
                   <tr>
                     <td class="left top right button">&nbsp;Bank Mandiri (IDR)</td>
@@ -460,11 +458,11 @@
                 </tbody>
               </table>
             </div>
-            <div style="position:absolute; top:350; left:30; width:350; font-family:'Arial', Helvetica, sans-serif ; font-size:11px;" align='center'>
+            <div style="position:absolute; top:350; left:30; width:350; font-size:11px;" align='center'>
               PT. PELABUHAN CILEGON MANDIRI<br>Pelaksana Pelayanan Jasa<br><br><br><br><br><br><br>
               H. ARIEF RIVA'I, SH, MH,M.SI<br>Direktur Utama
             </div>
-<div style="position:absolute; top:350; left:530; width:350;font-family:'Arial', Helvetica, sans-serif ; font-size:10px;" class="left top right button">
+<div style="position:absolute; top:350; left:530; width:350; font-size:10px;" class="left top right button">
             <ol>
               Keterangan :
             <li>Pembayaran dianggap sah  apabila bukti  transfer pembayaran telah disah-kan oleh Bank  dan bukti transfer tersebut diserahkan ke PT. Pelabuhan Cilegon Mandiri / Payment  valid when the transfer document has been legalized by the bank and submit to PT. Pelabuhan Cilegon Mandiri .</li>

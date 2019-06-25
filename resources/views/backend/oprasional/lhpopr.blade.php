@@ -126,6 +126,7 @@
 						<input name="file" value="" hidden/>
 						<input name="start" value="" hidden/>
 						<input name="sidx" value="" hidden/>
+						<input name="ext1" value="" hidden/>
 					</form>
 					<div class="row">
 						<div class="col-xs-12 col-sm-3">
@@ -580,7 +581,23 @@
 
 					$('#dompdf input[name=page]').val('lhp1-dompdf');
 					$('#dompdf input[name=start]').val(setdate);
-					$('#dompdf input[name=sidx]').val('ppjk');
+					$('#dompdf input[name=ext1]').val('lhp1');
+
+					// console.log(setdate);
+
+					$('#dompdf').submit();
+				}
+		}).jqGrid('navButtonAdd',pager_selector,{
+				keys: true,
+				caption:"LHP-M",
+				buttonicon:"ace-icon fa fa-file-pdf-o orange",
+				position:"last",
+				onClickButton:function(){
+					// var data = $(this).jqGrid('getRowData'); Get all data
+
+					$('#dompdf input[name=page]').val('lhp1-dompdf');
+					$('#dompdf input[name=start]').val(setdate);
+					$('#dompdf input[name=ext1]').val('lhp2');
 
 					// console.log(setdate);
 

@@ -149,8 +149,8 @@ class PDFController extends Controller
           $view =  \View::make($page, compact('result','mulai'))->render();
       break;
       case 'lhp1-dompdf':
-        $mulai = strtotime($mulai);
-
+        // dd($request->input());
+        // dd('1-'.date('m-Y',strtotime($mulai)));
         $result = DB::table('tb_dls')
           ->leftJoin('tb_ppjks', function ($join) {
             $join->on('tb_ppjks.id','tb_dls.ppjks_id');
@@ -165,7 +165,16 @@ class PDFController extends Controller
             $join->on('tb_jettys.id','tb_dls.jettys_id');
           })
           ->where(function ($query) use ($mulai,$akhir,$request){
-            $query->where('tb_ppjks.lhp', $mulai);
+            $mulai = strtotime($mulai);
+            if ($request->input('ext1')=='lhp1'){
+              $query->where('tb_ppjks.lhp', $mulai);
+            } else if ($request->input('ext1')=='lhp2'){
+              // $akhir = $mulai+(60 * 60 * 24);
+              $akhir = strtotime('1-'.date('m-Y',$mulai));
+              $query->where('tb_ppjks.lhp', '>=', $akhir)
+                ->Where('tb_ppjks.lhp', '<=', $mulai);
+              // $query->where('tb_ppjks.lhp', $akhir);
+            }
           })
           ->select(
             'tb_agens.code as agenCode',
@@ -181,17 +190,19 @@ class PDFController extends Controller
             'tb_dls.*'
           )
           ->orderBy('ppjk')
-          ->orderBy('date','asc')
+          ->orderBy('date', 'asc')
+          ->orderBy('tb_dls.id', 'asc')
+
           ->get();
-          // dd($result);
+          // dd(strtotime($mulai));
         // $result = json_encode(json_decode($qu));
         // $result = json_decode($result,true);
         // if ($result['records']>1) $result = $result['rows']; else $result = array();
         // $result = $request->data;
         // print_r ($query);
 
-
-
+        // dd()
+        $mulai = strtotime($mulai);
         $page = 'backend.oprasional.pdf.'.$request->input('page');
         $nfile = $request->input('file');
         $orientation = 'landscape';

@@ -716,11 +716,16 @@ class OprasionalApiController extends Controller
               'tb_ppjks.*',
               'tb_dls.*'
             );
+            if (array_key_exists("lhp",$request->input())){
+              $qu->orderBy('ppjk');
+              $qu->orderBy('date', 'asc');
+              $qu->orderBy('tb_dls.id', 'asc');
+            }
             if ($request->input('f')=='dl'){
 
             }
             if ($request->input('f')=='bstdo'){
-              $qu->orderBy('ppjk', 'asc');
+              $qu->orderBy('ppjk');
               $qu->orderBy('date', 'asc');
               $qu->orderBy('tb_dls.id', 'asc');
             }

@@ -180,7 +180,7 @@ class PDFController extends Controller
             'tb_ppjks.*',
             'tb_dls.*'
           )
-          ->orderBy('ppjk', 'asc')
+          ->orderBy('ppjk')
           ->orderBy('date','asc')
           ->get();
           // dd($result);

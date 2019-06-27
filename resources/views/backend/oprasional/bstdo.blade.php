@@ -379,7 +379,7 @@
 			sortname:'date',
 			sortorder: 'desc',
 			height: 'auto',
-			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','bapp','PC','ON','OFF','Tunda','ON','OFF','DD','Ket','Kurs','LSTP','Moring','ppjks_id'],
+			colNames:[' ', 'PPJK','AGEN','Date','Kapal','GRT','LOA','Bendera','Dermaga','OPS','bapp','PC','ON','OFF','Tunda','ON','OFF','DD','Ket','Kurs','Moring','LSTP','ppjks_id'],
 			colModel:[
 				{name:'myac',index:'', width:50, fixed:true, sortable:false, resize:false, align: 'center'},
 				{name:'ppjk',index:'ppjk', width:55, sorttype:"int", editable: false},
@@ -401,8 +401,8 @@
 				{name:'dd',index:'dd',width:40, editable: false},
 				{name:'ket',index:'ket',width:100, editable: false},
 				{name:'kurs',index:'kurs',width:50, editable: false, align: 'center',hidden:true},
-				{name:'lstp',index:'lstp',width:50, editable: true, align: 'center'},
 				{name:'moring',index:'moring',width:180, editable: true, align: 'center',hidden:true},
+				{name:'lstp',index:'lstp',width:50, editable: true, align: 'center'},
 				{name:'ppjks_id',index:'ppjks_id',width:180, editable: false, hidden:true, align: 'center'}
 			],
 

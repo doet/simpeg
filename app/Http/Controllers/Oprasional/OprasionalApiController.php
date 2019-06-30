@@ -664,7 +664,7 @@ class OprasionalApiController extends Controller
                   $akhir = strtotime($akhir);
                   if($akhir==0)$akhir = $mulai+(60 * 60 * 24);
                   $query->where('date_issue', '>=', $mulai)
-                    ->Where('date_issue', '<', $akhir);
+                    ->Where('date_issue', '<=', $akhir);
                 }
             })
             ->select(

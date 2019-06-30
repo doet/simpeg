@@ -148,6 +148,7 @@
 													<option ></option>
 													<option value="Berth">Berth</option>
 													<option value="Unberth">Unberth</option>
+													<option value="Khusus">Khusus</option>
 												</select>
 											</div>
 										</div>

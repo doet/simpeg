@@ -2,8 +2,8 @@
     <head>
         <style>
             /** Define the margins of your page **/
-            @page { margin: 150px 30px 80px 30px }
-            header { position: fixed; top: -120px; left:0px; right: 10px;  }
+            @page { margin: 100px 30px 80px 30px }
+            header { position: fixed; top: -60px; left:0px; right: 10px;  }
 
             /* main { position: fixed; top: 50px; left: 0px; bottom: -10px; right: 0px;  } */
 
@@ -94,9 +94,9 @@
         <!-- Define header and footer blocks before your content -->
         <header>
           <img src="{{public_path().'\\pic\\logo.png'}}" width="125px"><div style="position:absolute; top:10; left:100"><b>PT. PELABUHAN CILEGON MANDIRI<br />
-        Divisi Pemanduan dan Penundaan</b></div><br /><br /><br />
-            <center>sssssssssssss<br />
-          <font size="-1"><?php echo $mulai;?></font></center>
+        Divisi Pemanduan dan Penundaan</b></div>
+            <!-- <center>sssssssssssss<br />
+          <font size="-1"><?php echo $mulai;?></font></center> -->
         </header>
 
         <footer>
@@ -110,27 +110,54 @@
               <table width="350px">
                 <thead>
                   <tr>
+                    <td class="top right left" rowspan="2" colspan="21">FORMULIR</td>
+                    <td class="top right" colspan="4">Doc No </td>
+                    <td class="top right" colspan="2">F.PDP/01.004</td>
+                  </tr>
+                  <tr>
+                    <td class="top right" colspan="4">Rev</td>
+                    <td class="top right" colspan="2">0.0</td>
+                  </tr>
+                  <tr>
+                    <td class="top right left" rowspan="2" colspan="21">LEMBAR HASIL PEKERJAAN</td>
+                    <td class="top right" colspan="4">Tgl Efektif</td>
+                    <td class="top right" colspan="2"><?php echo date("d/m/Y",$mulai);?></td>
+                  </tr>
+                  <tr>
+                    <td class="top right" colspan="4">Halaman</td>
+                    <td class="top right" colspan="2">1 dari 1</td>
+                  </tr>
+                  <tr>
+                    <td class="top" colspan="27" ></td>
+                  </tr>
+                  <tr>
                     <td class="top right left" rowspan="2" width='20px'>No</td>
-                    <td class="top right" rowspan="2" width='40px'>Nomor </br> PPJK</td>
-                    <td class="top right" rowspan="2" width='30px'>Agen </br> (Code)</td>
+                    <td class="top right" rowspan="2" width='80px'>Nomor </br> PPJK</td>
+                    <td class="top right" rowspan="2" width='25px'>Agen</td>
                     <td class="top right button" colspan="2">Waktu Permintaan</td>
-                    <td class="top right" rowspan="2" width='180px'>Nama Kapal</td>
+                    <td class="top right" rowspan="2" width='130px'>Nama Kapal</td>
                     <td class="top right" rowspan="2" width='35px'>GRT</td>
-                    <td class="top right" rowspan="2" width='30px'>LOA </br> (Meter)</td>
+                    <td class="top right" rowspan="2" width='25px'>LOA</td>
                     <td class="top right" rowspan="2" width='80px'>Bendera</td>
                     <td class="top right" rowspan="2" width='110px'>Dermaga</td>
                     <td class="top right" rowspan="2" width='40px'>OPS </br> Kapal</td>
                     <td class="top right" rowspan="2" width='30px'>BAPP</td>
                     <td class="top right" rowspan="2" width='25px'>PC</td>
+                    <td class="top right button" colspan="2">Pilot</td>
                     <td class="top right button" colspan="5">Kapal Tunda</td>
                     <td class="top right button" colspan="2">Waktu</td>
                     <td class="top right" rowspan="2" width='25px'>DD</td>
-                    <td class="top right" rowspan="2">Ket</td>
-                    <td class="top right" rowspan="2" width='20px'>Kurs</td>
+                    <td class="top right" rowspan="2" width='50px'>Ket</td>
+                    <td class="top right" rowspan="2" width='35px'>LSTP</td>
+                    <td class="top right" rowspan="2" width='35px'>BSTDO</td>
+                    <td class="top right" rowspan="2">Mooring</td>
                   </tr>
                   <tr>
-                    <td class="right" width='55px'>tgl</td>
-                    <td class="right" width='30px'>jam</td>
+                    <td class="right" width='55px'>Tgl</td>
+                    <td class="right" width='30px'>Jam</td>
+
+                    <td class="right" width='30px'>ON</td>
+                    <td class="right" width='30px'>OFF</td>
 
                     <td class="right" width='20px'>GB</td>
                     <td class="right" width='20px'>GC</td>
@@ -142,26 +169,37 @@
                     <td class="right" width='30px'>OFF</td>
                   </tr>
                   <tr>
-                    <td class="top" colspan="23" ></td>
+                    <td class="top" colspan="27" ></td>
                   </tr>
                 </thead>
                 <tbody class="zebra">
                   </tr>
                   <?php
                   $i=1;
-                  $ppjk = '';
+                  $jppjk=0;
+                  $jbapp=array();
+                  $ppjk = $datetime = '';
                   foreach ($result as $row ) {
+                    // dd($row->ppjk);
                     $date = explode(" ", date("d-m-Y H:i",$row->date));
-                    if ($ppjk != $row->ppjk){
+                    if ($ppjk == $row->ppjk){
+                      if ($datetime == $row->date){
+                        $date[1] = 'SHIFT';
+                        $classShift = 'blue';
+                      } else {
+                        $classShift = '';
+                        $datetime = $row->date;
+                      }
+                    }else{
                       $ppjk = $row->ppjk;
                       $classShift = '';
-                    }else{
-                      $date[1] = 'SHIFT';
-                      $classShift = 'blue';
+                      $jppjk++;
+                      $datetime = $row->date;
                     }
-dsasd
+                    // if ($row->bapp != '') $jbapp = ;
+                    if (!in_array($row->bapp,$jbapp) && $row->bapp!='')$jbapp[]=$row->bapp;
+
                     if (strpos($row->jettyCode,'S.')===0) $classJetty = 'kuning'; else $classJetty = '';
-                    if ($row->kurs == '$') $kurs = 'ungu'; else $kurs = '';
 
                     $tunda = json_decode($row->tunda);
                     if (in_array('GB', $tunda))$gb = 'GB';else $gb = '';
@@ -170,9 +208,14 @@ dsasd
                     if (in_array('MV', $tunda))$mv = 'MV';else $mv = '';
                     if (in_array('MG', $tunda))$mg = 'MG';else $mg = '';
 
+                    // if ($row->kapalsLoa == '')$row->kapalsLoa =0;
                     if ($row->kapalsJenis == '') $kapal =  $row->kapalsName; else $kapal = '('.$row->kapalsJenis.') '.$row->kapalsName;
+
                     if ($row->tundaon == '') $tundaon=$row->tundaon; else $tundaon=date("H:i",$row->tundaon);
                     if ($row->tundaoff == '') $tundaoff=$row->tundaon; else $tundaoff=date("H:i",$row->tundaoff);
+
+                    if ($row->pcon == '') $pcon=$row->pcon; else $pcon=date("H:i",$row->pcon);
+                    if ($row->pcoff == '') $pcoff=$row->pcoff; else $pcoff=date("H:i",$row->pcoff);
 
                     echo '<tr>';
                     echo '<td class="top right left" align="center">&nbsp;'.$i.'</td>';
@@ -181,55 +224,36 @@ dsasd
                     echo '<td class="top right" align="center">'.$date[0].'</td>';
                     echo '<td class="top right '.$classShift.'" align="center">'.$date[1].'</td>';
                     echo '<td class="top right">&nbsp;'.$kapal.'</td>';
-                    echo '<td class="top right" align="right">'.number_format($row->kapalsGrt).'&nbsp;</td>';
-                    echo '<td class="top right" align="right">'.number_format($row->kapalsLoa).'&nbsp;</td>';
+                    echo '<td class="top right" align="right">'.$row->kapalsGrt.'&nbsp;</td>';
+                    echo '<td class="top right" align="right">'.$row->kapalsLoa.'&nbsp;</td>';
                     echo '<td class="top right">&nbsp;'.$row->kapalsBendera.'</td>';
                     echo '<td class="top right '.$classJetty.'">&nbsp;'.'('. $row->jettyCode .')'.$row->jettyName.'</td>';
                     echo '<td class="top right">&nbsp;'.$row->ops.'</td>';
                     echo '<td class="top right" align="center">'.$row->bapp.'</td>';
+
                     echo '<td class="top right" align="center">'.$row->pc.'</td>';
+                    echo '<td class="top right" align="center">'.$pcon.'</td>';
+                    echo '<td class="top right" align="center">'.$pcoff.'</td>';
 
                     echo '<td class="top right" align="center">'.$gb.'</td>';
                     echo '<td class="top right" align="center">'.$gc.'</td>';
                     echo '<td class="top right" align="center">'.$gs.'</td>';
-                    echo '<td class="top right" align="center"'.$mv.'</td>';
-                    echo '<td class="top right" align="center"'.$mg.'</td>';
+                    echo '<td class="top right" align="center">'.$mv.'</td>';
+                    echo '<td class="top right" align="center">'.$mg.'</td>';
 
                     echo '<td class="top right" align="center">'.$tundaon.'</td>';
                     echo '<td class="top right" align="center">'.$tundaoff.'</td>';
                     echo '<td class="top right" align="center">'.$row->dd.'</td>';
                     echo '<td class="top right">&nbsp;'.$row->ket.'</td>';
-                    echo '<td class="top right '.$kurs.'" align="center">'.$row->kurs.'</td>';
+                    echo '<td class="top right" align="right">'.$row->lstp.'&nbsp;</td>';
+                    echo '<td class="top right" align="right">'.$row->bstdo.'&nbsp;</td>';
+                    echo '<td class="top right">&nbsp;'.$row->mooring.'</td>';
                     echo '</tr>';
                     $i++;
                   }
                   ?>
                   <tr>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
-                  <td class="top"></td>
+                    <td class="top" colspan="27" ></td>
                   </tr>
                 </tbody>
               </table>
@@ -246,10 +270,10 @@ dsasd
               </tr>
               <tr>
                 <td class="" width="100px">1. Jumlah PPJK </td>
-                <td class="top right left" width="80px"> </td>
+                <td class="top right left" width="80px" align="center"> <?php echo $jppjk?></td>
                 <td class="" width="20px"> </td>
-                <td class="" width="100px">Jumlah PPJK </td>
-                <td class="top right left" width="80px"> </td>
+                <td class="" width="100px">Jumlah BAPP </td>
+                <td class="top right left" width="80px" align="center"> <?php echo count($jbapp)?></td>
                 <td class=""> </td>
               </tr>
               <tr>
@@ -278,7 +302,7 @@ dsasd
               <tr>
                 <td class=""> </td>
                 <td class="">Tanggal</td>
-                <td class="top right left" align="center"><?php echo $mulai;?></td>
+                <td class="top right left" align="center"><?php echo date("d/m/Y",$mulai);?></td>
                 <td class=""> </td>
                 <td class=""> </td>
               </tr>

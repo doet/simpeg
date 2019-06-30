@@ -93,6 +93,7 @@ class PDFController extends Controller
           $orientation = 'portrait';
           // dd($request->input());
           $view =  \View::make($page, compact('result','mulai'))->render();
+          $customPaper = "A4";
       break;
       case 'dl-dompdf': //Pengajuan Pembiyayaan
         $result = DB::table('tb_dls')
@@ -147,6 +148,7 @@ class PDFController extends Controller
           $orientation = 'landscape';
           // dd($result);
           $view =  \View::make($page, compact('result','mulai'))->render();
+          $customPaper = "A4";
       break;
       case 'lhp1-dompdf':
         // dd($request->input());
@@ -202,14 +204,24 @@ class PDFController extends Controller
         // print_r ($query);
 
         // dd()
+
+        if ($request->input('ext1')=='lhp2'){
+          $request->page = 'lhp2-dompdf';
+          $customPaper = array(0,0,595.276,935.4331);
+        } else {
+          $customPaper = "A4";
+        }
+        // dd($request->page);
+
         $mulai = strtotime($mulai);
-        $page = 'backend.oprasional.pdf.'.$request->input('page');
+        $page = 'backend.oprasional.pdf.'.$request->page;
         $nfile = $request->input('file');
         $orientation = 'landscape';
         // dd($result);
 
         $view =  \View::make($page, compact('result','mulai'))->render();
       break;
+
       case 'bstdo-dompdf':
         $result = DB::table('tb_dls')
           ->join('tb_ppjks', function ($join) {
@@ -272,9 +284,10 @@ class PDFController extends Controller
     // return view($page, compact('result','mulai'));
 
     $pdf = \App::make('dompdf.wrapper');
+
     $pdf->loadHTML($view)
         //->setOrientation($orientation)
-        ->setPaper('A4',$orientation);
+        ->setPaper($customPaper,$orientation);
 
     $dom_pdf = $pdf->getDomPDF();
     $canvas = $dom_pdf->get_canvas();

@@ -227,8 +227,8 @@
                   }
                   $isi[$i]['jumlahTarifvar']=$tarifvar*$kapalsGrt*$jumlahWaktu;
 
-
-                  $isi[$i]['jumlahTarif']=$jumlahTarif=$isi[$i]['jumlahTarifvar']+$isi[$i]['jumlahTariffix'];
+                  if (empty($match[$i]))$match[$i]=0;
+                  $isi[$i]['jumlahTarif']=$jumlahTarif=$isi[$i]['jumlahTarifvar']+$isi[$i]['jumlahTariffix']+$match[$i];
 
                   if ($row->ops=='Berth'){
                     if ($row->shift!='on'){

@@ -397,7 +397,7 @@
                   }
                   echo '<td class="top right" align="right"> '.number_format($kapalsGrt).'&nbsp;</td>';
                   echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTarifvar']).'&nbsp;</td>';
-                  echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTarif'],2).'&nbsp;'.$match[$i].'</td>';
+                  echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTarif'],2).'&nbsp;</td>';
                   echo '</tr>';
                   $i++;
                 }

@@ -227,10 +227,8 @@
                   }
                   $isi[$i]['jumlahTarifvar']=$tarifvar*$kapalsGrt*$jumlahWaktu;
 
-                  if (empty($match[$i]))$match[$i]=0;
-                  // dd($match);
 
-                  $isi[$i]['jumlahTarif']=$jumlahTarif=$isi[$i]['jumlahTarifvar']+$isi[$i]['jumlahTariffix']+$match[$i];
+                  $isi[$i]['jumlahTarif']=$jumlahTarif=$isi[$i]['jumlahTarifvar']+$isi[$i]['jumlahTariffix'];
 
                   if ($row->ops=='Berth'){
                     if ($row->shift!='on'){
@@ -374,7 +372,11 @@
                 </thead>
                 <tbody class="zebra">
               <?php
+              // dd($match);
+
+                $i=0;
                 foreach ($isi as $row) {
+                  if (empty($match[$i]))$match[$i]=0;
                   echo '<tr>';
                   echo '<td class="left top right" align="center"> '.$result->lstp.' </td>';
                   echo '<td class="top right" align="center"> '.$row['dari'].' </td>';
@@ -395,28 +397,33 @@
                   }
                   echo '<td class="top right" align="right"> '.number_format($kapalsGrt).'&nbsp;</td>';
                   echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTarifvar']).'&nbsp;</td>';
-                  echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTarif'],2).'&nbsp;</td>';
+                  echo '<td class="top right" align="right">Rp. '.number_format($row['jumlahTarif'],2).'&nbsp;'.$match[$i].'</td>';
                   echo '</tr>';
+                  $i++;
                 }
+                if (empty($match[$i+1]))$match[$i+1]=0;
+                if (empty($match[$i+2]))$match[$i+2]=0;
+                if (empty($match[$i+3]))$match[$i+3]=0;
+                if (empty($match[$i+4]))$match[$i+4]=0;
               ?>
 
                 </tbody>
                 <tr>
                   <td class="top" colspan="6" rowspan="4"> &nbsp; </td>
                   <td class="top" colspan="9" align="right">Total Tunda&nbsp;</td>
-                  <td class="left top right" align="right">Rp. <?php echo number_format($totalTarif)?>&nbsp;</td>
+                  <td class="left top right" align="right">Rp. <?php echo number_format($totalTarif+$match[$i+1])?>&nbsp;</td>
                 </tr>
                 <tr>
                   <td colspan="9" align="right">Bagi Hasil Tunda setelah PNBP&nbsp;</td>
-                  <td class="left top right" align="right">Rp. <?php echo number_format($bhtPNBP)?>&nbsp;</td>
+                  <td class="left top right" align="right">Rp. <?php echo number_format($bhtPNBP+$match[$i+2])?>&nbsp;</td>
                 </tr>
                 <tr>
                   <td colspan="9" align="right">PPn / Total after VAT&nbsp;</td>
-                  <td class="left top right" align="right">Rp. <?php echo number_format($ppn)?>&nbsp;</td>
+                  <td class="left top right" align="right">Rp. <?php echo number_format($ppn+$match[$i+3])?>&nbsp;</td>
                 </tr>
                 <tr>
                   <td colspan="9" align="right">Total Tagihan Bagi Hasil / Total Invoice&nbsp;</td>
-                  <td class="left top right button" align="right">Rp. <?php echo number_format($totalinv)?>&nbsp;</td>
+                  <td class="left top right button" align="right">Rp. <?php echo number_format($totalinv+$match[$i+4])?>&nbsp;</td>
                 </tr>
               </table>
             </div>

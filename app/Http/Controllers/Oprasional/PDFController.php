@@ -278,6 +278,7 @@ class PDFController extends Controller
 
         $view =  \View::make($page, compact('result','mulai'))->render();
         // return view($page, compact('result','mulai'));
+        $customPaper = "A4";
       break;
     }
 

@@ -58,6 +58,11 @@ class MasterDataController extends Controller
     public function mdiagnosa(){
         return view('backend.masterdata.submasterdata.mdiagnosa');
     }
-
+    public function mmuser(){
+        return view('backend.masterdata.submasterdata.mmuser');
+    }
+    public function mamenu(){
+        return view('backend.masterdata.submasterdata.mamenu');
+    }
 
 }

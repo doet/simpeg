@@ -603,7 +603,23 @@
 
 					$('#dompdf').submit();
 				}
-		})
+		}).jqGrid('navButtonAdd',pager_selector,{
+				caption:"",
+				buttonicon:"ace-icon fa fa-file-excel-o green",
+				position:"next",
+				onClickButton:function(){
+					var posdata = {category:'lhp-m',start:setdate,_token:'{{csrf_token()}}'};
+					getparameter2("{{url('/oprasional/XLS_Oprasional')}}",posdata,
+						function(data){
+							$("#loading").modal('hide');
+							window.open("{{ url('/public/files/tmp/data_LHP-M.xlsx') }}");
+						},
+						function(data){
+							$("#loading").modal();
+						},
+					);
+				}
+		});
 
 		//var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
 

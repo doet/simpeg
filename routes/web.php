@@ -21,11 +21,14 @@ Route::get('/',       'CekController@index');
 Route::get('/home',   'CekController@index')->name('home');
 
 /////////////////////////////////////////////////////////////////////////////////////// Master Data //////
+
 Route::get('masterdata',      'Masterdata\MasterDataController@masterdata');                                       //
 Route::get('mjabatan',        'Masterdata\MasterDataController@mjabatan');                                         //
 Route::get('mdivisi',         'Masterdata\MasterDataController@mdivisi');                                          //
 Route::get('mlibur',          'Masterdata\MasterDataController@mlibur');
 Route::get('mdiagnosa',       'Masterdata\MasterDataController@mdiagnosa');
+Route::get('mmuser',          'Masterdata\MasterDataController@mmuser');
+Route::get('mamenu',          'Masterdata\MasterDataController@mamenu');
 
 /////////////////////////////////////////////////////////////////////////////////////// Kepegawaian //////
 Route::get('pkaryawa',          'Kepegawaian\KepegawaianController@pkaryawa');				//

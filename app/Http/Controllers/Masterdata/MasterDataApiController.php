@@ -19,6 +19,25 @@ use Auth;
 
 class MasterDataApiController extends Controller
 {
+  public function json(Request $request){
+    $datatb = $request->input('datatb', '');
+    $responce = array();
+    switch ($datatb) {
+      case 'users':
+        $query = DB::table('users')
+          ->where(function ($query) use ($request){
+            $query->where('admin',1);
+          })
+          ->get();
+        foreach($query as $row) {
+          $responce[]=$row;
+        }
+      break;
+    }
+    // dd(Response()->json($responce));
+    return Response()->json($responce);
+
+  }
   public function cud(Request $request){
     $datatb = $request->input('datatb', '');
     $oper = $request->input('oper');
@@ -74,6 +93,19 @@ class MasterDataApiController extends Controller
         );
         return $response;
       break;
+      case 'mamenu':
+        $datanya=array(
+          'akses'=>implode(",",$request->user),
+        );
+
+        if ($oper=='edit')$edit = DB::table('menuadmins')->where('id', $id)->update($datanya);
+        // dd(DB::table('menuadmins')->where('id', $id)->first()->parent_id);
+        // $response = array(
+        //     'status' => 'success',
+        //     'msg' => 'ok',
+        // );
+        return $response;
+      break;
     }
     return  Response()->json($responce);
   }
@@ -90,21 +122,32 @@ class MasterDataApiController extends Controller
             case 'nilai':   // Vaariabel Master
                 $sidx = $request->input('sidx', 'sort');
                 $qu = variabel::where('grup', '=', $request->input('grup'));
-                $count = $qu->count();
             break;
             case 'mlibur':   // Libur dan Cuti Bersama
                 $sidx = $request->input('sidx', 'tgllibur');
-                $count = libur::all()
-                    ->count();
+                $qu = DB::table('tb_libur');
             break;
-            case 'diagnos':  // Libur dan Cuti Bersama
+            case 'diagnos':  // diognosa sakit
                 $sidx = $request->input('sidx', 'id');
-                $count = diagnos::all()
-                    ->count();
+                $qu = DB::table('tb_diagnos');
             break;
-
+            case 'mmuser':
+                $sidx = $request->input('sidx', 'id');
+                $qu = DB::table('users')
+                ->where(function ($query) use ($request){
+                  $query->where('admin',1);
+                });
+            break;
+            case 'mamenu':
+                $sidx = $request->input('sidx', 'id');
+                $qu = DB::table('menuadmins')
+                ->where(function ($query) use ($request){
+                  // $query->where('admin',1);
+                });
+            break;
         }
 
+        $count = $qu->count();
         if( $count > 0 ) {
             $total_pages = ceil($count/$limit);    //calculating total number of pages
         } else {
@@ -119,26 +162,9 @@ class MasterDataApiController extends Controller
         $responce['total'] = $total_pages;
         $responce['records'] = $count;
 
-    // Mengambil Nilai Query //
-        switch ($datatb) {
-            case 'nilai':   // Vaariabel Master
-                $query = $qu->orderBy($sidx, $sord)
-                    ->skip($start)->take($limit)
-                    ->get();
-            break;
-            case 'mlibur':  // Libur dan Cuti Bersama
-                $query = libur::orderBy($sidx, $sord)
-                    ->orderBy($sidx, $sord)
-                    ->skip($start)->take($limit)
-                    ->get();
-            break;
-            case 'diagnos':  // Libur dan Cuti Bersama
-                $query = diagnos::orderBy($sidx, $sord)
-                    ->orderBy($sidx, $sord)
-                    ->skip($start)->take($limit)
-                    ->get();
-            break;
-        }
+        $query = $qu->orderBy($sidx, $sord)
+          ->skip($start)->take($limit)
+          ->get();
 
         $i=0;
         foreach($query as $row) {
@@ -170,6 +196,36 @@ class MasterDataApiController extends Controller
                         $row->ket
                     );
                     $i++;
+                break;
+                case 'mmuser':
+                    $responce['rows'][$i]['id'] = $row->id;
+                    $responce['rows'][$i]['cell'] = array(
+                        $row->id,
+                        $row->name,
+                        $row->email,
+                    );
+                    $i++;
+                break;
+                case 'mamenu':
+                  $username = '';
+                  // $userarray = explode(",",$row->akses);
+                  foreach(explode(",",$row->akses) as $u) {
+                    $qu = DB::table('users')
+                      ->where(function ($query) use ($u){
+                        $query->where('admin',1);
+                        $query->where('id',$u);
+                      })->first();
+                      if ($qu)$username = $username.''.$qu->name.',';
+                  };
+
+                  $responce['rows'][$i]['id'] = $row->id;
+                  $responce['rows'][$i]['cell'] = array(
+                      $row->id,
+                      $row->label,
+                      $username,
+                      $row->akses,
+                  );
+                  $i++;
                 break;
 
             }

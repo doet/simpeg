@@ -66,7 +66,16 @@
                                     Diagnosa Penyakit
                                 </a>
                             </li>
-
+                            <li>
+                                <a data-toggle="tab" href="#messages" onclick="load('mmuser','#isi')">
+                                    Management Admin
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#messages" onclick="load('mamenu','#isi')">
+                                    Akses Menu
+                                </a>
+                            </li>
                         </ul>
 
                         <div class="tab-content">
@@ -104,7 +113,7 @@
         $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="ace-icon fa fa-check"></i></button>'+
                                     '<button type="button" class="btn editable-cancel"><i class="ace-icon fa fa-times"></i></button>';
 
-        
+
         load("mjabatan","#isi");
 
         //resize the chosen on window resize
